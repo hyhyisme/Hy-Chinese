@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Học sinh vào lớp — HY Chinese</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;600;700;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800&display=swap" rel="stylesheet">
+<link rel="icon" href="assets/logo.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a class="back-home" href="index.html">← Về trang chủ</a>
+
+<div class="auth-wrap">
+  <div class="brand-header">
+    <img src="assets/logo.png" alt="HY Chinese logo">
+    <div class="brand-name">HY Chinese</div>
+  </div>
+
+  <div class="card">
+    <h1>🎒 Vào lớp học</h1>
+    <p class="sub">Nhập mã lớp giáo viên đã cung cấp và tên của em</p>
+
+    <form id="join-form">
+      <div class="field">
+        <label for="join-code">Mã lớp</label>
+        <input type="text" id="join-code" class="join-code" required placeholder="HY-XXXX" maxlength="12">
+      </div>
+      <div class="field">
+        <label for="join-name">Họ và tên</label>
+        <input type="text" id="join-name" required placeholder="Nguyễn Văn A">
+      </div>
+      <button type="submit" class="btn-primary" id="join-btn">Vào lớp →</button>
+      <p class="form-msg" id="join-msg"></p>
+    </form>
+
+    <div id="dup-confirm" style="display:none;margin-top:18px;padding:16px;background:var(--paper-soft,#f7ede1);border-radius:12px;">
+      <p style="font-size:14px;margin:0 0 12px;">Lớp đã có bạn tên "<b id="dup-name"></b>" rồi — <b>đây có phải là bạn không?</b></p>
+      <button type="button" class="btn-primary" id="dup-yes-btn" style="width:100%;justify-content:center;margin-bottom:8px;">✅ Đúng, là tôi — tiếp tục học</button>
+      <button type="button" id="dup-no-btn" style="width:100%;padding:12px;border:1.5px solid var(--line,#ecdfd0);border-radius:12px;background:#fff;cursor:pointer;font-size:14px;">🙋 Không, tôi là học sinh mới</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/supabase-client.js"></script>
+<script>
+// nếu học sinh đã join trước đó trên thiết bị này -> vào thẳng
+(async () => {
+  const existing = await getCurrentStudent();
+  if (existing) window.location.href = 'student-home.html';
+})();
+
+let pendingJoinCode = '', pendingName = '', pendingExistingId = '';
+
+document.getElementById('join-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('join-btn');
+  const msg = document.getElementById('join-msg');
+  msg.className = 'form-msg'; msg.textContent = '';
+  btn.disabled = true; btn.textContent = 'Đang vào lớp...';
+
+  pendingJoinCode = document.getElementById('join-code').value;
+  pendingName = document.getElementById('join-name').value;
+
+  try {
+    await studentJoinClass(pendingJoinCode, pendingName);
+    window.location.href = 'student-home.html';
+  } catch (err) {
+    if (err.code === 'DUPLICATE_NAME') {
+      pendingExistingId = err.existingStudent.id;
+      document.getElementById('dup-name').textContent = err.existingStudent.full_name;
+      document.getElementById('join-form').style.display = 'none';
+      document.getElementById('dup-confirm').style.display = 'block';
+      btn.disabled = false; btn.textContent = 'Vào lớp →';
+      return;
+    }
+    msg.className = 'form-msg error';
+    msg.textContent = err.message;
+    btn.disabled = false; btn.textContent = 'Vào lớp →';
+  }
+});
+
+document.getElementById('dup-yes-btn').addEventListener('click', async () => {
+  const b = document.getElementById('dup-yes-btn');
+  b.disabled = true; b.textContent = 'Đang vào lớp...';
+  try {
+    await studentJoinClass(pendingJoinCode, pendingName, { relinkStudentId: pendingExistingId });
+    window.location.href = 'student-home.html';
+  } catch (err) {
+    alert('Có lỗi: ' + err.message);
+    b.disabled = false; b.textContent = '✅ Đúng, là tôi — tiếp tục học';
+  }
+});
+
+document.getElementById('dup-no-btn').addEventListener('click', async () => {
+  const b = document.getElementById('dup-no-btn');
+  b.disabled = true; b.textContent = 'Đang tạo hồ sơ mới...';
+  try {
+    await studentJoinClass(pendingJoinCode, pendingName, { forceNew: true });
+    window.location.href = 'student-home.html';
+  } catch (err) {
+    alert('Có lỗi: ' + err.message);
+    b.disabled = false; b.textContent = '🙋 Không, tôi là học sinh mới';
+  }
+});
+
+// tự viết hoa mã lớp khi gõ
+document.getElementById('join-code').addEventListener('input', (e) => {
+  e.target.value = e.target.value.toUpperCase();
+});
+</script>
+</body>
+</html>

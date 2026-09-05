@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Giáo viên đăng nhập — HY Chinese</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;600;700;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800&display=swap" rel="stylesheet">
+<link rel="icon" href="assets/logo.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a class="back-home" href="index.html">← Về trang chủ</a>
+
+<div class="auth-wrap">
+  <div class="brand-header">
+    <img src="assets/logo.png" alt="HY Chinese logo">
+    <div class="brand-name">HY Chinese</div>
+  </div>
+
+  <div class="card">
+    <div id="mode-login">
+      <h1>👩‍🏫 Giáo viên đăng nhập</h1>
+      <p class="sub">Quản lý lớp học và theo dõi bài tập học sinh</p>
+
+      <form id="login-form">
+        <div class="field">
+          <label for="login-email">Email</label>
+          <input type="email" id="login-email" required autocomplete="email" placeholder="teacher@hychinese.vn">
+        </div>
+        <div class="field">
+          <label for="login-pass">Mật khẩu</label>
+          <input type="password" id="login-pass" required autocomplete="current-password" placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn-primary" id="login-btn">Đăng nhập →</button>
+        <p class="form-msg" id="login-msg"></p>
+      </form>
+
+      <p class="switch-link">Chưa có tài khoản? <a href="#" id="show-signup">Đăng ký tài khoản giáo viên</a></p>
+    </div>
+
+    <div id="mode-signup" style="display:none;">
+      <h1>Tạo tài khoản giáo viên</h1>
+      <p class="sub">Dành cho giáo viên của HY CHINESE</p>
+
+      <form id="signup-form">
+        <div class="field">
+          <label for="signup-name">Họ và tên</label>
+          <input type="text" id="signup-name" required placeholder="Nguyễn Thị Hy">
+        </div>
+        <div class="field">
+          <label for="signup-email">Email</label>
+          <input type="email" id="signup-email" required autocomplete="email" placeholder="teacher@hychinese.vn">
+        </div>
+        <div class="field">
+          <label for="signup-pass">Mật khẩu</label>
+          <input type="password" id="signup-pass" required autocomplete="new-password" minlength="6" placeholder="Ít nhất 6 ký tự">
+        </div>
+        <button type="submit" class="btn-primary" id="signup-btn">Tạo tài khoản →</button>
+        <p class="form-msg" id="signup-msg"></p>
+      </form>
+
+      <p class="switch-link">Đã có tài khoản? <a href="#" id="show-login">Đăng nhập</a></p>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/supabase-client.js"></script>
+<script>
+// chuyển đổi giữa 2 form
+document.getElementById('show-signup').addEventListener('click', (e)=>{
+  e.preventDefault();
+  document.getElementById('mode-login').style.display = 'none';
+  document.getElementById('mode-signup').style.display = '';
+});
+document.getElementById('show-login').addEventListener('click', (e)=>{
+  e.preventDefault();
+  document.getElementById('mode-signup').style.display = 'none';
+  document.getElementById('mode-login').style.display = '';
+});
+
+// nếu đã đăng nhập sẵn -> vào thẳng dashboard
+(async () => {
+  const profile = await getCurrentTeacherProfile();
+  if (profile) window.location.href = 'teacher-dashboard.html';
+})();
+
+document.getElementById('login-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('login-btn');
+  const msg = document.getElementById('login-msg');
+  msg.className = 'form-msg'; msg.textContent = '';
+  btn.disabled = true; btn.textContent = 'Đang đăng nhập...';
+  try {
+    await teacherSignIn(
+      document.getElementById('login-email').value.trim(),
+      document.getElementById('login-pass').value
+    );
+    window.location.href = 'teacher-dashboard.html';
+  } catch (err) {
+    msg.className = 'form-msg error';
+    msg.textContent = err.message === 'Invalid login credentials'
+      ? 'Sai email hoặc mật khẩu.' : err.message;
+    btn.disabled = false; btn.textContent = 'Đăng nhập →';
+  }
+});
+
+document.getElementById('signup-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('signup-btn');
+  const msg = document.getElementById('signup-msg');
+  msg.className = 'form-msg'; msg.textContent = '';
+  btn.disabled = true; btn.textContent = 'Đang tạo tài khoản...';
+  try {
+    await teacherSignUp(
+      document.getElementById('signup-email').value.trim(),
+      document.getElementById('signup-pass').value,
+      document.getElementById('signup-name').value.trim()
+    );
+    msg.className = 'form-msg success';
+    msg.textContent = 'Tạo tài khoản thành công! Kiểm tra email để xác nhận (nếu bật), sau đó đăng nhập.';
+    btn.textContent = 'Tạo tài khoản →';
+    setTimeout(()=>{ document.getElementById('show-login').click(); }, 1800);
+  } catch (err) {
+    msg.className = 'form-msg error';
+    msg.textContent = err.message;
+  }
+  btn.disabled = false; btn.textContent = 'Tạo tài khoản →';
+});
+</script>
+</body>
+</html>

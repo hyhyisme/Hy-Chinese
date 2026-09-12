@@ -4451,19 +4451,19 @@ async function initMockTestHomework(lessonId){
   const exId = MOCKTEST_EXERCISE_MAP[lessonId];
   if(!data || !exId){ container.innerHTML = '<p style="color:var(--ink-soft);font-size:16px;">Bài này chưa có bài thi mô phỏng.</p>'; return; }
 
-  if (TEACHER_PREVIEW_MODE) {
-    container.innerHTML = '<p style="color:var(--ink-soft);font-size:16px;">👁️ Chế độ xem trước (giáo viên) — không thể làm/nộp bài tập ở đây.</p>';
-    return;
-  }
-
+  const isPreview = TEACHER_PREVIEW_MODE;
   container.innerHTML = '<p style="color:var(--ink-soft);font-size:16px;">Đang tải bài thi...</p>';
 
-  const { data: existingSubs } = await sb
-    .from('submissions')
-    .select('answer, submitted_at')
-    .eq('student_id', CURRENT_STUDENT.id)
-    .eq('exercise_id', exId)
-    .maybeSingle();
+  let existingSubs = null;
+  if (!isPreview) {
+    const res = await sb
+      .from('submissions')
+      .select('answer, submitted_at')
+      .eq('student_id', CURRENT_STUDENT.id)
+      .eq('exercise_id', exId)
+      .maybeSingle();
+    existingSubs = res.data;
+  }
   const alreadySubmitted = !!existingSubs;
 
   // gộp tất cả câu hỏi thành 1 mảng phẳng để dễ chấm điểm, kèm thông tin để hiển thị
@@ -4531,12 +4531,25 @@ async function initMockTestHomework(lessonId){
       <p style="font-size:15.5px;color:var(--ink-soft);margin-bottom:8px;">🎧 Nghe file audio dưới đây (đúng như trong sách), sau đó làm lần lượt các câu hỏi. Phần Đọc không cần nghe.</p>
       <audio controls src="${data.audio}" style="width:100%;"></audio>
     </div>
+    ${isPreview ? '<p style="font-size:14.5px;color:var(--seal,#8B2C2C);background:var(--seal-tint,#f4e6e3);padding:10px 14px;border-radius:10px;margin-bottom:10px;">👁️ Chế độ xem trước (giáo viên) — đáp án đúng được tô sẵn màu xanh bên dưới, mục "Nộp bài" đã ẩn vì đây chỉ để tham khảo nội dung.</p>' : ''}
     ${sectionsHtml}
-    <button class="btn-primary" id="mt-submit-btn" style="margin-top:16px;">Nộp bài →</button>
-    <p id="mt-submit-status" style="font-size:15.5px;margin-top:10px;"></p>
+    ${isPreview ? '' : '<button class="btn-primary" id="mt-submit-btn" style="margin-top:16px;">Nộp bài →</button><p id="mt-submit-status" style="font-size:15.5px;margin-top:10px;"></p>'}
   `;
 
   const selected = {}; // gIdx -> chosen option index
+
+  if (isPreview) {
+    // Chế độ xem trước: khoá tương tác, tô sẵn đáp án đúng cho từng câu
+    container.querySelectorAll('.mt-opt-btn').forEach(b => { b.disabled = true; b.style.pointerEvents = 'none'; b.style.cursor = 'default'; });
+    flatQuestions.forEach((item, gIdx) => {
+      const correctBtn = container.querySelector(`.mt-opt-btn[data-gidx="${gIdx}"][data-i="${item.q.answer}"]`);
+      if (correctBtn) { correctBtn.style.borderColor = 'var(--green,#3f7d5c)'; correctBtn.style.background = '#eef7f1'; }
+      const el = container.querySelector(`.mt-result[data-gidx="${gIdx}"]`);
+      if (el) el.innerHTML = `✅ Đáp án đúng: ${String.fromCharCode(65 + item.q.answer)}`;
+    });
+    return;
+  }
+
   container.querySelectorAll('.mt-opt-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const gIdx = btn.dataset.gidx;
@@ -4909,21 +4922,19 @@ async function initWorkbookHomework(lessonId){
   const map = WORKBOOK_EXERCISE_MAP[lessonId];
   if(!data || !map){ container.innerHTML = '<p style="color:var(--ink-soft);font-size:16px;">Bài này chưa có dữ liệu bài tập.</p>'; return; }
 
-  if (TEACHER_PREVIEW_MODE) {
-    container.innerHTML = '<p style="color:var(--ink-soft);font-size:16px;">👁️ Chế độ xem trước (giáo viên) — không thể làm/nộp bài tập ở đây. Đăng nhập bằng tài khoản học sinh để làm bài.</p>';
-    return;
-  }
-
+  const isPreview = TEACHER_PREVIEW_MODE;
   container.innerHTML = '<p style="color:var(--ink-soft);font-size:16px;">Đang tải bài tập...</p>';
 
   const exIds = [map.initials, map.finals, map.tones, map.pictures];
-  const { data: existingSubs } = await sb
-    .from('submissions')
-    .select('exercise_id, answer, submitted_at')
-    .eq('student_id', CURRENT_STUDENT.id)
-    .in('exercise_id', exIds);
-  const subByEx = {};
-  (existingSubs || []).forEach(s => { subByEx[s.exercise_id] = s; });
+  let subByEx = {};
+  if (!isPreview) {
+    const { data: existingSubs } = await sb
+      .from('submissions')
+      .select('exercise_id, answer, submitted_at')
+      .eq('student_id', CURRENT_STUDENT.id)
+      .in('exercise_id', exIds);
+    (existingSubs || []).forEach(s => { subByEx[s.exercise_id] = s; });
+  }
   const alreadySubmitted = !!subByEx[map.initials];
 
   const toneToolbarHtml = `
@@ -4970,14 +4981,38 @@ async function initWorkbookHomework(lessonId){
     <div style="margin-bottom:18px;">
       <audio controls src="${data.audio}" style="width:100%;"></audio>
     </div>
+    ${isPreview ? '<p style="font-size:14.5px;color:var(--seal,#8B2C2C);background:var(--seal-tint,#f4e6e3);padding:10px 14px;border-radius:10px;margin-bottom:14px;">👁️ Chế độ xem trước (giáo viên) — đáp án đúng đã được điền sẵn bên dưới, mục "Nộp bài" đã ẩn vì đây chỉ để tham khảo nội dung.</p>' : ''}
     ${toneToolbarHtml}
     ${renderDictationSection('1️⃣ Nghe và điền thanh mẫu (声母) còn thiếu', data.initials, 'initials', false)}
     ${renderDictationSection('2️⃣ Nghe và điền vận mẫu (韵母) còn thiếu — nhớ ghi đúng dấu thanh điệu', data.finals, 'finals', false)}
     ${renderDictationSection('3️⃣ Nghe và chọn đúng thanh điệu', data.tones, 'tones', true)}
     ${renderPicturesSection()}
-    <button class="btn-primary" id="wb-submit-btn" style="margin-top:10px;">Nộp bài →</button>
-    <p id="wb-submit-status" style="font-size:15.5px;margin-top:10px;"></p>
+    ${isPreview ? '' : '<button class="btn-primary" id="wb-submit-btn" style="margin-top:10px;">Nộp bài →</button><p id="wb-submit-status" style="font-size:15.5px;margin-top:10px;"></p>'}
   `;
+
+  if (isPreview) {
+    // Chế độ xem trước: điền sẵn đáp án đúng, khoá toàn bộ tương tác
+    data.initials.forEach((it,i) => {
+      const inp = container.querySelector(`.wb-input[data-key="initials"][data-idx="${i}"]`);
+      if(inp){ inp.value = it.answer; inp.disabled = true; }
+    });
+    data.finals.forEach((it,i) => {
+      const inp = container.querySelector(`.wb-input[data-key="finals"][data-idx="${i}"]`);
+      if(inp){ inp.value = it.answer; inp.disabled = true; }
+    });
+    data.tones.forEach((it,i) => {
+      container.querySelectorAll(`.tone-pick-btn[data-idx="${i}"]`).forEach(b => {
+        b.disabled = true; b.style.pointerEvents = 'none';
+        if(Number(b.dataset.t) === it.answer){ b.style.background = 'var(--green,#3f7d5c)'; b.style.color = '#fff'; }
+      });
+    });
+    data.pictures.urls.forEach((u,i) => {
+      const sel = container.querySelector(`.wb-pic-select[data-idx="${i}"]`);
+      if(sel){ sel.value = String(data.pictures.answer[i]); sel.disabled = true; }
+    });
+    container.querySelectorAll('.tone-mark-btn').forEach(b => { b.disabled = true; });
+    return;
+  }
 
   // gắn toolbar dấu thanh điệu cho mọi ô input trong phần finals
   container.querySelectorAll('.wb-input').forEach(inp => {

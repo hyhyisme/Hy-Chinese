@@ -332,31 +332,42 @@ a{color:inherit;text-decoration:none;}
   border:1px dashed var(--gold-soft);background:var(--paper-card);padding:10px 14px;border-radius:10px;text-align:center;
 }
 
-/* ---------- 214 BỘ THỦ ---------- */
+/* ---------- 60 BỘ THỦ THƯỜNG GẶP ---------- */
 .radical-search-box{
   width:100%;max-width:520px;padding:13px 18px;border:1.5px solid var(--line);border-radius:999px;
   font-size:16px;font-family:inherit;margin-bottom:28px;outline:none;
 }
 .radical-search-box:focus{border-color:var(--seal);}
-.radical-group-title{
-  font-size:15px;font-weight:800;color:var(--seal);text-transform:uppercase;letter-spacing:.04em;
-  margin:26px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line);
-}
-.radical-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;}
-.radical-card{
-  border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:#fff;
-  display:flex;gap:12px;align-items:center;
-}
-.radical-char{
-  font-family:'Noto Serif SC',serif;font-size:30px;font-weight:700;color:var(--seal);
-  width:42px;text-align:center;flex-shrink:0;
-}
-.radical-info{min-width:0;}
-.radical-info .hv{font-weight:700;font-size:16.5px;}
-.radical-info .py{color:var(--ink-soft);font-size:14px;}
-.radical-info .mn{color:var(--ink-soft);font-size:15px;margin-top:1px;}
-.radical-info .variant{color:#b7b0a0;font-size:12.5px;margin-top:2px;}
 .radical-no-result{color:var(--ink-soft);font-size:16px;padding:20px 0;}
+.radical-list{display:flex;flex-direction:column;gap:16px;}
+.radical-card{
+  border:1px solid var(--line);border-radius:16px;padding:20px 22px;background:#fff;
+}
+.radical-card-head{display:flex;align-items:baseline;gap:12px;margin-bottom:8px;flex-wrap:wrap;}
+.radical-no-badge{
+  width:30px;height:30px;border-radius:50%;background:var(--seal-tint,#f4e6e3);color:var(--seal);
+  font-weight:800;font-size:14px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.radical-card-head h3{font-family:var(--font-display);font-size:21px;margin:0;color:var(--ink);}
+.radical-card-head .py{color:var(--ink-soft);font-size:15px;}
+.radical-meaning{color:var(--ink-soft);font-size:15.5px;line-height:1.55;margin:0 0 14px;}
+.radical-variants{display:flex;flex-direction:column;gap:12px;}
+.radical-variant{display:flex;gap:16px;padding:12px 14px;background:var(--paper,#FFF9F4);border-radius:12px;}
+.radical-variant-char{
+  font-family:'Noto Serif SC',serif;font-size:38px;font-weight:700;color:var(--seal);
+  width:54px;text-align:center;flex-shrink:0;line-height:1.3;
+}
+.radical-variant-body{min-width:0;flex:1;}
+.radical-variant-note{color:var(--ink-soft);font-size:13.5px;line-height:1.5;margin-bottom:8px;}
+.radical-examples{display:flex;flex-wrap:wrap;gap:8px;}
+.radical-ex-chip{
+  background:#fff;border:1px solid var(--line);border-radius:9px;padding:6px 11px;font-size:14px;
+  display:flex;align-items:baseline;gap:6px;
+}
+.radical-ex-chip .zh{font-family:'Noto Serif SC',serif;font-weight:700;color:var(--ink);}
+.radical-ex-chip .py{color:var(--gold);font-size:12.5px;}
+.radical-ex-chip .mean{color:var(--ink-soft);font-size:13px;}
+
 
 /* ---------- BẢNG PINYIN TƯƠNG TÁC (dạng ma trận Phụ âm đầu × Vần) ---------- */
 .pytable-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:16px;background:#fff;}
@@ -1192,14 +1203,14 @@ let TEACHER_PREVIEW_MODE = false;
   </div>
 </section>
 
-<!-- ============ SCREEN 4: TRA CỨU 214 BỘ THỦ ============ -->
+<!-- ============ SCREEN 4: TRA CỨU 60 BỘ THỦ THƯỜNG GẶP ============ -->
 <section class="screen" id="screen-radicals">
   <div class="section-wrap">
     <div class="section-head">
-      <h1>📚 214 Bộ thủ chữ Hán</h1>
-      <p>Tra cứu theo chữ, Hán Việt, pinyin hoặc nghĩa — sắp xếp theo số nét.</p>
+      <h1>📚 60 Bộ thủ thường gặp</h1>
+      <p>Tra cứu theo chữ, tên bộ thủ, pinyin, nghĩa hoặc ví dụ — kèm cách dùng và ví dụ minh hoạ.</p>
     </div>
-    <input type="text" id="radical-search" class="radical-search-box" placeholder="Tìm theo chữ, Hán Việt, pinyin, nghĩa... (vd: 女, nữ, nu, phụ nữ)">
+    <input type="text" id="radical-search" class="radical-search-box" placeholder="Tìm theo chữ, tên bộ thủ, pinyin, nghĩa... (vd: 女, nữ, nu, phụ nữ)">
     <div id="radical-results"></div>
   </div>
 </section>
@@ -2491,13 +2502,13 @@ const LESSON12_CONTENT = {
     {word:"水", py:"shuǐ", chars:["水"]},
   ],
   sentences: [
-    {tokens:["今天", "天气", "怎么样"], answer:"今天天气怎么样？", vi:"Hôm nay thời tiết thế nào?"},
-    {tokens:["这里", "的", "天", "不太好", "下雨了"], answer:"这里的天不太好，下雨了。", vi:"Ở đây trời không đẹp lắm, mưa rồi."},
-    {tokens:["昨天", "下雪了", "太冷了"], answer:"昨天下雪了，太冷了。", vi:"Hôm qua tuyết rơi rồi, lạnh quá."},
-    {tokens:["你", "昨天", "没", "来", "公司", "生病了"], answer:"你昨天没来公司，生病了？", vi:"Hôm qua bạn không đến công ty, bị ốm à?"},
-    {tokens:["医生", "我", "病了"], answer:"医生，我病了。", vi:"Bác sĩ, tôi bị ốm."},
-    {tokens:["吃", "一点儿", "药", "今天", "休息", "半天", "吧"], answer:"吃一点儿药，今天休息半天吧。", vi:"Uống chút thuốc, hôm nay nghỉ nửa ngày nhé."},
-    {tokens:["回家后", "再", "喝", "些", "热水"], answer:"回家后再喝些热水。", vi:"Về nhà rồi uống thêm ít nước ấm."},
+    {tokens:["今天", "天气", "怎么样", "？"], answer:"今天天气怎么样？", vi:"Hôm nay thời tiết thế nào?"},
+    {tokens:["这里", "的", "天", "不太好", "，", "下雨了", "。"], answer:"这里的天不太好，下雨了。", vi:"Ở đây trời không đẹp lắm, mưa rồi."},
+    {tokens:["昨天", "下雪了", "，", "太冷了", "。"], answer:"昨天下雪了，太冷了。", vi:"Hôm qua tuyết rơi rồi, lạnh quá."},
+    {tokens:["你", "昨天", "没", "来", "公司", "，", "生病了", "？"], answer:"你昨天没来公司，生病了？", vi:"Hôm qua bạn không đến công ty, bị ốm à?"},
+    {tokens:["医生", "，", "我", "病了", "。"], answer:"医生，我病了。", vi:"Bác sĩ, tôi bị ốm."},
+    {tokens:["吃", "一点儿", "药", "，", "今天", "休息", "半天", "吧", "。"], answer:"吃一点儿药，今天休息半天吧。", vi:"Uống chút thuốc, hôm nay nghỉ nửa ngày nhé."},
+    {tokens:["回家后", "再", "喝", "些", "热水", "。"], answer:"回家后再喝些热水。", vi:"Về nhà rồi uống thêm ít nước ấm."},
   ],
   grammar: [
     {
@@ -2628,13 +2639,13 @@ const LESSON13_CONTENT = {
     {word:"茶", py:"chá", chars:["茶"]},
   ],
   sentences: [
-    {tokens:["我", "可以", "再", "问", "您", "一个问题", "吗"], answer:"我可以再问您一个问题吗？", vi:"Em có thể hỏi thầy/cô thêm một câu hỏi không?"},
-    {tokens:["那个", "小店", "卖不卖", "手机"], answer:"那个小店卖不卖手机？", vi:"Cửa hàng nhỏ đó có bán điện thoại không?"},
-    {tokens:["女士", "请坐", "您", "喝", "什么"], answer:"女士，请坐！您喝什么？", vi:"Thưa cô, mời ngồi! Cô uống gì ạ?"},
-    {tokens:["请", "给", "我", "一杯", "牛奶"], answer:"请给我一杯牛奶。", vi:"Cho tôi một cốc sữa."},
-    {tokens:["我", "还没", "吃", "早饭"], answer:"我还没吃早饭。", vi:"Tôi vẫn chưa ăn sáng."},
-    {tokens:["我", "要", "一斤", "饺子"], answer:"我要一斤饺子。", vi:"Tôi muốn một cân sủi cảo."},
-    {tokens:["请", "给", "我", "一杯", "茶", "吧"], answer:"请给我一杯茶吧。", vi:"Cho tôi một cốc trà nhé."},
+    {tokens:["我", "可以", "再", "问", "您", "一个问题", "吗", "？"], answer:"我可以再问您一个问题吗？", vi:"Em có thể hỏi thầy/cô thêm một câu hỏi không?"},
+    {tokens:["那个", "小店", "卖不卖", "手机", "？"], answer:"那个小店卖不卖手机？", vi:"Cửa hàng nhỏ đó có bán điện thoại không?"},
+    {tokens:["女士", "，", "请坐", "！", "您", "喝", "什么", "？"], answer:"女士，请坐！您喝什么？", vi:"Thưa cô, mời ngồi! Cô uống gì ạ?"},
+    {tokens:["请", "给", "我", "一杯", "牛奶", "。"], answer:"请给我一杯牛奶。", vi:"Cho tôi một cốc sữa."},
+    {tokens:["我", "还没", "吃", "早饭", "。"], answer:"我还没吃早饭。", vi:"Tôi vẫn chưa ăn sáng."},
+    {tokens:["我", "要", "一斤", "饺子", "。"], answer:"我要一斤饺子。", vi:"Tôi muốn một cân sủi cảo."},
+    {tokens:["请", "给", "我", "一杯", "茶", "吧", "。"], answer:"请给我一杯茶吧。", vi:"Cho tôi một cốc trà nhé."},
   ],
   grammar: [
     {
@@ -2781,13 +2792,13 @@ const LESSON14_CONTENT = {
     {word:"晚", py:"wǎn", chars:["晚"]},
   ],
   sentences: [
-    {tokens:["你们", "上火车后", "看见", "王老师", "了吗"], answer:"你们上火车后看见王老师了吗？", vi:"Các bạn lên tàu rồi có nhìn thấy cô Vương không?"},
-    {tokens:["我", "看了", "一个", "电影"], answer:"我看了一个电影。", vi:"Tôi đã xem một bộ phim."},
-    {tokens:["你们", "会", "说", "汉语了", "也会", "写", "汉字了吗"], answer:"你们会说汉语了，也会写汉字了吗？", vi:"Các bạn biết nói tiếng Trung rồi, cũng biết viết chữ Hán chưa?"},
-    {tokens:["我们", "都会", "写了"], answer:"我们都会写了。", vi:"Chúng tôi đều biết viết rồi."},
-    {tokens:["明年", "女儿", "上", "中学"], answer:"明年女儿上中学。", vi:"Sang năm con gái học trung học."},
-    {tokens:["我们家", "有了", "一个", "中学生"], answer:"我们家有了一个中学生。", vi:"Nhà chúng tôi có một học sinh trung học rồi."},
-    {tokens:["上学后", "他们", "都", "忙了"], answer:"上学后，他们都忙了。", vi:"Sau khi đi học, các bạn ấy đều bận rộn."},
+    {tokens:["你们", "上火车后", "看见", "王老师", "了吗", "？"], answer:"你们上火车后看见王老师了吗？", vi:"Các bạn lên tàu rồi có nhìn thấy cô Vương không?"},
+    {tokens:["我", "看了", "一个", "电影", "。"], answer:"我看了一个电影。", vi:"Tôi đã xem một bộ phim."},
+    {tokens:["你们", "会", "说", "汉语了", "，", "也会", "写", "汉字了吗", "？"], answer:"你们会说汉语了，也会写汉字了吗？", vi:"Các bạn biết nói tiếng Trung rồi, cũng biết viết chữ Hán chưa?"},
+    {tokens:["我们", "都会", "写了", "。"], answer:"我们都会写了。", vi:"Chúng tôi đều biết viết rồi."},
+    {tokens:["明年", "女儿", "上", "中学", "。"], answer:"明年女儿上中学。", vi:"Sang năm con gái học trung học."},
+    {tokens:["我们家", "有了", "一个", "中学生", "。"], answer:"我们家有了一个中学生。", vi:"Nhà chúng tôi có một học sinh trung học rồi."},
+    {tokens:["上学后", "，", "他们", "都", "忙了", "。"], answer:"上学后，他们都忙了。", vi:"Sau khi đi học, các bạn ấy đều bận rộn."},
   ],
   grammar: [
     {
@@ -2909,13 +2920,13 @@ const LESSON15_CONTENT = {
     {word:"大兴机场", py:"Dàxīng Jīchǎng", chars:["大", "兴", "机", "场"]},
   ],
   sentences: [
-    {tokens:["你们", "爱吃", "哪个菜"], answer:"你们爱吃哪个菜？", vi:"Các bạn thích ăn món nào?"},
-    {tokens:["我", "爱吃", "中国菜", "也", "喜欢", "做"], answer:"我爱吃中国菜，也喜欢做。", vi:"Tôi thích ăn món Trung, cũng thích nấu."},
-    {tokens:["去年", "我", "和", "男朋友", "去了", "西安"], answer:"去年我和男朋友去了西安。", vi:"Năm ngoái tôi và bạn trai đã đi Tây An."},
-    {tokens:["今年", "我", "想", "去", "北京"], answer:"今年我想去北京。", vi:"Năm nay tôi muốn đi Bắc Kinh."},
-    {tokens:["你们", "的", "飞机", "到", "北京", "要", "几个", "小时"], answer:"你们的飞机到北京要几个小时？", vi:"Máy bay của các bạn đến Bắc Kinh mất mấy tiếng?"},
-    {tokens:["她", "可以", "去", "机场", "接", "你们"], answer:"她可以去机场接你们。", vi:"Chị ấy có thể đến sân bay đón các bạn."},
-    {tokens:["那", "我们", "和", "您", "姐姐", "在", "大兴机场", "见"], answer:"那我们和您姐姐在大兴机场见！", vi:"Vậy chúng em gặp chị của cô ở sân bay Đại Hưng nhé!"},
+    {tokens:["你们", "爱吃", "哪个菜", "？"], answer:"你们爱吃哪个菜？", vi:"Các bạn thích ăn món nào?"},
+    {tokens:["我", "爱吃", "中国菜", "，", "也", "喜欢", "做", "。"], answer:"我爱吃中国菜，也喜欢做。", vi:"Tôi thích ăn món Trung, cũng thích nấu."},
+    {tokens:["去年", "我", "和", "男朋友", "去了", "西安", "。"], answer:"去年我和男朋友去了西安。", vi:"Năm ngoái tôi và bạn trai đã đi Tây An."},
+    {tokens:["今年", "我", "想", "去", "北京", "。"], answer:"今年我想去北京。", vi:"Năm nay tôi muốn đi Bắc Kinh."},
+    {tokens:["你们", "的", "飞机", "到", "北京", "要", "几个", "小时", "？"], answer:"你们的飞机到北京要几个小时？", vi:"Máy bay của các bạn đến Bắc Kinh mất mấy tiếng?"},
+    {tokens:["她", "可以", "去", "机场", "接", "你们", "。"], answer:"她可以去机场接你们。", vi:"Chị ấy có thể đến sân bay đón các bạn."},
+    {tokens:["那", "我们", "和", "您", "姐姐", "在", "大兴机场", "见", "！"], answer:"那我们和您姐姐在大兴机场见！", vi:"Vậy chúng em gặp chị của cô ở sân bay Đại Hưng nhé!"},
   ],
   grammar: [
     {
@@ -3596,221 +3607,67 @@ function rewriteMediaPaths(obj, seen = new Set()){
 /* ============================================================
    3) ĐIỀU HƯỚNG GIỮA CÁC MÀN HÌNH
    ============================================================ */
-const RADICALS_214 = [
-[1,"一","","Nhất","yī","Số một"],
-[1,"丨","","Cổn","gǔn","Nét sổ"],
-[1,"丶","","Chủ","zhǔ","Nét chấm"],
-[1,"丿","","Phiệt (Thiên, Triệt)","piě","Nét phẩy"],
-[1,"乙","","Ất","yǐ","Can Ất, thứ hai"],
-[1,"亅","","Quyết","jué","Nét sổ móc"],
-[2,"二","","Nhị","èr","Số hai"],
-[2,"亠","","Đầu","tóu","Phần đầu, nắp"],
-[2,"人","亻","Nhân","rén","Người"],
-[2,"儿","","Nhi","ér","Chân người"],
-[2,"入","","Nhập","rù","Đi vào"],
-[2,"八","","Bát","bā","Số tám, chia tách"],
-[2,"冂","","Quynh","jiōng","Vùng biên, khung mở dưới"],
-[2,"冖","","Mịch","mì","Che phủ"],
-[2,"冫","","Băng","bīng","Băng, lạnh"],
-[2,"几","","Kỷ","jī","Bàn nhỏ"],
-[2,"凵","","Khảm","kǎn","Khung mở phía trên"],
-[2,"刀","刂","Đao","dāo","Dao"],
-[2,"力","","Lực","lì","Sức mạnh"],
-[2,"勹","","Bao","bāo","Bao bọc"],
-[2,"匕","","Chuỷ","bǐ","Cái thìa, muỗng"],
-[2,"匚","","Phương","fāng","Khung mở bên phải"],
-[2,"匸","","Hệ","xì","Che giấu, khung che"],
-[2,"十","","Thập","shí","Số mười"],
-[2,"卜","","Bốc","bǔ","Bói toán"],
-[2,"卩","","Tiết","jié","Đốt tre, con dấu"],
-[2,"厂","","Hán","hǎn","Vách đá"],
-[2,"厶","","Khư (Tư)","sī","Riêng tư"],
-[2,"又","","Hựu","yòu","Lại, bàn tay phải"],
-[3,"口","","Khẩu","kǒu","Miệng"],
-[3,"囗","","Vi","wéi","Vây quanh"],
-[3,"土","","Thổ","tǔ","Đất"],
-[3,"士","","Sĩ","shì","Kẻ sĩ"],
-[3,"夂","","Truy (Tri, Trĩ)","zhǐ","Đi đến từ phía sau"],
-[3,"夊","","Tuy","suī","Đi chậm"],
-[3,"夕","","Tịch","xī","Buổi tối"],
-[3,"大","","Đại","dà","To lớn"],
-[3,"女","","Nữ","nǚ","Phụ nữ"],
-[3,"子","","Tử","zǐ","Con, trẻ nhỏ"],
-[3,"宀","","Miên","mián","Mái nhà"],
-[3,"寸","","Thốn","cùn","Tấc, đơn vị đo"],
-[3,"小","","Tiểu","xiǎo","Nhỏ"],
-[3,"尢","","Uông","yóu","Yếu, què"],
-[3,"尸","","Thi","shī","Thân người, xác"],
-[3,"屮","","Triệt","chè","Mầm non"],
-[3,"山","","Sơn","shān","Núi"],
-[3,"巛","","Xuyên","chuān","Sông"],
-[3,"工","","Công","gōng","Công việc"],
-[3,"己","","Kỷ","jǐ","Bản thân"],
-[3,"巾","","Cân","jīn","Khăn"],
-[3,"干","","Can","gān","Khô, cái khiên"],
-[3,"幺","","Yêu","yāo","Nhỏ, sợi tơ"],
-[3,"广","","Nghiễm","yǎn / guǎng","Mái che, nhà tựa vách"],
-[3,"廴","","Dẫn","yǐn","Bước dài"],
-[3,"廾","","Củng","gǒng","Hai tay chắp lại"],
-[3,"弋","","Dặc","yì","Bắn, cọc buộc"],
-[3,"弓","","Cung","gōng","Cái cung"],
-[3,"彐","","Kệ (Ký, Tuyết)","jì","Mõm, đầu con vật"],
-[3,"彡","","Sam","shān","Lông, nét trang trí"],
-[3,"彳","","Xích","chì","Bước chân trái"],
-[4,"心","忄 㣺","Tâm","xīn","Tim, tâm trí"],
-[4,"戈","","Qua","gē","Binh khí cán dài"],
-[4,"戶","户","Hộ","hù","Cửa một cánh"],
-[4,"手","扌","Thủ","shǒu","Tay"],
-[4,"支","","Chi","zhī","Cành, nhánh"],
-[4,"攴","","Phộc","pū","Đánh nhẹ"],
-[4,"文","","Văn","wén","Văn tự, hoa văn"],
-[4,"斗","","Đẩu","dǒu","Cái đấu"],
-[4,"斤","","Cân","jīn","Cái rìu"],
-[4,"方","","Phương","fāng","Vuông, phương hướng"],
-[4,"无","","Vô","wú","Không, không có"],
-[4,"日","","Nhật","rì","Mặt trời, ngày"],
-[4,"曰","","Viết","yuē","Nói rằng"],
-[4,"月","","Nguyệt","yuè","Mặt trăng, tháng"],
-[4,"木","","Mộc","mù","Cây, gỗ"],
-[4,"欠","","Khiếm","qiàn","Thiếu, ngáp"],
-[4,"止","","Chỉ","zhǐ","Dừng lại"],
-[4,"歹","","Đãi","dǎi","Xương tàn, chết"],
-[4,"殳","","Thù","shū","Binh khí"],
-[4,"毋","母","Vô","wú","Chớ, đừng"],
-[4,"比","","Tỷ","bǐ","So sánh"],
-[4,"毛","","Mao","máo","Lông"],
-[4,"氏","","Thị","shì","Họ, thị tộc"],
-[4,"气","","Khí","qì","Hơi, khí"],
-[4,"水","氵 氺","Thủy","shuǐ","Nước"],
-[4,"火","灬","Hỏa","huǒ","Lửa"],
-[4,"爪","爫","Trảo","zhǎo","Móng vuốt"],
-[4,"父","","Phụ","fù","Cha"],
-[4,"爻","","Hào","yáo","Hào trong quẻ"],
-[4,"爿","","Tường","qiáng","Mảnh gỗ chẻ"],
-[4,"片","","Phiến","piàn","Mảnh, lát"],
-[4,"牙","","Nha","yá","Răng"],
-[4,"牛","牜","Ngưu","niú","Trâu, bò"],
-[4,"犬","犭","Khuyển","quǎn","Chó"],
-[5,"玄","","Huyền","xuán","Sâu xa, huyền bí"],
-[5,"玉","王","Ngọc","yù","Ngọc, đá quý"],
-[5,"瓜","","Qua","guā","Quả dưa"],
-[5,"瓦","","Ngõa","wǎ","Ngói"],
-[5,"甘","","Cam","gān","Ngọt"],
-[5,"生","","Sinh","shēng","Sinh ra, sống"],
-[5,"用","","Dụng","yòng","Dùng"],
-[5,"田","","Điền","tián","Ruộng"],
-[5,"疋","","Thất (Sơ, Nhã)","pǐ / shū","Cuộn vải; đơn vị thất"],
-[5,"疒","","Nạch","nè / chuáng","Bệnh tật"],
-[5,"癶","","Bát","bō","Hai bàn chân bước ngược"],
-[5,"白","","Bạch","bái","Màu trắng"],
-[5,"皮","","Bì","pí","Da"],
-[5,"皿","","Mãnh","mǐn","Đồ đựng, bát đĩa"],
-[5,"目","","Mục","mù","Mắt"],
-[5,"矛","","Mâu","máo","Cây giáo"],
-[5,"矢","","Thỉ","shǐ","Mũi tên"],
-[5,"石","","Thạch","shí","Đá"],
-[5,"示","礻","Thị (Kỳ)","shì","Thần linh, chỉ thị"],
-[5,"禸","","Nhựu (Nhụ)","róu","Dấu chân"],
-[5,"禾","","Hòa","hé","Lúa, ngũ cốc"],
-[5,"穴","","Huyệt","xué / xuè","Hang, lỗ"],
-[5,"立","","Lập","lì","Đứng, thành lập"],
-[6,"竹","","Trúc","zhú","Tre, trúc"],
-[6,"米","","Mễ","mǐ","Gạo"],
-[6,"糸","糹 纟","Mịch","mì","Sợi tơ"],
-[6,"缶","","Phẫu","fǒu","Đồ sành, vò"],
-[6,"网","罒 罓","Võng","wǎng","Lưới"],
-[6,"羊","","Dương","yáng","Dê, cừu"],
-[6,"羽","","Vũ","yǔ","Lông vũ"],
-[6,"老","","Lão","lǎo","Già"],
-[6,"而","","Nhi","ér","Râu; mà, và"],
-[6,"耒","","Lỗi","lěi","Cái cày"],
-[6,"耳","","Nhĩ","ěr","Tai"],
-[6,"聿","","Duật","yù","Cây bút"],
-[6,"肉","月","Nhục","ròu","Thịt"],
-[6,"臣","","Thần","chén","Bầy tôi"],
-[6,"自","","Tự","zì","Bản thân"],
-[6,"至","","Chí","zhì","Đến"],
-[6,"臼","","Cữu","jiù","Cái cối"],
-[6,"舌","","Thiệt","shé","Lưỡi"],
-[6,"舛","","Suyễn","chuǎn","Trái ngược"],
-[6,"舟","","Chu","zhōu","Thuyền"],
-[6,"艮","","Cấn","gèn","Dừng, quẻ Cấn"],
-[6,"色","","Sắc","sè","Màu sắc"],
-[6,"艸","艹","Thảo","cǎo","Cỏ"],
-[6,"虍","","Hổ","hū","Vằn hổ"],
-[6,"虫","","Trùng","huǐ / chóng","Sâu bọ, côn trùng"],
-[6,"血","","Huyết","xiě / xuè","Máu"],
-[6,"行","","Hành","xíng","Đi, thực hiện"],
-[6,"衣","衤","Y","yī","Áo, quần áo"],
-[6,"襾","西 覀","Á (Tây)","yà","Che phủ"],
-[7,"見","","Kiến","jiàn","Nhìn thấy"],
-[7,"角","","Giác","jiǎo / jué","Sừng, góc"],
-[7,"言","訁 讠","Ngôn","yán","Lời nói"],
-[7,"谷","","Cốc","gǔ","Thung lũng"],
-[7,"豆","","Đậu","dòu","Hạt đậu"],
-[7,"豕","","Thỉ","shǐ","Lợn"],
-[7,"豸","","Trãi","zhì","Loài thú, chồn"],
-[7,"貝","贝","Bối","bèi","Vỏ sò, của cải"],
-[7,"赤","","Xích","chì","Màu đỏ"],
-[7,"走","","Tẩu","zǒu","Đi, chạy"],
-[7,"足","","Túc","zú","Chân, đầy đủ"],
-[7,"身","","Thân","shēn","Thân thể"],
-[7,"車","车","Xa","chē","Xe"],
-[7,"辛","","Tân","xīn","Cay, vất vả"],
-[7,"辰","","Thần","chén","Thìn, thời gian"],
-[7,"辵","辶","Sước (Quai xước)","chuò","Đi, bước đi"],
-[7,"邑","阝(phải)","Ấp","yì","Làng, thành"],
-[7,"酉","","Dậu","yǒu","Rượu, chi Dậu"],
-[7,"釆","","Biện","biàn","Phân biệt"],
-[7,"里","","Lý","lǐ","Làng, dặm"],
-[8,"金","釒 钅","Kim","jīn","Kim loại, vàng"],
-[8,"長","长","Trường","cháng","Dài, trưởng"],
-[8,"門","门","Môn","mén","Cửa"],
-[8,"阜","阝(trái)","Phụ","fù","Gò đất"],
-[8,"隶","","Đãi","lì","Kịp, lệ thuộc"],
-[8,"隹","","Chuy (Truy)","zhuī","Chim đuôi ngắn"],
-[8,"雨","","Vũ","yǔ","Mưa"],
-[8,"靑","青","Thanh","qīng","Màu xanh"],
-[8,"非","","Phi","fēi","Không phải"],
-[9,"面","","Diện","miàn","Mặt"],
-[9,"革","","Cách","gé","Da thuộc"],
-[9,"韋","韦","Vi","wéi","Da mềm"],
-[9,"韭","","Cửu (Phỉ)","jiǔ","Hẹ"],
-[9,"音","","Âm","yīn","Âm thanh"],
-[9,"頁","页","Hiệt","yè","Đầu; trang"],
-[9,"風","风","Phong","fēng","Gió"],
-[9,"飛","飞","Phi","fēi","Bay"],
-[9,"食","飠 饣","Thực","shí","Ăn, thức ăn"],
-[9,"首","","Thủ","shǒu","Đầu"],
-[9,"香","","Hương","xiāng","Thơm"],
-[10,"馬","马","Mã","mǎ","Ngựa"],
-[10,"骨","","Cốt","gǔ","Xương"],
-[10,"高","","Cao","gāo","Cao"],
-[10,"髟","","Bưu (Tiêu)","biāo","Tóc dài"],
-[10,"鬥","","Đấu","dòu","Đánh nhau"],
-[10,"鬯","","Sưởng","chàng","Rượu cúng"],
-[10,"鬲","","Cách (Lịch)","lì / gé","Nồi ba chân"],
-[10,"鬼","","Quỷ","guǐ","Ma, quỷ"],
-[11,"魚","鱼","Ngư","yú","Cá"],
-[11,"鳥","鸟","Điểu","niǎo","Chim"],
-[11,"鹵","卤","Lỗ","lǔ","Muối, vị mặn"],
-[11,"鹿","","Lộc","lù","Hươu"],
-[11,"麥","麦","Mạch","mài","Lúa mì"],
-[11,"麻","","Ma","má","Cây gai"],
-[12,"黃","黄","Hoàng","huáng","Màu vàng"],
-[12,"黍","","Thử","shǔ","Kê nếp"],
-[12,"黑","","Hắc","hēi","Màu đen"],
-[12,"黹","","Chỉ","zhǐ","Thêu"],
-[13,"黽","黾","Mãnh (Miễn, Mẫn)","mǐn","Ếch, cóc"],
-[13,"鼎","","Đỉnh","dǐng","Cái đỉnh"],
-[13,"鼓","","Cổ","gǔ","Cái trống"],
-[13,"鼠","","Thử","shǔ","Chuột"],
-[14,"鼻","","Tỵ","bí","Mũi"],
-[14,"齊","斉 齐","Tề","qí","Đều, ngang bằng"],
-[15,"齒","歯 齿","Xỉ","chǐ","Răng"],
-[16,"龍","龙","Long","lóng","Rồng"],
-[16,"龜","亀 龟","Quy","guī","Rùa"],
-[17,"龠","","Dược","yuè","Sáo cổ"]
+const RADICALS_60 = [
+  {so:1, ten:"Nhân", py:"rén", meaning:"Con người - thường xuất hiện trong các chữ liên quan tới con người, đặc biệt thiên về giới tính nam", variants:[{char:"人", note:"Có thể đứng 1 mình hoặc đi kèm với các Hán tự khác; thường đứng phía trên/bên phải khi ghép", examples:[{zh:"会",py:"hùi",pos:"v",mean:"biết"}, {zh:"认",py:"rèn",pos:"v",mean:"nhận thức"}]}, {char:"亻", note:"Không bao giờ đứng 1 mình; thường đứng bên trái khi ghép cùng Hán tự khác", examples:[{zh:"他",py:"tā",pos:"pn",mean:"anh ấy"}, {zh:"你",py:"nǐ",pos:"pn",mean:"bạn"}]}]},
+  {so:2, ten:"Nữ", py:"nǚ", meaning:"Con gái, nữ giới - thường xuất hiện trong các chữ liên quan tới phái nữ, hàm ý tốt đẹp", variants:[{char:"女", note:"Có thể đứng 1 mình hoặc đi kèm với các Hán tự khác; thường đứng phía dưới hoặc bên trái khi ghép", examples:[{zh:"好",py:"hǎo",pos:"adj",mean:"tốt"}, {zh:"要",py:"yào",pos:"v",mean:"cần, muốn"}]}]},
+  {so:3, ten:"Tử", py:"zǐ", meaning:"Đứa con - thường xuất hiện trong các chữ liên quan tới con cái, trẻ nhỏ", variants:[{char:"子", note:"Có thể đứng 1 mình hoặc đi kèm với các Hán tự khác; thường đứng phía dưới hoặc bên phải khi ghép", examples:[{zh:"学习",py:"xué xí",pos:"v",mean:"học tập"}, {zh:"孩子",py:"hái zi",pos:"n",mean:"con, trẻ con"}, {zh:"孔子",py:"kǒng zǐ",pos:"n",mean:"Khổng Tử"}]}]},
+  {so:4, ten:"Ngôn", py:"yán", meaning:"Nói, lời nói - thường xuất hiện trong các chữ liên quan tới ngôn từ, lời nói có ích, tích cực (Lời hay ý đẹp)", variants:[{char:"言", note:"Thường đứng 1 mình, có khi đứng bên phải khi ghép với Hán tự khác", examples:[{zh:"言语",py:"yán yǔ",pos:"n",mean:"ngôn ngữ"}, {zh:"信息",py:"xìn xī",pos:"n",mean:"thông tin"}]}, {char:"讠", note:"Không bao giờ đứng 1 mình; thường đứng bên trái khi ghép cùng Hán tự khác", examples:[{zh:"词",py:"cí",pos:"n",mean:"từ, lời"}]}]},
+  {so:5, ten:"Khẩu", py:"kǒu", meaning:"Miệng - thường xuất hiện trong các chữ liên quan tới miệng, các hoạt động của miệng", variants:[{char:"口", note:"Có thể đứng 1 mình hoặc đi kèm với các Hán tự khác; có thể đứng phía trên/dưới/trái/phải khi ghép", examples:[{zh:"户口",py:"hù kǒu",pos:"n",mean:"hộ khẩu"}, {zh:"吃",py:"chī",pos:"v",mean:"ăn, uống"}, {zh:"高兴",py:"gāo xìng",pos:"adj",mean:"vui vẻ"}, {zh:"和",py:"hé",pos:"adj",mean:"hoà bình, hoà nhã"}]}]},
+  {so:6, ten:"Miên", py:"mián", meaning:"Mái nhà (nhà nhỏ) - thường xuất hiện trong các chữ liên quan tới căn nhà, việc/hoạt động liên quan đến nhà", variants:[{char:"宀", note:"Không bao giờ đứng 1 mình mà phải đi kèm với các Hán tự khác; đứng phía trên khi ghép với Hán tự", examples:[{zh:"宿舍",py:"sù shè",pos:"n",mean:"ký túc xá"}, {zh:"家",py:"jiā",pos:"n",mean:"nhà"}]}]},
+  {so:7, ten:"Vi", py:"wéi", meaning:"Vây quanh - thường xuất hiện trong các chữ liên quan tới tường thành, quây lại...", variants:[{char:"囗", note:"Được viết bao quanh bên ngoài các bộ khác. Lưu ý: Bộ Vi khác Bộ Khẩu ở chỗ Bộ Vi thường có chữ ở bên trong, còn Bộ Khẩu thì không.", examples:[{zh:"中国",py:"zhōng guó",pos:"n",mean:"Trung Quốc"}, {zh:"园",py:"yuán",pos:"n",mean:"vườn, công viên"}]}]},
+  {so:8, ten:"Sơn", py:"shān", meaning:"Núi - thường xuất hiện trong các chữ liên quan tới núi", variants:[{char:"山", note:"Có thể đứng 1 mình hoặc đi kèm với các Hán tự khác; có thể đứng phía trên/dưới/trái/phải khi ghép", examples:[{zh:"爬山",py:"pá shān",pos:"v",mean:"leo núi"}, {zh:"出发",py:"chū fā",pos:"v",mean:"xuất phát"}]}]},
+  {so:9, ten:"Lực", py:"lì", meaning:"Sức mạnh - thường xuất hiện trong các chữ liên quan tới sức lực, các hoạt động cần đến sức lực", variants:[{char:"力", note:"Có thể đứng 1 mình hoặc đi kèm với các Hán tự khác; có thể đứng phía trên/dưới/trái/phải khi ghép", examples:[{zh:"压力",py:"yā lì",pos:"n",mean:"áp lực"}]}]},
+  {so:10, ten:"Điền", py:"tián", meaning:"Ruộng - thường xuất hiện trong các chữ liên quan tới ruộng", variants:[{char:"田", note:"Có thể đứng 1 mình hoặc đi kèm với các Hán tự khác; có thể đứng phía trên/dưới/phải khi ghép", examples:[{zh:"田径",py:"tián jìng",pos:"n",mean:"điền kinh"}, {zh:"苹果",py:"píng guǒ",pos:"n",mean:"quả táo, cây táo"}, {zh:"备用",py:"bèi yòng",pos:"v",mean:"dự trữ"}]}]},
+  {so:11, ten:"Thuỷ", py:"shuǐ", meaning:"Nước - thường xuất hiện trong các chữ liên quan tới nước, chất lỏng", variants:[{char:"水", note:"Có thể đứng 1 mình hoặc đi kèm với các Hán tự khác; có thể đứng bên dưới/phải khi ghép", examples:[{zh:"水",py:"shuǐ",pos:"n",mean:"nước"}, {zh:"冰",py:"bīng",pos:"n",mean:"băng"}]}, {char:"氵", note:"Không bao giờ đứng 1 mình; thường đứng bên trái khi ghép cùng Hán tự khác (Bộ 3 chấm thuỷ)", examples:[{zh:"河",py:"hé",pos:"n",mean:"sông"}]}]},
+  {so:12, ten:"Tâm", py:"xīn", meaning:"Trái tim - thường xuất hiện trong các chữ liên quan tới suy nghĩ, cảm xúc của con người", variants:[{char:"心", note:"Có thể đứng 1 mình hoặc đi kèm với các Hán tự khác; thường đứng phía dưới khi ghép", examples:[{zh:"心",py:"xīn",pos:"n",mean:"trái tim"}, {zh:"您",py:"nín",pos:"pn",mean:"ngài"}]}, {char:"忄", note:"Không bao giờ đứng 1 mình; thường đứng bên trái khi ghép cùng Hán tự khác (Bộ tâm đứng)", examples:[{zh:"性格",py:"xìng gé",pos:"n",mean:"tính cách"}]}]},
+  {so:13, ten:"Hoả", py:"huǒ", meaning:"Lửa - thường xuất hiện trong các chữ liên quan tới lửa, sức nóng, các hoạt động cần đến lửa", variants:[{char:"火", note:"Có thể đứng 1 mình hoặc đi kèm với các Hán tự khác; thường đứng bên trái khi ghép", examples:[{zh:"火车",py:"huǒ chē",pos:"n",mean:"tàu hoả"}, {zh:"灯",py:"dēng",pos:"n",mean:"đèn"}]}, {char:"灬", note:"Không bao giờ đứng 1 mình; luôn đứng bên dưới khi ghép cùng Hán tự khác (Bộ 4 chấm hoả)", examples:[{zh:"蒸",py:"zhēng",pos:"v",mean:"bốc hơi, bay hơi"}]}]},
+  {so:14, ten:"Thực", py:"shí", meaning:"Ăn - thường xuất hiện trong các chữ liên quan tới ăn uống", variants:[{char:"食", note:"Có thể đứng 1 mình hoặc đi kèm với các Hán tự khác; thường đứng phía dưới khi ghép", examples:[{zh:"食堂",py:"shí táng",pos:"n",mean:"nhà ăn, căng tin"}]}, {char:"饣", note:"Không bao giờ đứng 1 mình; thường đứng bên trái khi ghép cùng Hán tự khác", examples:[{zh:"饭馆",py:"fàn guǎn",pos:"n",mean:"quán ăn"}]}]},
+  {so:15, ten:"Kim", py:"jīn", meaning:"Kim loại - thường xuất hiện trong các chữ liên quan tới kim loại, đồ dùng bằng kim loại", variants:[{char:"金", note:"Có thể đứng 1 mình hoặc đi kèm với các Hán tự khác; thường đứng phía dưới khi ghép", examples:[{zh:"鉴",py:"jiàn",pos:"v",mean:"soi, rọi"}]}, {char:"钅", note:"Không bao giờ đứng 1 mình; thường đứng bên trái khi ghép cùng Hán tự khác", examples:[{zh:"钱",py:"qián",pos:"n",mean:"tiền, đồng tiền"}]}]},
+  {so:16, ten:"Thủ", py:"shǒu", meaning:"Tay - thường xuất hiện trong các chữ liên quan tới hoạt động bằng tay", variants:[{char:"手", note:"Có thể đứng 1 mình hoặc đi kèm với các Hán tự khác; thường đứng phía dưới khi ghép", examples:[{zh:"拿",py:"ná",pos:"v",mean:"cầm, lấy"}, {zh:"手机",py:"shǒu jī",pos:"n",mean:"điện thoại di động"}]}, {char:"扌", note:"Không bao giờ đứng 1 mình; thường đứng bên trái khi ghép cùng Hán tự khác", examples:[{zh:"打",py:"dǎ",pos:"v",mean:"đánh"}]}]},
+  {so:17, ten:"Thảo", py:"cǎo", meaning:"Cỏ - thường xuất hiện trong các chữ liên quan tới thực vật (thường là thân mềm, lùn), rau, cỏ", variants:[{char:"艹", note:"Không bao giờ đứng 1 mình; luôn đứng phía trên đầu Hán tự khi ghép", examples:[{zh:"花",py:"huā",pos:"n",mean:"hoa, bông hoa"}, {zh:"苹",py:"píng",pos:"n",mean:"cây táo"}]}]},
+  {so:18, ten:"Mộc", py:"mù", meaning:"Cây, gỗ - thường xuất hiện trong các chữ liên quan tới cây thân gỗ, đồ gỗ", variants:[{char:"木", note:"Có thể đứng 1 mình hoặc đi kèm với các Hán tự khác; có thể đứng bên trên/dưới/trái/phải khi ghép", examples:[{zh:"果",py:"guǒ",pos:"n",mean:"quả, trái cây"}, {zh:"树",py:"shù",pos:"n",mean:"cây"}, {zh:"杏",py:"xìng",pos:"n",mean:"cây hạnh"}]}]},
+  {so:19, ten:"Quai Sước", py:"chuò", meaning:"Bàn chân, chợt đi chợt đứng - thường xuất hiện trong các chữ liên quan tới di chuyển, đi lại", variants:[{char:"辶", note:"Không bao giờ đứng 1 mình; luôn đứng bên trái khi ghép cùng Hán tự khác", examples:[{zh:"道",py:"dào",pos:"n",mean:"đường, con đường"}, {zh:"送",py:"sòng",pos:"v",mean:"tặng"}]}]},
+  {so:20, ten:"Ngưu", py:"níu", meaning:"Trâu, bò - thường xuất hiện trong các chữ liên quan tới trâu, bò, cần đến trâu bò, cúng tế", variants:[{char:"牛", note:"Có thể đứng 1 mình hoặc đi kèm với các Hán tự khác; có thể đứng phía dưới khi ghép", examples:[{zh:"荦",py:"luò",pos:"adj",mean:"rõ ràng"}, {zh:"牛",py:"níu",pos:"n",mean:"con trâu, bò"}]}, {char:"牜", note:"Không bao giờ đứng 1 mình; thường đứng bên trái khi ghép cùng Hán tự khác", examples:[{zh:"牲",py:"shēng",pos:"n",mean:"gia súc (vật tế)"}]}]},
+  {so:21, ten:"Y", py:"yī", meaning:"Áo - thường xuất hiện trong các chữ liên quan tới quần áo, tất, váy...", variants:[{char:"衣", note:"Có thể đứng 1 mình hoặc đi kèm với các Hán tự khác; thường đứng phía dưới khi ghép", examples:[{zh:"表",py:"biǎo",pos:"n",mean:"mặt ngoài"}, {zh:"衣服",py:"yī fu",pos:"n",mean:"quần áo, y phục"}]}, {char:"衤", note:"Không bao giờ đứng 1 mình; thường đứng bên trái khi ghép cùng Hán tự khác", examples:[{zh:"衬衫",py:"chèn shān",pos:"n",mean:"áo sơ mi"}]}]},
+  {so:22, ten:"Đao", py:"dāo", meaning:"Dao - thường xuất hiện trong các chữ liên quan tới dao, cắt", variants:[{char:"刀", note:"Có thể đứng 1 mình hoặc đi kèm; có thể đứng bên dưới/phải, 1 số ít nằm trên khi ghép", examples:[{zh:"份",py:"fèn",pos:"n",mean:"phần, suất"}, {zh:"忍",py:"rěn",pos:"v",mean:"chịu đựng"}]}, {char:"刂", note:"Không bao giờ đứng 1 mình; thường đứng bên phải khi ghép cùng Hán tự khác", examples:[{zh:"刷",py:"shuā",pos:"n",mean:"bàn chải"}]}]},
+  {so:23, ten:"Nhật", py:"rì", meaning:"Mặt trời - thường xuất hiện trong các chữ liên quan tới mặt trời, ngày", variants:[{char:"日", note:"Có thể đứng 1 mình hoặc đi kèm; có thể đứng bên trên/dưới/trái/phải khi ghép", examples:[{zh:"旧",py:"jiù",pos:"adj",mean:"cũ"}, {zh:"晚",py:"wǎn",pos:"n",mean:"buổi tối"}, {zh:"春",py:"chūn",pos:"n",mean:"mùa xuân"}, {zh:"早",py:"zǎo",pos:"n",mean:"sáng sớm"}]}]},
+  {so:24, ten:"Nguyệt", py:"yuè", meaning:"Mặt trăng - thường xuất hiện trong các chữ liên quan tới bộ phận cơ thể, thời gian, tháng", variants:[{char:"月", note:"Có thể đứng 1 mình hoặc đi kèm; có thể đứng bên trái/phải/dưới khi ghép", examples:[{zh:"阴",py:"yīn",pos:"adj",mean:"âm u"}, {zh:"朕",py:"zhèn",pos:"pn",mean:"trẫm, ta"}, {zh:"有限",py:"yǒu xiàn",pos:"adj",mean:"giới hạn"}]}]},
+  {so:25, ten:"Vũ", py:"yǔ", meaning:"Mưa - thường xuất hiện trong các chữ liên quan tới mưa, thời tiết", variants:[{char:"雨", note:"Có thể đứng 1 mình hoặc đi kèm; thường đứng phía trên khi ghép với Hán tự khác", examples:[{zh:"雪",py:"xuě",pos:"n",mean:"tuyết"}, {zh:"雾",py:"wù",pos:"n",mean:"sương mù"}]}]},
+  {so:26, ten:"Mục", py:"mù", meaning:"Mắt - thường xuất hiện trong các chữ liên quan tới mắt (ngủ, nhìn...)", variants:[{char:"目", note:"Có thể đứng 1 mình hoặc đi kèm; có thể đứng bên trái/phải/trên/dưới khi ghép", examples:[{zh:"看",py:"kàn",pos:"v",mean:"nhìn, xem, đọc"}, {zh:"睡",py:"shuì",pos:"v",mean:"ngủ"}, {zh:"相册",py:"xiàng cè",pos:"n",mean:"album ảnh"}]}]},
+  {so:27, ten:"Thạch", py:"shí", meaning:"Đá - thường xuất hiện trong các chữ liên quan tới đá, sự bền cứng", variants:[{char:"石", note:"Có thể đứng 1 mình hoặc đi kèm; có thể đứng bên trái/dưới khi ghép", examples:[{zh:"碗",py:"wǎn",pos:"n",mean:"bát, chén"}, {zh:"磨",py:"mó",pos:"v",mean:"ma sát, cọ sát"}]}]},
+  {so:28, ten:"Xích", py:"chì", meaning:"Bước chân trái (Bộ nhân kép) - thường xuất hiện trong các chữ liên quan tới đi lại, đường sá, động tác của con người (thường là chân), hành động đạt được", variants:[{char:"彳", note:"Rất ít khi đứng 1 mình; thường đứng bên trái khi ghép với Hán tự khác", examples:[{zh:"法律",py:"fǎ lǜ",pos:"n",mean:"pháp luật"}, {zh:"待遇",py:"dài yù",pos:"n",mean:"đãi ngộ (vật chất/quyền lợi xã hội, chính trị)"}]}]},
+  {so:29, ten:"Túc", py:"zú", meaning:"Chân (cả chân) - thường xuất hiện trong các chữ liên quan tới chân, hoạt động bằng chân", variants:[{char:"足", note:"Thường đứng 1 mình hoặc đứng bên phải/dưới khi ghép với Hán tự khác", examples:[{zh:"足球",py:"zú qiú",pos:"n",mean:"bóng đá"}, {zh:"捉",py:"zhuō",pos:"v",mean:"cầm, nắm"}]}, {char:"𧾷", note:"Thường đứng bên trái khi ghép cùng Hán tự khác", examples:[{zh:"跳",py:"tiào",pos:"v",mean:"nhảy"}, {zh:"跄",py:"qiāng",pos:"adj",mean:"nhẹ nhàng, lễ phép"}]}]},
+  {so:30, ten:"Tẩu", py:"zǒu", meaning:"Đi nhanh/chạy - thường xuất hiện trong các chữ liên quan tới đi lại, di chuyển (kiểu hành tẩu giang hồ)", variants:[{char:"走", note:"Có thể đứng 1 mình hoặc đi kèm; thường đứng bên trái khi ghép, là bộ mở đầu", examples:[{zh:"越",py:"yuè",pos:"v",mean:"vượt qua"}, {zh:"起",py:"qǐ",pos:"v",mean:"dậy"}, {zh:"走路",py:"zǒu lù",pos:"v",mean:"đi đường, đi bộ"}]}]},
+  {so:31, ten:"Ngọc", py:"yù", meaning:"Đá quý - thường xuất hiện trong các chữ liên quan tới ngọc ngà, châu báu, thứ quý giá", variants:[{char:"玉", note:"Có thể đứng 1 mình hoặc đi kèm; có thể đứng phía dưới hoặc bên trong khi ghép", examples:[{zh:"国",py:"guó",pos:"n",mean:"quốc gia, nước"}, {zh:"宝",py:"bǎo",pos:"n",mean:"báu vật"}]}]},
+  {so:32, ten:"Mịch", py:"mì", meaning:"Sợi tơ nhỏ - thường xuất hiện trong các chữ liên quan tới dây đan, kết, bện...", variants:[{char:"系", note:"Có thể đứng 1 mình hoặc đi kèm; thường đứng phía dưới khi ghép", examples:[{zh:"系",py:"xì",pos:"n",mean:"hệ thống"}]}, {char:"纟", note:"Không bao giờ đứng 1 mình; thường đứng bên trái khi ghép cùng Hán tự khác", examples:[{zh:"红",py:"hóng",pos:"adj",mean:"đỏ, màu đỏ"}]}]},
+  {so:33, ten:"Trúc", py:"zhú", meaning:"Tre, trúc - thường xuất hiện trong các chữ liên quan tới tre, trúc, đồ bằng tre trúc", variants:[{char:"竹", note:"Thường đứng 1 mình", examples:[{zh:"竹竿",py:"zhú gān",pos:"n",mean:"thân trúc, thân tre"}]}, {char:"⺮", note:"Không bao giờ đứng 1 mình; thường đứng trên đầu khi ghép cùng Hán tự khác (hình dạng này hay xuất hiện hơn)", examples:[{zh:"笔",py:"bǐ",pos:"n",mean:"bút"}, {zh:"等",py:"děng",pos:"v",mean:"đợi, chờ đợi"}]}]},
+  {so:34, ten:"Ấp", py:"yì", meaning:"Vùng đất, đất phong - thường xuất hiện trong các chữ liên quan tới vùng lãnh thổ, khu dân cư, thành phố, huyện...", variants:[{char:"邑", note:"Có thể đứng 1 mình hoặc đi kèm; thường đứng phía dưới khi ghép", examples:[{zh:"扈",py:"hù",pos:"n",mean:"tùy tùng (hộ tống theo sau)"}]}, {char:"阝", note:"Không bao giờ đứng 1 mình; luôn đứng bên phải khi ghép cùng Hán tự khác (Tai phải)", examples:[{zh:"邻",py:"lín",pos:"n",mean:"hàng xóm"}]}]},
+  {so:35, ten:"Phụ", py:"fù", meaning:"Đống đất, gò đất trên núi - thường xuất hiện trong các chữ liên quan tới đồi núi", variants:[{char:"阜", note:"Thường đứng 1 mình", examples:[{zh:"阜",py:"fù",pos:"n",mean:"núi đất"}]}, {char:"阝", note:"Không bao giờ đứng 1 mình; luôn đứng bên trái khi ghép cùng Hán tự khác (Tai trái)", examples:[{zh:"防",py:"fáng",pos:"v",mean:"bảo vệ"}]}]},
+  {so:36, ten:"Hoà", py:"hé", meaning:"Cây lúa - thường xuất hiện trong các chữ liên quan tới lúa", variants:[{char:"禾", note:"Có thể đứng 1 mình hoặc đi kèm; có thể đứng bên trên/trái khi ghép", examples:[{zh:"秋",py:"qiū",pos:"n",mean:"mùa thu"}, {zh:"香",py:"xiāng",pos:"adj",mean:"thơm"}]}]},
+  {so:37, ten:"Mễ", py:"mǐ", meaning:"Gạo - thường xuất hiện trong các chữ liên quan tới gạo, chế phẩm bằng gạo", variants:[{char:"米", note:"Có thể đứng 1 mình hoặc đi kèm; có thể đứng bên trên/dưới/trái khi ghép", examples:[{zh:"粟",py:"sù",pos:"n",mean:"cây kê, hạt kê"}, {zh:"粉",py:"fěn",pos:"n",mean:"bột, phấn"}]}]},
+  {so:38, ten:"Môn", py:"mén", meaning:"Cửa - thường xuất hiện trong các chữ liên quan tới cửa", variants:[{char:"门", note:"Có thể đứng 1 mình hoặc đi kèm; bao bên ngoài các Hán tự khác", examples:[{zh:"问",py:"wèn",pos:"v",mean:"hỏi"}, {zh:"门",py:"mén",pos:"n",mean:"cửa"}, {zh:"闷",py:"mèn",pos:"adj",mean:"oi ả, oi bức"}]}]},
+  {so:39, ten:"Khuyển", py:"quǎn", meaning:"Chó săn - thường xuất hiện trong các chữ liên quan tới tính cách của chó săn, con mồi của chó săn, chó, mèo...", variants:[{char:"犬", note:"Có thể đứng 1 mình hoặc đi kèm; thường đứng phía dưới khi ghép", examples:[{zh:"臭",py:"chòu",pos:"adj",mean:"hôi"}]}, {char:"犭", note:"Không bao giờ đứng 1 mình; thường đứng bên trái khi ghép cùng Hán tự khác", examples:[{zh:"狗",py:"gǒu",pos:"n",mean:"con chó"}]}]},
+  {so:40, ten:"Thổ", py:"tǔ", meaning:"Đất - thường xuất hiện trong các chữ liên quan tới đất, vùng lãnh thổ gắn liền với đất", variants:[{char:"土", note:"Có thể đứng 1 mình hoặc đi kèm; có thể đứng bên trái/trên/dưới khi ghép", examples:[{zh:"地",py:"dì",pos:"n",mean:"mặt đất"}, {zh:"幸",py:"xìng",pos:"adj",mean:"hạnh phúc"}, {zh:"在",py:"zài",pos:"v",mean:"ở"}]}]},
+  {so:41, ten:"Cân", py:"jīn", meaning:"Cái khăn - thường xuất hiện trong các chữ liên quan tới khăn, vải...", variants:[{char:"巾", note:"Có thể đứng 1 mình hoặc đi kèm; thường đứng bên trái/phải/dưới khi ghép", examples:[{zh:"帅",py:"shuài",pos:"adj",mean:"anh tuấn, đẹp"}, {zh:"帆",py:"fān",pos:"n",mean:"cánh buồm"}, {zh:"帚",py:"hǒu",pos:"n",mean:"cái chổi"}]}]},
+  {so:42, ten:"Hán", py:"chǎng", meaning:"Sườn núi - thường xuất hiện trong các chữ liên quan tới phòng ốc, nhà cửa, vách đá, sườn núi", variants:[{char:"厂", note:"Có thể đứng 1 mình hoặc đi kèm; luôn đứng phía trên góc trái, bao vây bên trên khi ghép", examples:[{zh:"厂家",py:"chǎng jiā",pos:"n",mean:"công xưởng"}, {zh:"厌",py:"yàn",pos:"v",mean:"hài lòng"}]}]},
+  {so:43, ten:"Nghiễm", py:"yǎn/guǎng", meaning:"Mái nhà (nhà to, cao tầng) - thường xuất hiện trong chữ liên quan tới phòng ốc, toà nhà, địa điểm, công trình kiến trúc. (Lưu ý: Bộ Miên cũng có nghĩa là mái nhà nhưng là nhà nhỏ hơn so với Bộ Nghiễm)", variants:[{char:"广", note:"Có thể đứng 1 mình hoặc đi kèm; luôn đứng phía trên góc trái, bao vây bên trên khi ghép", examples:[{zh:"广场",py:"guǎng chǎng",pos:"n",mean:"quảng trường"}, {zh:"床",py:"chuáng",pos:"n",mean:"giường"}, {zh:"座",py:"zuò",pos:"n",mean:"chỗ ngồi"}]}]},
+  {so:44, ten:"Nạch", py:"nè", meaning:"Bệnh tật - thường xuất hiện trong các chữ liên quan tới bệnh tật", variants:[{char:"疒", note:"Luôn đứng phía trên góc trái, bao vây bên trên khi ghép với Hán tự khác", examples:[{zh:"病",py:"bìng",pos:"n",mean:"bệnh (ốm, đau) — 病人 bìngrén: bệnh nhân; 看病 kànbìng: khám bệnh"}, {zh:"疼",py:"téng",pos:"adj",mean:"đau, buốt, nhức"}]}]},
+  {so:45, ten:"Xa", py:"chē", meaning:"Xe cộ - thường xuất hiện trong các chữ liên quan tới xe cộ, di chuyển", variants:[{char:"车", note:"Có thể đứng 1 mình hoặc đi kèm; có thể đứng bên trên/dưới/trái khi ghép", examples:[{zh:"车场",py:"chē chǎng",pos:"n",mean:"bãi đỗ xe"}, {zh:"轱",py:"gū",pos:"n",mean:"bánh xe"}, {zh:"载",py:"zài",pos:"v",mean:"chở"}]}]},
+  {so:46, ten:"Bối", py:"bèi", meaning:"Vỏ sò, vật báu - thường xuất hiện trong các chữ liên quan tới giá trị, của quý (do thời xưa thường dùng vỏ sò làm tiền trao đổi)", variants:[{char:"贝", note:"Có thể đứng 1 mình hoặc đi kèm; thường đứng bên dưới/trái, 1 số nằm bên phải khi ghép", examples:[{zh:"贵",py:"guì",pos:"adj",mean:"đắt, quý"}, {zh:"购",py:"gòu",pos:"v",mean:"mua, sắm"}]}]},
+  {so:47, ten:"Hiệt", py:"yè", meaning:"Đầu, trang giấy - thường xuất hiện trong các chữ liên quan tới đầu, cần dùng đến đầu", variants:[{char:"页", note:"Có thể đứng 1 mình hoặc đi kèm; thường đứng bên phải khi ghép", examples:[{zh:"颁",py:"bān",pos:"v",mean:"phát hành, ban bố"}, {zh:"颂",py:"sòng",pos:"v",mean:"khen ngợi"}]}]},
+  {so:48, ten:"Ngư", py:"yú", meaning:"Con cá - thường xuất hiện trong các chữ liên quan tới cá, hải sản", variants:[{char:"鱼", note:"Có thể đứng 1 mình hoặc đi kèm; thường đứng bên trái/dưới khi ghép", examples:[{zh:"鱼网",py:"yú wǎng",pos:"n",mean:"lưới đánh cá"}, {zh:"鲎",py:"hòu",pos:"n",mean:"con sam"}, {zh:"鲑",py:"guī",pos:"n",mean:"cá hồi"}]}]},
+  {so:49, ten:"Trùng", py:"chóng", meaning:"Côn trùng - thường xuất hiện trong các chữ liên quan tới côn trùng (kiến, bọ...), động vật lột xác được (rắn, tôm...)", variants:[{char:"虫", note:"Có thể đứng 1 mình hoặc đi kèm; có thể đứng bên trái/phải/dưới khi ghép", examples:[{zh:"蚣",py:"gè",pos:"n",mean:"con bọ hung"}, {zh:"虿",py:"chài",pos:"n",mean:"bọ cạp"}, {zh:"蚀",py:"shí",pos:"v",mean:"đục khoét, hao mòn"}]}]},
+  {so:50, ten:"Mã", py:"mǎ", meaning:"Con ngựa, to lớn - thường xuất hiện trong các chữ liên quan tới ngựa, mã, sức kéo (lái), đi lại...", variants:[{char:"马", note:"Có thể đứng 1 mình hoặc đi kèm; có thể đứng bên dưới/trái/phải khi ghép", examples:[{zh:"妈妈",py:"mā ma",pos:"n",mean:"mẹ"}, {zh:"驾驶",py:"jià shǐ",pos:"v",mean:"lái, điều khiển (xe)"}]}]},
+  {so:51, ten:"Điểu", py:"niǎo", meaning:"Con chim - thường xuất hiện trong các chữ liên quan tới các loài chim, gia cầm, các hoạt động liên quan đến chim", variants:[{char:"鸟", note:"Có thể đứng 1 mình hoặc đi kèm; thường đứng bên dưới/phải khi ghép", examples:[{zh:"鸡",py:"jī",pos:"n",mean:"con gà"}, {zh:"鸟",py:"niǎo",pos:"n",mean:"con chim"}, {zh:"鹭",py:"sī",pos:"n",mean:"con cò"}]}]},
+  {so:52, ten:"Đại", py:"dà", meaning:"To, lớn - thường xuất hiện trong các chữ liên quan tới sự to lớn", variants:[{char:"大", note:"Có thể đứng 1 mình hoặc đi kèm; thường đứng phía trên/dưới khi ghép", examples:[{zh:"大家",py:"dà jiā",pos:"pn",mean:"mọi người, cả nhà"}, {zh:"天",py:"tiān",pos:"n",mean:"bầu trời"}, {zh:"奖",py:"jiǎng",pos:"n",mean:"phần thưởng"}]}]},
+  {so:53, ten:"Dương", py:"yáng", meaning:"Con dê - thường xuất hiện trong các chữ liên quan tới dê, hoạt động liên quan (người xưa quan niệm thịt dê nhiều chất dinh dưỡng nên cũng có chút liên quan đến cái đẹp)", variants:[{char:"羊", note:"Có thể đứng 1 mình hoặc đi kèm; có thể đứng phía trên/dưới/phải khi ghép. Lưu ý: khi nằm phía trên sẽ biến thể (ví dụ 美)", examples:[{zh:"详",py:"xiáng",pos:"adj",mean:"kỹ càng"}, {zh:"痒",py:"yǎng",pos:"adj",mean:"nhột, ngứa"}, {zh:"美",py:"měi",pos:"adj",mean:"đẹp, duyên dáng (dạng biến thể khi Bộ Dương nằm phía trên)"}]}]},
+  {so:54, ten:"Băng", py:"bīng", meaning:"Băng tuyết - thường xuất hiện trong các chữ liên quan tới tuyết, đá lạnh, nhiệt độ thấp, lạnh (thời tiết, tính cách...)", variants:[{char:"冫", note:"Thường đứng bên trái khi ghép với Hán tự khác", examples:[{zh:"冰",py:"bīng",pos:"n",mean:"băng, đá, nước đá"}, {zh:"冷",py:"lěng",pos:"adj",mean:"lạnh, rét (mang ý nghĩa thời tiết)"}, {zh:"准",py:"zhǔn",pos:"adj",mean:"chính xác, đúng"}]}]},
+  {so:55, ten:"Kỷ", py:"jǐ", meaning:"Ghế dựa nhỏ/Mấy - thường xuất hiện trong các chữ liên quan tới sự dựa dẫm, cơ, máy móc", variants:[{char:"几", note:"Có thể đứng 1 mình hoặc đi kèm; thường đứng bên trên/dưới/phải/bao xung quanh khi ghép", examples:[{zh:"风",py:"fēng",pos:"n",mean:"gió"}, {zh:"凭",py:"píng",pos:"v",mean:"dựa, tựa"}, {zh:"机",py:"jī",pos:"n",mean:"máy, máy móc"}]}]},
+  {so:56, ten:"Hựu", py:"yòu", meaning:"Tuần hoàn, lặp lại, lại nữa, cũng có thể chỉ \"cái tay\" - thường xuất hiện trong các chữ liên quan tới hoạt động liên quan đến tay, sự tuần hoàn, lặp lại...", variants:[{char:"又", note:"Có thể đứng 1 mình hoặc đi kèm; thường đứng bên phải/dưới, 1 số ít đứng bên trái khi ghép", examples:[{zh:"对",py:"duì",pos:"adj",mean:"đúng"}, {zh:"友",py:"yǒu",pos:"n",mean:"bạn bè"}, {zh:"叔",py:"shū",pos:"n",mean:"chú ruột"}, {zh:"发",py:"fā",pos:"v",mean:"phát, giao, gửi"}]}]},
+  {so:57, ten:"Thốn", py:"cùn", meaning:"Tấc (1/10 thước - đơn vị đo chiều dài) - thường xuất hiện trong các chữ liên quan tới phép đo, chiều dài", variants:[{char:"寸", note:"Có thể đứng 1 mình hoặc đi kèm; thường đứng bên phải/dưới khi ghép", examples:[{zh:"过",py:"guò",pos:"v",mean:"đi qua"}, {zh:"导",py:"dǎo",pos:"v",mean:"hướng dẫn"}]}]},
+  {so:58, ten:"Khiếm", py:"qiàn", meaning:"Khiếm khuyết, thiếu vắng - thường xuất hiện trong các chữ liên quan tới khiếm khuyết, thiếu sót, tổn thất... (có thể hiểu là người cần được chùm khăn che đi khiếm khuyết, cho dễ nhớ)", variants:[{char:"欠", note:"Có thể đứng 1 mình hoặc đi kèm; thường đứng bên phải/trên/dưới khi ghép", examples:[{zh:"资",py:"zī",pos:"n",mean:"chi phí, phí tổn"}, {zh:"歉",py:"qiàn",pos:"n",mean:"mất mùa"}]}]},
+  {so:59, ten:"Vương", py:"wáng", meaning:"Vua chúa - thường xuất hiện trong các chữ liên quan tới vua chúa, việc liên quan đất nước, sự hưng thịnh, to lớn...", variants:[{char:"王", note:"Có thể đứng 1 mình hoặc đi kèm; có thể đứng bên trái/phải/dưới khi ghép", examples:[{zh:"玩",py:"wán",pos:"v",mean:"chơi"}, {zh:"国",py:"guó",pos:"n",mean:"quốc gia, đất nước"}]}]},
+  {so:60, ten:"Phộc", py:"pù", meaning:"Đánh khẽ, vỗ nhẹ - thường xuất hiện trong các chữ liên quan tới đánh, dạy dỗ...", variants:[{char:"攴", note:"Hình dạng này ít xuất hiện, hầu như không đứng độc lập trong chữ giản thể hiện đại; nếu xuất hiện sẽ thường đứng bên phải khi ghép với Hán tự khác", examples:[]}, {char:"攵", note:"Thường thấy hình dạng này hơn; thường đứng bên trên/phải khi ghép với Hán tự khác", examples:[{zh:"教",py:"jiào",pos:"v",mean:"dạy dỗ, giáo dục"}]}]},
 ];
 
 const PINYIN_COLS = ["", "b", "p", "m", "f", "d", "t", "n", "l", "g", "k", "h", "j", "q", "x", "z", "c", "s", "zh", "ch", "sh", "r"];
@@ -3971,7 +3828,7 @@ function renderPinyinTable(){
 }
 
 function openRadicalsScreen(){
-  showScreen('radicals', '214 Bộ thủ chữ Hán');
+  showScreen('radicals', '60 Bộ thủ thường gặp');
   renderRadicals('');
 }
 document.getElementById('nav-open-radicals').addEventListener('click', (e)=>{ e.preventDefault(); openRadicalsScreen(); });
@@ -4134,42 +3991,43 @@ const STROKE_LABEL = {1:'1 nét',2:'2 nét',3:'3 nét',4:'4 nét',5:'5 nét',6:'
 function renderRadicals(query){
   const el = document.getElementById('radical-results');
   const q = (query||'').trim().toLowerCase();
-  let list = RADICALS_214;
+  let list = RADICALS_60;
   if(q){
-    list = RADICALS_214.filter(r=>{
-      const [strokes, char, variant, hanviet, pinyin, meaning] = r;
-      return char.includes(q) || (variant && variant.includes(q)) ||
-        hanviet.toLowerCase().includes(q) || pinyin.toLowerCase().includes(q) ||
-        meaning.toLowerCase().includes(q);
+    list = RADICALS_60.filter(r=>{
+      if(r.ten.toLowerCase().includes(q) || r.py.toLowerCase().includes(q) || r.meaning.toLowerCase().includes(q)) return true;
+      return r.variants.some(v =>
+        v.char.includes(q) ||
+        v.examples.some(e => e.zh.includes(q) || e.py.toLowerCase().includes(q) || e.mean.toLowerCase().includes(q))
+      );
     });
   }
   if(!list.length){
     el.innerHTML = '<p class="radical-no-result">Không tìm thấy bộ thủ nào khớp với "' + query + '".</p>';
     return;
   }
-  // nhóm theo số nét, giữ nguyên khi đang search (không nhóm nếu đang lọc để dễ nhìn kết quả)
-  if(q){
-    el.innerHTML = '<div class="radical-grid">' + list.map(radicalCardHtml).join('') + '</div>';
-    return;
-  }
-  const groups = {};
-  list.forEach(r=>{ (groups[r[0]] = groups[r[0]] || []).push(r); });
-  const strokeKeys = Object.keys(groups).map(Number).sort((a,b)=>a-b);
-  el.innerHTML = strokeKeys.map(sk => `
-    <div class="radical-group-title">${STROKE_LABEL[sk] || sk + ' nét'} — ${groups[sk].length} bộ</div>
-    <div class="radical-grid">${groups[sk].map(radicalCardHtml).join('')}</div>
-  `).join('');
+  el.innerHTML = '<div class="radical-list">' + list.map(radicalCardHtml).join('') + '</div>';
 }
 
 function radicalCardHtml(r){
-  const [strokes, char, variant, hanviet, pinyin, meaning] = r;
-  return `<div class="radical-card">
-    <div class="radical-char hanzi">${char}</div>
-    <div class="radical-info">
-      <div class="hv">${hanviet} <span class="py">· ${pinyin}</span></div>
-      <div class="mn">${meaning}</div>
-      ${variant ? `<div class="variant">Biến thể: ${variant}</div>` : ''}
+  const variantsHtml = r.variants.map(v => `
+    <div class="radical-variant">
+      <div class="radical-variant-char hanzi">${v.char}</div>
+      <div class="radical-variant-body">
+        <div class="radical-variant-note">${v.note}</div>
+        ${v.examples.length ? `<div class="radical-examples">
+          ${v.examples.map(e => `<span class="radical-ex-chip"><span class="zh hanzi">${e.zh}</span><span class="py">${e.py}</span><span class="mean">(${e.pos}) ${e.mean}</span></span>`).join('')}
+        </div>` : ''}
+      </div>
     </div>
+  `).join('');
+  return `<div class="radical-card">
+    <div class="radical-card-head">
+      <span class="radical-no-badge">${r.so}</span>
+      <h3>Bộ ${r.ten}</h3>
+      <span class="py">| ${r.py} |</span>
+    </div>
+    <p class="radical-meaning"><b>Nghĩa:</b> ${r.meaning}</p>
+    <div class="radical-variants">${variantsHtml}</div>
   </div>`;
 }
 

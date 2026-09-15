@@ -4250,8 +4250,8 @@ const MOCKTEST_LESSONS = {
       {
         part: "Phần 4 — Đọc đoạn văn, trả lời câu hỏi", kind: "reading_q",
         questions: [
-          {passage:{zh:"我家有三口人，爸爸、妈妈和我。",py:"Wǒ jiā yǒu sān kǒu rén, bàba, māma hé wǒ."}, question:{zh:"说话人家里有：",py:"Shuōhuàrén jiālǐ yǒu:"}, options:[{zh:"姐姐",py:"jiějie"}, {zh:"三口人",py:"sān kǒu rén"}, {zh:"四口人",py:"sì kǒu rén"}], answer:1},
-          {passage:{zh:"她是法国人，我不是。",py:"Tā shì Fǎguó rén, wǒ bú shì."}, question:{zh:"“她”是：",py:"“Tā” shì:"}, options:[{zh:"法国人",py:"Fǎguó rén"}, {zh:"中国人",py:"Zhōngguó rén"}, {zh:"泰国人",py:"Tàiguó rén"}], answer:0},
+          {options:[{zh:"姐姐",py:"jiějie"}, {zh:"三口人",py:"sān kǒu rén"}, {zh:"四口人",py:"sì kǒu rén"}], passage:{zh:"我家有三口人，爸爸、妈妈和我。",py:"Wǒ jiā yǒu sān kǒu rén, bàba, māma hé wǒ."}, question:{zh:"说话人家里有：",py:"Shuōhuàrén jiālǐ yǒu:"}, answer:1},
+          {options:[{zh:"法国人",py:"Fǎguó rén"}, {zh:"中国人",py:"Zhōngguó rén"}, {zh:"泰国人",py:"Tàiguó rén"}], passage:{zh:"她是法国人，我不是。",py:"Tā shì Fǎguó rén, wǒ bú shì."}, question:{zh:"“她”是：",py:"“Tā” shì:"}, answer:0},
         ],
       },
     ],
@@ -4420,8 +4420,8 @@ const MOCKTEST_LESSONS = {
         part: "Phần 3 — Nghe hội thoại, chọn tranh phù hợp nhất", kind: "shared_img",
         pool: ["assets/lesson7/listen3_A.jpg", "assets/lesson7/listen3_B.jpg", "assets/lesson7/listen3_C.jpg", "assets/lesson7/listen3_D.jpg"],
         questions: [
-          {answer:3},
           {answer:2},
+          {answer:3},
           {answer:1},
         ],
       },
@@ -4438,9 +4438,9 @@ const MOCKTEST_LESSONS = {
         part: "Phần 1 — Chọn tranh phù hợp với câu", kind: "shared_img_prompt",
         pool: ["assets/lesson7/read1_A.jpg", "assets/lesson7/read1_B.jpg", "assets/lesson7/read1_C.jpg", "assets/lesson7/read1_D.jpg"],
         questions: [
-          {prompt:{zh:"我在上课呢。",py:"Wǒ zài shàngkè ne."}, answer:1},
-          {prompt:{zh:"我下午有事，晚上7:00见吧。",py:"Wǒ xiàwǔ yǒu shì, wǎnshang qī diǎn jiàn ba."}, answer:3},
-          {prompt:{zh:"今天不上班，我去超市买东西。",py:"Jīntiān bú shàngbān, wǒ qù chāoshì mǎi dōngxi."}, answer:2},
+          {prompt:{zh:"我在上课呢。",py:"Wǒ zài shàngkè ne."}, answer:3},
+          {prompt:{zh:"我下午有事，晚上7:00见吧。",py:"Wǒ xiàwǔ yǒu shì, wǎnshang qī diǎn jiàn ba."}, answer:2},
+          {prompt:{zh:"今天不上班，我去超市买东西。",py:"Jīntiān bú shàngbān, wǒ qù chāoshì mǎi dōngxi."}, answer:1},
         ],
       },
       {
@@ -4449,7 +4449,7 @@ const MOCKTEST_LESSONS = {
         questions: [
           {prompt:{zh:"我们在哪儿见？",py:"Wǒmen zài nǎr jiàn?"}, answer:2},
           {prompt:{zh:"现在几点？",py:"Xiànzài jǐ diǎn?"}, answer:0},
-          {prompt:{zh:"我们下午去超市吧。",py:"Wǒmen xiàwǔ qù chāoshì ba."}, answer:3},
+          {prompt:{zh:"我们下午去超市吧。",py:"Wǒmen xiàwǔ qù chāoshì ba."}, answer:1},
         ],
       },
       {
@@ -4476,7 +4476,7 @@ const MOCKTEST_LESSONS = {
         part: "Phần 1 — Nghe và chọn đúng tranh", kind: "own_img",
         questions: [
           {images:["assets/lesson8/listen1_q1_A.jpg", "assets/lesson8/listen1_q1_B.jpg", "assets/lesson8/listen1_q1_C.jpg"], answer:2},
-          {images:["assets/lesson8/listen1_q2_A.jpg", "assets/lesson8/listen1_q2_B.jpg", "assets/lesson8/listen1_q2_C.jpg"], answer:0},
+          {images:["assets/lesson8/listen1_q2_A.jpg", "assets/lesson8/listen1_q2_B.jpg", "assets/lesson8/listen1_q2_C.jpg"], answer:1},
           {images:["assets/lesson8/listen1_q3_A.jpg", "assets/lesson8/listen1_q3_B.jpg", "assets/lesson8/listen1_q3_C.jpg"], answer:0},
         ],
       },
@@ -4546,9 +4546,9 @@ const MOCKTEST_LESSONS = {
       {
         part: "Phần 1 — Nghe và chọn đúng tranh", kind: "own_img",
         questions: [
-          {images:["assets/lesson9/listen1_q1_A.jpg", "assets/lesson9/listen1_q1_B.jpg", "assets/lesson9/listen1_q1_C.jpg"], answer:2},
-          {images:["assets/lesson9/listen1_q2_A.jpg", "assets/lesson9/listen1_q2_B.jpg", "assets/lesson9/listen1_q2_C.jpg"], answer:1},
-          {images:["assets/lesson9/listen1_q3_A.jpg", "assets/lesson9/listen1_q3_B.jpg", "assets/lesson9/listen1_q3_C.jpg"], answer:2},
+          {images:["assets/lesson9/listen1_q1_A.jpg", "assets/lesson9/listen1_q1_B.jpg", "assets/lesson9/listen1_q1_C.jpg"], answer:1},
+          {images:["assets/lesson9/listen1_q2_A.jpg", "assets/lesson9/listen1_q2_B.jpg", "assets/lesson9/listen1_q2_C.jpg"], answer:2},
+          {images:["assets/lesson9/listen1_q3_A.jpg", "assets/lesson9/listen1_q3_B.jpg", "assets/lesson9/listen1_q3_C.jpg"], answer:0},
         ],
       },
       {
@@ -4570,8 +4570,8 @@ const MOCKTEST_LESSONS = {
       {
         part: "Phần 4 — Nghe câu và câu hỏi, chọn đáp án đúng", kind: "own_text",
         questions: [
-          {options:[{zh:"上午8:00",py:"shàngwǔ bā diǎn"}, {zh:"上午10:00",py:"shàngwǔ shí diǎn"}, {zh:"晚上8:00",py:"wǎnshang bā diǎn"}], answer:1},
-          {options:[{zh:"菜店",py:"càidiàn"}, {zh:"书店",py:"shūdiàn"}, {zh:"超市",py:"chāoshì"}], answer:2},
+          {options:[{zh:"上午8:00",py:"shàngwǔ bā diǎn"}, {zh:"上午10:00",py:"shàngwǔ shí diǎn"}, {zh:"晚上8:00",py:"wǎnshang bā diǎn"}], answer:0},
+          {options:[{zh:"菜店",py:"càidiàn"}, {zh:"书店",py:"shūdiàn"}, {zh:"超市",py:"chāoshì"}], answer:1},
         ],
       },
     ],
@@ -4611,99 +4611,6 @@ const MOCKTEST_LESSONS = {
       },
     ],
   },
-
-  16: {
-    audio: "audio/final-exam/listening.mp3",
-    listening: [
-      {
-        part: "Phần 1 — Nghe và chọn đúng tranh", kind: "own_img",
-        questions: [
-          {images:["assets/final-exam/listen1_q1_A.jpg", "assets/final-exam/listen1_q1_B.jpg", "assets/final-exam/listen1_q1_C.jpg"], answer:2},
-          {images:["assets/final-exam/listen1_q2_A.jpg", "assets/final-exam/listen1_q2_B.jpg", "assets/final-exam/listen1_q2_C.jpg"], answer:0},
-          {images:["assets/final-exam/listen1_q3_A.jpg", "assets/final-exam/listen1_q3_B.jpg", "assets/final-exam/listen1_q3_C.jpg"], answer:2},
-          {images:["assets/final-exam/listen1_q4_A.jpg", "assets/final-exam/listen1_q4_B.jpg", "assets/final-exam/listen1_q4_C.jpg"], answer:1},
-          {images:["assets/final-exam/listen1_q5_A.jpg", "assets/final-exam/listen1_q5_B.jpg", "assets/final-exam/listen1_q5_C.jpg"], answer:2},
-        ],
-      },
-      {
-        part: "Phần 2 — Nghe câu hỏi, chọn đáp án đúng", kind: "own_text",
-        questions: [
-          {options:[{zh:"在学习",py:"zài xuéxí"}, {zh:"打电话",py:"dǎ diànhuà"}, {zh:"做饭好吃",py:"zuò fàn hǎochī"}], answer:1},
-          {options:[{zh:"白天",py:"báitiān"}, {zh:"生病了",py:"shēngbìng le"}, {zh:"水果店",py:"shuǐguǒdiàn"}], answer:2},
-          {options:[{zh:"八元",py:"bā yuán"}, {zh:"不是",py:"bú shì"}, {zh:"便宜",py:"piányi"}], answer:1},
-          {options:[{zh:"去年",py:"qùnián"}, {zh:"很漂亮",py:"hěn piàoliang"}, {zh:"我弟弟",py:"wǒ dìdi"}], answer:2},
-          {options:[{zh:"没有",py:"méiyǒu"}, {zh:"再见",py:"zàijiàn"}, {zh:"不要",py:"bú yào"}], answer:0},
-        ],
-      },
-      {
-        part: "Phần 3 — Nghe hội thoại, chọn tranh phù hợp nhất", kind: "shared_img",
-        pool: ["assets/final-exam/listen3_A.jpg", "assets/final-exam/listen3_B.jpg", "assets/final-exam/listen3_C.jpg", "assets/final-exam/listen3_D.jpg", "assets/final-exam/listen3_E.jpg", "assets/final-exam/listen3_F.jpg"],
-        questions: [
-          {answer:1},
-          {answer:3},
-          {answer:4},
-          {answer:0},
-          {answer:5},
-        ],
-      },
-      {
-        part: "Phần 4 — Nghe câu và câu hỏi, chọn đáp án đúng", kind: "own_text",
-        questions: [
-          {options:[{zh:"60岁",py:"liùshí suì"}, {zh:"60多岁",py:"liùshí duō suì"}, {zh:"70岁",py:"qīshí suì"}], answer:0},
-          {options:[{zh:"电脑",py:"diànnǎo"}, {zh:"杯子",py:"bēizi"}, {zh:"手机",py:"shǒujī"}], answer:2},
-          {options:[{zh:"女儿",py:"nǚ'ér"}, {zh:"妹妹",py:"mèimei"}, {zh:"高女士",py:"Gāo nǚshì"}], answer:0},
-          {options:[{zh:"包子",py:"bāozi"}, {zh:"面包",py:"miànbāo"}, {zh:"面条儿",py:"miàntiáor"}], answer:1},
-          {options:[{zh:"早上",py:"zǎoshang"}, {zh:"中午",py:"zhōngwǔ"}, {zh:"星期天",py:"Xīngqītiān"}], answer:1},
-        ],
-      },
-    ],
-    reading: [
-      {
-        part: "Phần 1 — Chọn tranh phù hợp với câu", kind: "shared_img_prompt",
-        pool: ["assets/final-exam/read1_A.jpg", "assets/final-exam/read1_B.jpg", "assets/final-exam/read1_C.jpg", "assets/final-exam/read1_D.jpg", "assets/final-exam/read1_E.jpg", "assets/final-exam/read1_F.jpg"],
-        questions: [
-          {prompt:{zh:"王先生是医生。",py:"Wáng xiānsheng shì yīshēng."}, answer:1},
-          {prompt:{zh:"姐姐上午去超市买了菜。",py:"Jiějie shàngwǔ qù chāoshì mǎile cài."}, answer:3},
-          {prompt:{zh:"今天的早饭是牛奶和鸡蛋。",py:"Jīntiān de zǎofàn shì niúnǎi hé jīdàn."}, answer:0},
-          {prompt:{zh:"我家有四口人，爸爸、妈妈、弟弟和我。",py:"Wǒ jiā yǒu sì kǒu rén, bàba, māma, dìdi hé wǒ."}, answer:2},
-          {prompt:{zh:"她和好朋友都爱唱歌。",py:"Tā hé hǎo péngyou dōu ài chàng gē."}, answer:5},
-        ],
-      },
-      {
-        part: "Phần 2 — Ghép câu trả lời phù hợp", kind: "shared_text_prompt",
-        pool: [{zh:"商店。",py:"Shāngdiàn."}, {zh:"我学生。",py:"Wǒ xuésheng."}, {zh:"在桌子上。",py:"Zài zhuōzi shang."}, {zh:"还没有。",py:"Hái méiyǒu."}, {zh:"下雪了。",py:"Xià xuě le."}, {zh:"好的，谢谢！",py:"Hǎo de, xièxie!"}],
-        questions: [
-          {prompt:{zh:"这是我的书，你的呢？",py:"Zhè shì wǒ de shū, nǐ de ne?"}, answer:2},
-          {prompt:{zh:"你去哪儿买苹果？",py:"Nǐ qù nǎr mǎi píngguǒ?"}, answer:0},
-          {prompt:{zh:"昨天天气怎么样？",py:"Zuótiān tiānqì zěnmeyàng?"}, answer:4},
-          {prompt:{zh:"你和谁打电话呢？",py:"Nǐ hé shéi dǎ diànhuà ne?"}, answer:1},
-          {prompt:{zh:"你下班了吗？",py:"Nǐ xiàbān le ma?"}, answer:3},
-        ],
-      },
-      {
-        part: "Phần 3 — Chọn từ điền vào chỗ trống", kind: "fill_blank",
-        pool: [{zh:"认识",py:"rènshi"}, {zh:"住",py:"zhù"}, {zh:"晚饭",py:"wǎnfàn"}, {zh:"叫",py:"jiào"}, {zh:"汉字",py:"Hànzì"}, {zh:"块",py:"kuài"}],
-        questions: [
-          {prompt:{zh:"大家都没吃（　）呢。",py:"Dàjiā dōu méi chī ( ) ne."}, answer:2},
-          {prompt:{zh:"在今天的中文课上，我学了很多（　）。",py:"Zài jīntiān de Zhōngwén kè shang, wǒ xuéle hěn duō ( )."}, answer:4},
-          {prompt:{zh:"对不起，我不（　）这个人。",py:"Duìbuqǐ, wǒ bú ( ) zhège rén."}, answer:0},
-          {prompt:{zh:"我和家人（　）在北京。",py:"Wǒ hé jiārén ( ) zài Běijīng."}, answer:1},
-          {prompt:{zh:"这些东西可以卖多少钱？男：80（　）。",py:"Zhèxiē dōngxi kěyǐ mài duōshao qián? Nán: Bāshí ( )."}, answer:5},
-        ],
-      },
-      {
-        part: "Phần 4 — Đọc đoạn văn, trả lời câu hỏi", kind: "reading_q",
-        questions: [
-          {options:[{zh:"开车",py:"kāichē"}, {zh:"坐飞机",py:"zuò fēijī"}, {zh:"坐出租车",py:"zuò chūzūchē"}], passage:{zh:"下雨了，我们坐出租车回家吧。",py:"Xià yǔ le, wǒmen zuò chūzūchē huí jiā ba."}, question:{zh:"说话人想怎么回家？",py:"Shuōhuàrén xiǎng zěnme huí jiā?"}, answer:2},
-          {options:[{zh:"小学生",py:"xiǎoxuéshēng"}, {zh:"中学生",py:"zhōngxuéshēng"}, {zh:"大学生",py:"dàxuéshēng"}], passage:{zh:"我儿子今年16岁了，正在上中学。",py:"Wǒ érzi jīnnián shíliù suì le, zhèngzài shàng zhōngxué."}, question:{zh:"说话人的儿子是：",py:"Shuōhuàrén de érzi shì:"}, answer:1},
-          {options:[{zh:"桌子下",py:"zhuōzi xià"}, {zh:"房间里",py:"fángjiān li"}, {zh:"房间外",py:"fángjiān wài"}], passage:{zh:"小猫和小狗都在房间外睡觉呢。",py:"Xiǎo māo hé xiǎo gǒu dōu zài fángjiān wài shuìjiào ne."}, question:{zh:"小狗在：",py:"Xiǎo gǒu zài:"}, answer:2},
-          {options:[{zh:"饭店",py:"fàndiàn"}, {zh:"医院",py:"yīyuàn"}, {zh:"学校",py:"xuéxiào"}], passage:{zh:"我同学在这个学校工作很多年了，你有问题可以问他。",py:"Wǒ tóngxué zài zhège xuéxiào gōngzuò hěn duō nián le, nǐ yǒu wèntí kěyǐ wèn tā."}, question:{zh:"说话人的同学在哪儿上班？",py:"Shuōhuàrén de tóngxué zài nǎr shàngbān?"}, answer:2},
-          {options:[{zh:"名字好听",py:"míngzi hǎotīng"}, {zh:"写字好看",py:"xiě zì hǎokàn"}, {zh:"正在读书",py:"zhèngzài dúshū"}], passage:{zh:"这个小朋友写字真好看。",py:"Zhège xiǎopéngyou xiě zì zhēn hǎokàn."}, question:{zh:"那个小朋友：",py:"Nàge xiǎopéngyou:"}, answer:1},
-        ],
-      },
-    ],
-  },
-
   10: {
     audio: "audio/lesson10/mocktest.mp3",
     listening: [
@@ -4726,9 +4633,9 @@ const MOCKTEST_LESSONS = {
         part: "Phần 3 — Nghe hội thoại, chọn tranh phù hợp nhất", kind: "shared_img",
         pool: ["assets/lesson10/listen3_A.jpg", "assets/lesson10/listen3_B.jpg", "assets/lesson10/listen3_C.jpg", "assets/lesson10/listen3_D.jpg"],
         questions: [
+          {answer:2},
           {answer:3},
           {answer:1},
-          {answer:2},
         ],
       },
       {
@@ -4798,8 +4705,8 @@ const MOCKTEST_LESSONS = {
         pool: ["assets/lesson11/listen3_A.jpg", "assets/lesson11/listen3_B.jpg", "assets/lesson11/listen3_C.jpg", "assets/lesson11/listen3_D.jpg"],
         questions: [
           {answer:3},
-          {answer:1},
           {answer:2},
+          {answer:1},
         ],
       },
       {
@@ -5089,8 +4996,8 @@ const MOCKTEST_LESSONS = {
       {
         part: "Phần 4 — Nghe câu và câu hỏi, chọn đáp án đúng", kind: "own_text",
         questions: [
-          {options:[{zh:"西安",py:"Xī'ān"}, {zh:"北京",py:"Běijīng"}, {zh:"上海",py:"Shànghǎi"}], answer:1},
-          {options:[{zh:"坐飞机",py:"zuò fēijī"}, {zh:"坐火车",py:"zuò huǒchē"}, {zh:"坐出租车",py:"zuò chūzūchē"}], answer:0},
+          {options:[{zh:"西安",py:"Xī'ān"}, {zh:"北京",py:"Běijīng"}, {zh:"上海",py:"Shànghǎi"}], answer:0},
+          {options:[{zh:"坐飞机",py:"zuò fēijī"}, {zh:"坐火车",py:"zuò huǒchē"}, {zh:"坐出租车",py:"zuò chūzūchē"}], answer:1},
         ],
       },
     ],
@@ -5126,6 +5033,97 @@ const MOCKTEST_LESSONS = {
         questions: [
           {options:[{zh:"买电脑",py:"mǎi diànnǎo"}, {zh:"打电话",py:"dǎ diànhuà"}, {zh:"看电影",py:"kàn diànyǐng"}], passage:{zh:"明天星期天，儿子想去看一个电影。",py:"Míngtiān Xīngqītiān, érzi xiǎng qù kàn yí gè diànyǐng."}, question:{zh:"儿子明天想：",py:"Érzi míngtiān xiǎng:"}, answer:2},
           {options:[{zh:"下小雨",py:"xià xiǎoyǔ"}, {zh:"下大雨",py:"xià dàyǔ"}, {zh:"下小雪",py:"xià xiǎoxuě"}], passage:{zh:"下小雨了，小狗非常高兴，它喜欢小雨。",py:"Xià xiǎoyǔ le, xiǎo gǒu fēicháng gāoxìng, tā xǐhuan xiǎoyǔ."}, question:{zh:"小狗喜欢：",py:"Xiǎo gǒu xǐhuan:"}, answer:0},
+        ],
+      },
+    ],
+  },
+  16: {
+    audio: "audio/final-exam/listening.mp3",
+    listening: [
+      {
+        part: "Phần 1 — Nghe và chọn đúng tranh", kind: "own_img",
+        questions: [
+          {images:["assets/final-exam/listen1_q1_A.jpg", "assets/final-exam/listen1_q1_B.jpg", "assets/final-exam/listen1_q1_C.jpg"], answer:2},
+          {images:["assets/final-exam/listen1_q2_A.jpg", "assets/final-exam/listen1_q2_B.jpg", "assets/final-exam/listen1_q2_C.jpg"], answer:0},
+          {images:["assets/final-exam/listen1_q3_A.jpg", "assets/final-exam/listen1_q3_B.jpg", "assets/final-exam/listen1_q3_C.jpg"], answer:2},
+          {images:["assets/final-exam/listen1_q4_A.jpg", "assets/final-exam/listen1_q4_B.jpg", "assets/final-exam/listen1_q4_C.jpg"], answer:1},
+          {images:["assets/final-exam/listen1_q5_A.jpg", "assets/final-exam/listen1_q5_B.jpg", "assets/final-exam/listen1_q5_C.jpg"], answer:2},
+        ],
+      },
+      {
+        part: "Phần 2 — Nghe câu hỏi, chọn đáp án đúng", kind: "own_text",
+        questions: [
+          {options:[{zh:"在学习",py:"zài xuéxí"}, {zh:"打电话",py:"dǎ diànhuà"}, {zh:"做饭好吃",py:"zuò fàn hǎochī"}], answer:1},
+          {options:[{zh:"白天",py:"báitiān"}, {zh:"生病了",py:"shēngbìng le"}, {zh:"水果店",py:"shuǐguǒdiàn"}], answer:2},
+          {options:[{zh:"八元",py:"bā yuán"}, {zh:"不是",py:"bú shì"}, {zh:"便宜",py:"piányi"}], answer:1},
+          {options:[{zh:"去年",py:"qùnián"}, {zh:"很漂亮",py:"hěn piàoliang"}, {zh:"我弟弟",py:"wǒ dìdi"}], answer:2},
+          {options:[{zh:"没有",py:"méiyǒu"}, {zh:"再见",py:"zàijiàn"}, {zh:"不要",py:"bú yào"}], answer:0},
+        ],
+      },
+      {
+        part: "Phần 3 — Nghe hội thoại, chọn tranh phù hợp nhất", kind: "shared_img",
+        pool: ["assets/final-exam/listen3_A.jpg", "assets/final-exam/listen3_B.jpg", "assets/final-exam/listen3_C.jpg", "assets/final-exam/listen3_D.jpg", "assets/final-exam/listen3_E.jpg", "assets/final-exam/listen3_F.jpg"],
+        questions: [
+          {answer:1},
+          {answer:3},
+          {answer:4},
+          {answer:0},
+          {answer:5},
+        ],
+      },
+      {
+        part: "Phần 4 — Nghe câu và câu hỏi, chọn đáp án đúng", kind: "own_text",
+        questions: [
+          {options:[{zh:"60岁",py:"liùshí suì"}, {zh:"60多岁",py:"liùshí duō suì"}, {zh:"70岁",py:"qīshí suì"}], answer:0},
+          {options:[{zh:"电脑",py:"diànnǎo"}, {zh:"杯子",py:"bēizi"}, {zh:"手机",py:"shǒujī"}], answer:2},
+          {options:[{zh:"女儿",py:"nǚ'ér"}, {zh:"妹妹",py:"mèimei"}, {zh:"高女士",py:"Gāo nǚshì"}], answer:0},
+          {options:[{zh:"包子",py:"bāozi"}, {zh:"面包",py:"miànbāo"}, {zh:"面条儿",py:"miàntiáor"}], answer:1},
+          {options:[{zh:"早上",py:"zǎoshang"}, {zh:"中午",py:"zhōngwǔ"}, {zh:"星期天",py:"Xīngqītiān"}], answer:1},
+        ],
+      },
+    ],
+    reading: [
+      {
+        part: "Phần 1 — Chọn tranh phù hợp với câu", kind: "shared_img_prompt",
+        pool: ["assets/final-exam/read1_A.jpg", "assets/final-exam/read1_B.jpg", "assets/final-exam/read1_C.jpg", "assets/final-exam/read1_D.jpg", "assets/final-exam/read1_E.jpg", "assets/final-exam/read1_F.jpg"],
+        questions: [
+          {prompt:{zh:"王先生是医生。",py:"Wáng xiānsheng shì yīshēng."}, answer:1},
+          {prompt:{zh:"姐姐上午去超市买了菜。",py:"Jiějie shàngwǔ qù chāoshì mǎile cài."}, answer:3},
+          {prompt:{zh:"今天的早饭是牛奶和鸡蛋。",py:"Jīntiān de zǎofàn shì niúnǎi hé jīdàn."}, answer:0},
+          {prompt:{zh:"我家有四口人，爸爸、妈妈、弟弟和我。",py:"Wǒ jiā yǒu sì kǒu rén, bàba, māma, dìdi hé wǒ."}, answer:2},
+          {prompt:{zh:"她和好朋友都爱唱歌。",py:"Tā hé hǎo péngyou dōu ài chàng gē."}, answer:5},
+        ],
+      },
+      {
+        part: "Phần 2 — Ghép câu trả lời phù hợp", kind: "shared_text_prompt",
+        pool: [{zh:"商店。",py:"Shāngdiàn."}, {zh:"我学生。",py:"Wǒ xuésheng."}, {zh:"在桌子上。",py:"Zài zhuōzi shang."}, {zh:"还没有。",py:"Hái méiyǒu."}, {zh:"下雪了。",py:"Xià xuě le."}, {zh:"好的，谢谢！",py:"Hǎo de, xièxie!"}],
+        questions: [
+          {prompt:{zh:"这是我的书，你的呢？",py:"Zhè shì wǒ de shū, nǐ de ne?"}, answer:2},
+          {prompt:{zh:"你去哪儿买苹果？",py:"Nǐ qù nǎr mǎi píngguǒ?"}, answer:0},
+          {prompt:{zh:"昨天天气怎么样？",py:"Zuótiān tiānqì zěnmeyàng?"}, answer:4},
+          {prompt:{zh:"你和谁打电话呢？",py:"Nǐ hé shéi dǎ diànhuà ne?"}, answer:1},
+          {prompt:{zh:"你下班了吗？",py:"Nǐ xiàbān le ma?"}, answer:3},
+        ],
+      },
+      {
+        part: "Phần 3 — Chọn từ điền vào chỗ trống", kind: "fill_blank",
+        pool: [{zh:"认识",py:"rènshi"}, {zh:"住",py:"zhù"}, {zh:"晚饭",py:"wǎnfàn"}, {zh:"叫",py:"jiào"}, {zh:"汉字",py:"Hànzì"}, {zh:"块",py:"kuài"}],
+        questions: [
+          {prompt:{zh:"大家都没吃（　）呢。",py:"Dàjiā dōu méi chī ( ) ne."}, answer:2},
+          {prompt:{zh:"在今天的中文课上，我学了很多（　）。",py:"Zài jīntiān de Zhōngwén kè shang, wǒ xuéle hěn duō ( )."}, answer:4},
+          {prompt:{zh:"对不起，我不（　）这个人。",py:"Duìbuqǐ, wǒ bú ( ) zhège rén."}, answer:0},
+          {prompt:{zh:"我和家人（　）在北京。",py:"Wǒ hé jiārén ( ) zài Běijīng."}, answer:1},
+          {prompt:{zh:"这些东西可以卖多少钱？男：80（　）。",py:"Zhèxiē dōngxi kěyǐ mài duōshao qián? Nán: Bāshí ( )."}, answer:5},
+        ],
+      },
+      {
+        part: "Phần 4 — Đọc đoạn văn, trả lời câu hỏi", kind: "reading_q",
+        questions: [
+          {options:[{zh:"开车",py:"kāichē"}, {zh:"坐飞机",py:"zuò fēijī"}, {zh:"坐出租车",py:"zuò chūzūchē"}], passage:{zh:"下雨了，我们坐出租车回家吧。",py:"Xià yǔ le, wǒmen zuò chūzūchē huí jiā ba."}, question:{zh:"说话人想怎么回家？",py:"Shuōhuàrén xiǎng zěnme huí jiā?"}, answer:2},
+          {options:[{zh:"小学生",py:"xiǎoxuéshēng"}, {zh:"中学生",py:"zhōngxuéshēng"}, {zh:"大学生",py:"dàxuéshēng"}], passage:{zh:"我儿子今年16岁了，正在上中学。",py:"Wǒ érzi jīnnián shíliù suì le, zhèngzài shàng zhōngxué."}, question:{zh:"说话人的儿子是：",py:"Shuōhuàrén de érzi shì:"}, answer:1},
+          {options:[{zh:"桌子下",py:"zhuōzi xià"}, {zh:"房间里",py:"fángjiān li"}, {zh:"房间外",py:"fángjiān wài"}], passage:{zh:"小猫和小狗都在房间外睡觉呢。",py:"Xiǎo māo hé xiǎo gǒu dōu zài fángjiān wài shuìjiào ne."}, question:{zh:"小狗在：",py:"Xiǎo gǒu zài:"}, answer:2},
+          {options:[{zh:"饭店",py:"fàndiàn"}, {zh:"医院",py:"yīyuàn"}, {zh:"学校",py:"xuéxiào"}], passage:{zh:"我同学在这个学校工作很多年了，你有问题可以问他。",py:"Wǒ tóngxué zài zhège xuéxiào gōngzuò hěn duō nián le, nǐ yǒu wèntí kěyǐ wèn tā."}, question:{zh:"说话人的同学在哪儿上班？",py:"Shuōhuàrén de tóngxué zài nǎr shàngbān?"}, answer:2},
+          {options:[{zh:"名字好听",py:"míngzi hǎotīng"}, {zh:"写字好看",py:"xiě zì hǎokàn"}, {zh:"正在读书",py:"zhèngzài dúshū"}], passage:{zh:"这个小朋友写字真好看。",py:"Zhège xiǎopéngyou xiě zì zhēn hǎokàn."}, question:{zh:"那个小朋友：",py:"Nàge xiǎopéngyou:"}, answer:1},
         ],
       },
     ],

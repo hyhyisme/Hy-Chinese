@@ -97,6 +97,7 @@ a{color:inherit;text-decoration:none;}
   flex-shrink:0;
   position:relative;
 }
+.seal.seal-wide{ font-size:19px; letter-spacing:-1px; }
 .seal::after{
   content:"";position:absolute;inset:5px;border:1px solid rgba(255,255,255,.55);border-radius:9px;
 }
@@ -4042,7 +4043,7 @@ function renderLessonGrid(){
     const ready = LESSONS[m.id].ready;
     html += `<button class="lesson-card ${ready?'enabled':'locked'}" data-id="${m.id}" ${ready?'':'disabled'}>
       ${ready?'':'<span class="lesson-lock">🔒 sắp có</span>'}
-      <div class="seal lesson-seal">${SEAL_NUM[m.id]}</div>
+      <div class="seal lesson-seal${SEAL_NUM[m.id].length>1?' seal-wide':''}">${SEAL_NUM[m.id]}</div>
       <div class="lesson-card-body">
         <div class="num">Bài ${m.id}</div>
         <div class="zh hanzi">${m.zh}</div>
@@ -4071,7 +4072,9 @@ function openLesson(id){
   currentLessonId = id;
   const L = LESSONS[id];
   const isExam = (id === FINAL_EXAM_ID);
-  document.getElementById('lesson-seal').textContent = isExam ? '🏆' : SEAL_NUM[id];
+  const sealEl = document.getElementById('lesson-seal');
+  sealEl.textContent = isExam ? '🏆' : SEAL_NUM[id];
+  sealEl.classList.toggle('seal-wide', !isExam && SEAL_NUM[id].length > 1);
   document.getElementById('lesson-zh-title').textContent = L.zh;
   document.getElementById('lesson-pinyin-title').textContent = L.py;
   document.getElementById('lesson-vi-title').textContent = isExam ? L.vi : ('Bài ' + id + ' · ' + L.vi);
@@ -4115,7 +4118,7 @@ function initLessonPanels(L){
   }
   if(!L.ready){
     document.getElementById('lesson-panels').innerHTML =
-      `<div class="coming-soon"><div class="seal" style="margin:0 auto 18px;">${SEAL_NUM[L.id]}</div>
+      `<div class="coming-soon"><div class="seal${SEAL_NUM[L.id] && SEAL_NUM[L.id].length>1?' seal-wide':''}" style="margin:0 auto 18px;">${SEAL_NUM[L.id]}</div>
       <p><b>Bài ${L.id} đang được biên soạn.</b><br>Nội dung ôn tập đầy đủ sẽ sớm được cập nhật.</p></div>`;
     return;
   }
@@ -5324,11 +5327,14 @@ async function initMockTestHomework(lessonId){
 
     (answerPayload.details || []).forEach((d, gIdx) => {
       const el = container.querySelector(`.mt-result[data-gidx="${gIdx}"]`);
-      if(!el) return;
-      const item = flatQuestions[gIdx];
-      el.innerHTML = d.correct ? '✅ Đúng' : `❌ Sai — đáp án đúng: ${String.fromCharCode(65 + item.q.answer)}`;
+      if(el) el.innerHTML = d.correct ? '✅ Đúng' : '❌ Sai';
       const chosenBtn = container.querySelector(`.mt-opt-btn[data-gidx="${gIdx}"][data-i="${selected[gIdx]}"]`);
       if(chosenBtn) chosenBtn.style.borderColor = d.correct ? 'var(--green,#3f7d5c)' : 'var(--red-err,#a33a2e)';
+      if(!d.correct){
+        const correctIdx = flatQuestions[gIdx].q.answer;
+        const correctBtn = container.querySelector(`.mt-opt-btn[data-gidx="${gIdx}"][data-i="${correctIdx}"]`);
+        if(correctBtn) correctBtn.style.borderColor = 'var(--green,#3f7d5c)';
+      }
     });
 
     const old = container.querySelector('.hw-submitted-banner');
@@ -5603,7 +5609,9 @@ async function initPhoneticsHomework(lessonId){
     (answerPayload.details || []).forEach((d, gIdx) => {
       const el = container.querySelector(`.ph-result[data-gidx="${gIdx}"]`);
       if(!el) return;
-      el.innerHTML = d.correct ? '✅ Đúng' : `❌ Sai — đáp án đúng: <b>${d.correct_answer}</b>`;
+      el.innerHTML = d.correct
+        ? `✅ Đúng — bạn đã chọn: <b>${d.given}</b>`
+        : `❌ Sai — bạn chọn: <b>${d.given}</b> · đáp án đúng: <b>${d.correct_answer}</b>`;
     });
 
     const old = container.querySelector('.hw-submitted-banner');
@@ -5818,7 +5826,17 @@ async function initWorkbookHomework(lessonId){
       totalAll += sub.answer.total;
       sub.answer.details.forEach((d,i) => {
         const el = container.querySelector(`.wb-item-result[data-key="${key}"][data-idx="${i}"]`);
-        if(el) el.innerHTML = d.correct ? '✅' : `❌ (đúng: <b>${d.correct_answer}</b>)`;
+        if(key === 'tones'){
+          if(el) el.innerHTML = d.correct ? '✅' : '❌';
+          const chosenBtn = container.querySelector(`.tone-pick-btn[data-idx="${i}"][data-t="${d.given}"]`);
+          if(chosenBtn) chosenBtn.style.borderColor = d.correct ? 'var(--green,#3f7d5c)' : 'var(--red-err,#a33a2e)';
+          if(!d.correct){
+            const correctBtn = container.querySelector(`.tone-pick-btn[data-idx="${i}"][data-t="${d.correct_answer}"]`);
+            if(correctBtn) correctBtn.style.borderColor = 'var(--green,#3f7d5c)';
+          }
+          return;
+        }
+        if(el) el.innerHTML = d.correct ? '✅' : `❌ (bạn chọn: <b>${d.given}</b> · đúng: <b>${d.correct_answer}</b>)`;
         if(key !== 'pictures'){
           const inp = container.querySelector(`.wb-input[data-key="${key}"][data-idx="${i}"]`);
           if(inp && !inp.value) inp.value = (d.given === '(bỏ trống)' ? '' : d.given) || '';

@@ -891,6 +891,10 @@ const TRACKING = {
 };
 let CURRENT_STUDENT = null;
 let TEACHER_PREVIEW_MODE = false;
+// Cấp độ khoá học sinh được PHÉP vào, lấy từ classes.hsk_level (vd: "HSK1", "HSK2"), viết thường
+// để so khớp với data-course trên các thẻ chọn cấp độ (vd: "hsk1", "hsk2"). null = không giới hạn
+// (giáo viên xem trước, hoặc lỡ thiếu dữ liệu hsk_level thì mặc định cho vào hết, tránh khoá nhầm).
+let STUDENT_COURSE_LEVEL = null;
 (async () => {
   CURRENT_STUDENT = await getCurrentStudent();
   if (!CURRENT_STUDENT) {
@@ -917,6 +921,7 @@ let TEACHER_PREVIEW_MODE = false;
   }
   TRACKING.studentName = CURRENT_STUDENT.full_name;
   TRACKING.studentClass = CURRENT_STUDENT.classes?.name || '';
+  if (CURRENT_STUDENT.classes?.hsk_level) STUDENT_COURSE_LEVEL = String(CURRENT_STUDENT.classes.hsk_level).toLowerCase();
   document.getElementById('auth-gate').style.display = 'none';
   const miniName = document.getElementById('student-mini-name');
   if (miniName) miniName.textContent = CURRENT_STUDENT.full_name;
@@ -3922,11 +3927,43 @@ function showScreen(name, title){
   }
 }
 
+// Học sinh chỉ được vào ĐÚNG cấp độ khớp với classes.hsk_level của lớp mình (vd: lớp "HSK1"
+// chỉ vào được thẻ data-course="hsk1"). Giáo viên xem trước (TEACHER_PREVIEW_MODE) hoặc
+// trường hợp thiếu dữ liệu hsk_level (STUDENT_COURSE_LEVEL === null) thì không bị giới hạn.
+function isCourseAllowed(course){
+  if (TEACHER_PREVIEW_MODE || !STUDENT_COURSE_LEVEL) return true;
+  return course === STUDENT_COURSE_LEVEL;
+}
+function refreshHskPickerLocks(){
+  document.querySelectorAll('#hsk-level-grid .level-card').forEach(card=>{
+    const course = card.dataset.course;
+    const allowed = isCourseAllowed(course);
+    card.classList.toggle('enabled', allowed);
+    card.classList.toggle('locked', !allowed);
+    let badge = card.querySelector('.level-lock-badge');
+    if(!allowed){
+      if(!badge){
+        badge = document.createElement('div');
+        badge.className = 'level-lock-badge';
+        badge.style.cssText = 'margin-top:8px;font-size:13px;color:var(--ink-soft);';
+        badge.textContent = '🔒 Lớp của bạn chưa học cấp độ này';
+        card.querySelector('.level-card-body').appendChild(badge);
+      }
+    } else if(badge){
+      badge.remove();
+    }
+  });
+}
 function openHskPickerScreen(){
   navStack = ['home'];
+  refreshHskPickerLocks();
   showScreen('hskPicker', 'Chọn cấp độ HSK');
 }
 function openLevelListScreen(course){
+  if(course && !isCourseAllowed(course)){
+    alert('Lớp của bạn chưa được học ' + (COURSE_TITLES[course] || course) + ' — nếu đây là nhầm lẫn, hãy báo giáo viên kiểm tra lại cấp độ của lớp.');
+    return;
+  }
   if(course) currentCourse = course;
   navStack = ['home', 'hskPicker'];
   renderLessonGrid();
@@ -3934,7 +3971,7 @@ function openLevelListScreen(course){
   document.getElementById('level-title').textContent = COURSE_TITLES[currentCourse] + ' · ' + totalLessons + ' bài học';
   showScreen('level', COURSE_TITLES[currentCourse] + ' · Danh sách bài');
 }
-document.querySelectorAll('#hsk-level-grid .level-card.enabled').forEach(card=>{
+document.querySelectorAll('#hsk-level-grid .level-card').forEach(card=>{
   card.addEventListener('click', ()=> openLevelListScreen(card.dataset.course));
 });
 ['nav-open-hsk','footer-open-hsk'].forEach(id=>{

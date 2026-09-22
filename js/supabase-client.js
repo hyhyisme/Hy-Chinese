@@ -44,7 +44,16 @@ async function studentJoinClass(joinCode, fullName, options = {}) {
   if (!cls) throw new Error('Không tìm thấy lớp với mã này. Kiểm tra lại mã lớp giáo viên đã cung cấp.');
 
   // 2. Đăng nhập ẩn danh (nếu chưa có phiên)
+  // QUAN TRỌNG: nếu thiết bị này đang có sẵn một phiên KHÔNG PHẢI ẩn danh (vd: giáo viên
+  // đang đăng nhập email/mật khẩu), TUYỆT ĐỐI không tái sử dụng phiên đó cho học sinh —
+  // trước đây lỗi này khiến hồ sơ học sinh bị gán auth_uid = UID của giáo viên, dẫn đến
+  // giáo viên tự nhiên "biến thành" học sinh đó mỗi lần đăng nhập. Phải đăng xuất phiên
+  // cũ và tạo phiên ẩn danh mới, tách biệt hoàn toàn với mọi phiên giáo viên.
   let { data: { user } } = await sb.auth.getUser();
+  if (user && !user.is_anonymous) {
+    await sb.auth.signOut();
+    user = null;
+  }
   if (!user) {
     const { data: anonData, error: anonErr } = await sb.auth.signInAnonymously();
     if (anonErr) throw anonErr;
@@ -109,6 +118,9 @@ async function studentJoinClass(joinCode, fullName, options = {}) {
 async function getCurrentStudent() {
   const { data: { user } } = await sb.auth.getUser();
   if (!user) return null;
+  // Lớp bảo vệ: phiên KHÔNG ẩn danh (đăng nhập email/mật khẩu = giáo viên) không bao giờ
+  // được coi là học sinh, kể cả nếu dữ liệu cũ trong bảng students lỡ bị gán nhầm auth_uid.
+  if (!user.is_anonymous) return null;
   const { data, error } = await sb.from('students').select('*, classes(name)').eq('auth_uid', user.id).maybeSingle();
   if (error) return null;
   return data;

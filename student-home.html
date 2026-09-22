@@ -1006,6 +1006,32 @@ let TEACHER_PREVIEW_MODE = false;
 
 </section>
 
+<!-- ============ SCREEN 1B: CHỌN CẤP ĐỘ HSK ============ -->
+<section class="screen" id="screen-hsk-picker">
+  <div class="section-wrap">
+    <div class="section-head">
+      <h1>Chọn cấp độ HSK</h1>
+      <p>Mỗi cấp độ gồm các bài học riêng, bám sát giáo trình 新HSK教程 (HSK 3.0).</p>
+    </div>
+    <div class="level-card-grid" id="hsk-level-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;">
+      <button class="level-card enabled" data-course="hsk1">
+        <div class="level-card-top"><div class="seal" style="margin:0 auto;">1</div></div>
+        <div class="level-card-body">
+          <div class="num" style="font-weight:800;font-size:20px;">HSK 1</div>
+          <div class="vi">15 bài học + kiểm tra cuối khoá</div>
+        </div>
+      </button>
+      <button class="level-card enabled" data-course="hsk2">
+        <div class="level-card-top"><div class="seal" style="margin:0 auto;">2</div></div>
+        <div class="level-card-body">
+          <div class="num" style="font-weight:800;font-size:20px;">HSK 2</div>
+          <div class="vi">15 bài học</div>
+        </div>
+      </button>
+    </div>
+  </div>
+</section>
+
 <!-- ============ SCREEN 2: DANH SÁCH BÀI (theo cấp độ) ============ -->
 <section class="screen" id="screen-level">
   <div class="section-wrap">
@@ -3602,6 +3628,146 @@ function rewriteMediaPaths(obj, seen = new Set()){
   return obj;
 }
 [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,FINAL_EXAM_ID].forEach(n => { if (LESSONS[n]) rewriteMediaPaths(LESSONS[n]); });
+
+// ============================================================
+// HSK 2 — namespace dữ liệu RIÊNG, độc lập hoàn toàn với HSK1 ở trên.
+// Mỗi cấp độ mới (HSK3, HSK4...) lặp lại đúng khuôn này với hậu tố _HSK{n}.
+// ============================================================
+const LESSONS_META_HSK2 = [
+  {id:1, zh:"她请我们吃了北京烤鸭", py:"Tā qǐng wǒmen chīle Běijīng Kǎoyā", vi:"Chị ấy đã mời chúng em ăn vịt quay Bắc Kinh", goals:["Dùng “请”“让”“叫” để bày tỏ yêu cầu, thỉnh cầu","Trợ từ ngữ khí “吧” (2)","Câu “是……的”","Vịt quay Bắc Kinh và cách thưởng thức"]},
+];
+const LESSONS_HSK2 = {};
+LESSONS_META_HSK2.forEach(m => {
+  LESSONS_HSK2[m.id] = Object.assign({ready:false}, m);
+});
+const FINAL_EXAM_ID_HSK2 = null; // chưa có bài kiểm tra cuối khoá HSK2
+
+// Nội dung đầy đủ Bài 1 HSK2 — trích từ 《新HSK教程2》第1课 + SBT New HSK 2
+const LESSON_HSK2_1_CONTENT = {
+  texts: [
+    {
+      label:"Bài khoá 1", page:2, context:"Ở sân bay, Vương Nhất Tuyết đã đón được Bạch Gia Nguyệt và Annie.", audio:"audio/lesson1/text1.mp3", lines:[
+        {speaker:"白家月", speakerPy:"Bái Jiāyuè", speakerVi:"Bạch Gia Nguyệt", zh:"请问，您是王一飞老师的姐姐吗？", py:"Qǐngwèn, nín shì Wáng Yīfēi lǎoshī de jiějie ma?", vi:"Xin hỏi, chị là chị gái của cô Vương Nhất Phi phải không ạ?"},
+        {speaker:"王一雪", speakerPy:"Wáng Yīxuě", speakerVi:"Vương Nhất Tuyết", zh:"是的，你们就是她的学生吧？", py:"Shì de, nǐmen jiù shì tā de xuésheng ba?", vi:"Đúng rồi, các em là học sinh của cô ấy phải không?"},
+        {speaker:"白家月", speakerPy:"Bái Jiāyuè", speakerVi:"Bạch Gia Nguyệt", zh:"对。我是白家月，她是安妮。", py:"Duì. Wǒ shì Bái Jiāyuè, tā shì Ānnī.", vi:"Vâng ạ, em là Bạch Gia Nguyệt, bạn ấy là Annie."},
+        {speaker:"王一雪", speakerPy:"Wáng Yīxuě", speakerVi:"Vương Nhất Tuyết", zh:"你们好，我叫王一雪。一飞给我打电话了，让我来接你们。", py:"Nǐmen hǎo, wǒ jiào Wáng Yīxuě. Yīfēi gěi wǒ dǎ diànhuà le, ràng wǒ lái jiē nǐmen.", vi:"Chào các em. Chị tên là Vương Nhất Tuyết. Nhất Phi đã gọi điện thoại cho chị, nhờ chị đến đón các em."},
+        {speaker:"白家月, 安妮", speakerPy:"Bái Jiāyuè, Ānnī", speakerVi:"Bạch Gia Nguyệt, Annie", zh:"谢谢您。", py:"Xièxie nín.", vi:"Chúng em cảm ơn chị ạ."},
+        {speaker:"王一雪", speakerPy:"Wáng Yīxuě", speakerVi:"Vương Nhất Tuyết", zh:"不客气。", py:"Bú kèqi.", vi:"Đừng khách sáo vậy."},
+      ]
+    },
+    {
+      label:"Bài khoá 2", page:3, context:"Ở trong xe của Vương Nhất Tuyết, Bạch Gia Nguyệt, Annie và Vương Nhất Tuyết đang trò chuyện.", audio:"audio/lesson1/text2.mp3", lines:[
+        {speaker:"王一雪", speakerPy:"Wáng Yīxuě", speakerVi:"Vương Nhất Tuyết", zh:"你们是第一次来北京吗？", py:"Nǐmen shì dì-yī cì lái Běijīng ma?", vi:"Đây là lần đầu các em đến Bắc Kinh phải không?"},
+        {speaker:"白家月", speakerPy:"Bái Jiāyuè", speakerVi:"Bạch Gia Nguyệt", zh:"是的，我们都是第一次来。", py:"Shì de, wǒmen dōu shì dì-yī cì lái.", vi:"Vâng ạ, chúng em đều là lần đầu tiên đến đây ạ."},
+        {speaker:"王一雪", speakerPy:"Wáng Yīxuě", speakerVi:"Vương Nhất Tuyết", zh:"你们是来学中文的吗？", py:"Nǐmen shì lái xué Zhōngwén de ma?", vi:"Các em đến học tiếng Trung Quốc à?"},
+        {speaker:"安妮", speakerPy:"Ānnī", speakerVi:"Annie", zh:"不是，我们是来旅游的。", py:"Bú shì, wǒmen shì lái lǚyóu de.", vi:"Không phải, chúng em đến du lịch ạ."},
+        {speaker:"王一雪", speakerPy:"Wáng Yīxuě", speakerVi:"Vương Nhất Tuyết", zh:"我这几天都不忙，你们有事就找我。", py:"Wǒ zhè jǐ tiān dōu bù máng, nǐmen yǒu shì jiù zhǎo wǒ.", vi:"Mấy hôm nay chị đều không bận, các em có việc gì thì cứ tìm chị nhé."},
+        {speaker:"白家月", speakerPy:"Bái Jiāyuè", speakerVi:"Bạch Gia Nguyệt", zh:"好的，谢谢您。", py:"Hǎo de, xièxie nín.", vi:"Vâng ạ, cảm ơn chị."},
+      ]
+    },
+    {
+      label:"Bài khoá 3", page:5, context:"Ở trong xe của Vương Nhất Tuyết, Bạch Gia Nguyệt nhận được một cuộc điện thoại.", audio:"audio/lesson1/text3.mp3", lines:[
+        {speaker:"陈天中", speakerPy:"Chén Tiānzhōng", speakerVi:"Trần Thiên Trung", zh:"喂，家月，你明天有时间吗？我想请你帮个忙。", py:"Wèi, Jiāyuè, nǐ míngtiān yǒu shíjiān ma? Wǒ xiǎng qǐng nǐ bāng gè máng.", vi:"A lô, Gia Nguyệt à, mai bạn có thời gian không? Mình muốn nhờ bạn giúp một việc."},
+        {speaker:"白家月", speakerPy:"Bái Jiāyuè", speakerVi:"Bạch Gia Nguyệt", zh:"不好意思，天中，我已经到北京了。", py:"Bù hǎoyìsi, Tiānzhōng, wǒ yǐjīng dào Běijīng le.", vi:"Xin lỗi Thiên Trung nhé, mình đã đến Bắc Kinh rồi."},
+        {speaker:"陈天中", speakerPy:"Chén Tiānzhōng", speakerVi:"Trần Thiên Trung", zh:"你是什么时候到的？", py:"Nǐ shì shénme shíhou dào de?", vi:"Bạn đến khi nào vậy?"},
+        {speaker:"白家月", speakerPy:"Bái Jiāyuè", speakerVi:"Bạch Gia Nguyệt", zh:"我是今天早上到的。你有事可以叫李文帮忙，他还在学校呢。", py:"Wǒ shì jīntiān zǎoshang dào de. Nǐ yǒushì kěyǐ jiào Lǐ Wén bāngmáng, tā hái zài xuéxiào ne.", vi:"Mình đến sáng hôm nay. Nếu bạn cần giúp việc gì thì có thể nhờ Lý Văn nhé, bạn ấy vẫn đang ở trường."},
+        {speaker:"陈天中", speakerPy:"Chén Tiānzhōng", speakerVi:"Trần Thiên Trung", zh:"好的，那我给他打个电话。", py:"Hǎo de, nà wǒ gěi tā dǎ gè diànhuà.", vi:"Được rồi, vậy mình sẽ gọi điện thoại cho bạn ấy."},
+        {speaker:"白家月", speakerPy:"Bái Jiāyuè", speakerVi:"Bạch Gia Nguyệt", zh:"好，再见！", py:"Hǎo, zàijiàn!", vi:"Ừ, tạm biệt nhé."},
+      ]
+    },
+    {
+      label:"Bài khoá 4", page:7, context:"Ở khách sạn, Bạch Gia Nguyệt nhắn tin cho cô Vương Nhất Phi.", audio:"audio/lesson1/text4.mp3", lines:[
+        {speaker:"白家月", speakerPy:"Bái Jiāyuè", speakerVi:"Bạch Gia Nguyệt", zh:"王老师，我们已经到北京了，是您姐姐来接的我们。她请我们吃了北京烤鸭，还给我们介绍了很多东西。我们的中文不太好，有时不太懂她的意思。", py:"Wáng lǎoshī, wǒmen yǐjīng dào Běijīng le, shì nín jiějie lái jiē de wǒmen. Tā qǐng wǒmen chīle Běijīng Kǎoyā, hái gěi wǒmen jièshàole hěn duō dōngxi. Wǒmen de Zhōngwén bú tài hǎo, yǒushí bú tài dǒng tā de yìsi.", vi:"Thưa cô Vương, chúng em đã tới Bắc Kinh rồi, chị gái của cô đã tới đón chúng em. Chị ấy đã mời chúng em ăn vịt quay Bắc Kinh, còn giới thiệu cho chúng em rất nhiều thứ. Tiếng Trung Quốc của chúng em không tốt lắm, đôi khi chưa hiểu hết ý của chị ấy."},
+      ]
+    },
+  ],
+  audio: {
+    vocab: [], text: ["audio/lesson1/text1.mp3", "audio/lesson1/text2.mp3", "audio/lesson1/text3.mp3", "audio/lesson1/text4.mp3"], poem: "",
+  },
+  vocab: [
+    {zh:"就", py:"jiù", pos:"phó.", meaning:"chính (là), thì", ex:[{zh:"她就是我的姐姐。",py:"Tā jiù shì wǒ de jiějie."}, {zh:"他就是你的老师吧？",py:"Tā jiù shì nǐ de lǎoshī ba?"}], grp:0, wordAudio:"audio/lesson1/words/jiu.mp3"},
+    {zh:"给", py:"gěi", pos:"giới.", meaning:"cho", ex:[{zh:"老师给我们上课。",py:"Lǎoshī gěi wǒmen shàngkè."}, {zh:"妈妈给孩子们做饭。",py:"Māma gěi háizimen zuò fàn."}], grp:0, wordAudio:"audio/lesson1/words/gei.mp3"},
+    {zh:"让", py:"ràng", pos:"đgt.", meaning:"bảo, để, cho phép, nhờ", ex:[{zh:"你让他进来吧，外面太冷了。",py:"Nǐ ràng tā jìnlai ba, wàimiàn tài lěng le."}, {zh:"医生让我多休息。",py:"Yīshēng ràng wǒ duō xiūxi."}], grp:0, wordAudio:"audio/lesson1/words/rang.mp3"},
+    {zh:"接", py:"jiē", pos:"đgt.", meaning:"đón", ex:[{zh:"你开车来接我吧。",py:"Nǐ kāichē lái jiē wǒ ba."}, {zh:"我要去机场接一个朋友。",py:"Wǒ yào qù jīchǎng jiē yí gè péngyou."}], grp:0, wordAudio:"audio/lesson1/words/jie.mp3"},
+    {zh:"次", py:"cì", pos:"lượng.", meaning:"lần", ex:[{zh:"这是我第一次来中国。",py:"Zhè shì wǒ dì-yī cì lái Zhōngguó."}, {zh:"你来西安几次了？",py:"Nǐ lái Xī'ān jǐ cì le?"}], grp:0, wordAudio:"audio/lesson1/words/ci.mp3"},
+    {zh:"旅游", py:"lǚyóu", pos:"đgt.", meaning:"du lịch", ex:[{zh:"你想去哪儿旅游？",py:"Nǐ xiǎng qù nǎr lǚyóu?"}, {zh:"他现在在中国旅游。",py:"Tā xiànzài zài Zhōngguó lǚyóu."}], grp:0, wordAudio:"audio/lesson1/words/lvyou.mp3"},
+    {zh:"帮忙", py:"bāngmáng", pos:"đgt.", meaning:"giúp đỡ", ex:[{zh:"我想请你帮个忙。",py:"Wǒ xiǎng qǐng nǐ bāng gè máng."}, {zh:"你有事就找他，他会帮忙的。",py:"Nǐ yǒu shì jiù zhǎo tā, tā huì bāngmáng de."}], grp:0, wordAudio:"audio/lesson1/words/bangmang.mp3"},
+    {zh:"不好意思", py:"bù hǎoyìsi", pos:"", meaning:"xin lỗi, áy náy, ngại", ex:[{zh:"不好意思，请让一下。",py:"Bù hǎoyìsi, qǐng ràng yíxià."}, {zh:"不好意思，我今天没时间帮忙。",py:"Bù hǎoyìsi, wǒ jīntiān méi shíjiān bāngmáng."}], grp:0, wordAudio:"audio/lesson1/words/buhaoyisi.mp3"},
+    {zh:"已经", py:"yǐjīng", pos:"phó.", meaning:"đã", ex:[{zh:"他已经去学校了。",py:"Tā yǐjīng qù xuéxiào le."}, {zh:"妈妈已经睡觉了。",py:"Māma yǐjīng shuìjiào le."}], grp:0, wordAudio:"audio/lesson1/words/yijing.mp3"},
+    {zh:"那", py:"nà", pos:"liên.", meaning:"vậy, vậy thì, thế, thế thì", ex:[{zh:"那我们明天再去吧。",py:"Nà wǒmen míngtiān zài qù ba."}, {zh:"明天下雨。那我们不出去了。",py:"Míngtiān xiàyǔ. Nà wǒmen bù chūqù le."}], grp:0, wordAudio:"audio/lesson1/words/na.mp3"},
+    {zh:"介绍", py:"jièshào", pos:"đgt.", meaning:"giới thiệu", ex:[{zh:"她给我介绍了很多朋友。",py:"Tā gěi wǒ jièshàole hěn duō péngyou."}, {zh:"介绍一下你的新朋友吧。",py:"Jièshào yíxià nǐ de xīn péngyou ba."}], grp:0, wordAudio:"audio/lesson1/words/jieshao.mp3"},
+    {zh:"有时", py:"yǒushí", pos:"phó.", meaning:"có lúc, có khi", ex:[{zh:"我有时开车上班，有时坐出租车上班。",py:"Wǒ yǒushí kāichē shàngbān, yǒushí zuò chūzūchē shàngbān."}, {zh:"她有时7点起床，有时8点起床。",py:"Tā yǒushí qī diǎn qǐchuáng, yǒushí bā diǎn qǐchuáng."}], grp:0, wordAudio:"audio/lesson1/words/youshi.mp3"},
+    {zh:"懂", py:"dǒng", pos:"đgt.", meaning:"hiểu", ex:[{zh:"你懂了吗？",py:"Nǐ dǒngle ma?"}, {zh:"他听不懂中文。",py:"Tā tīng bu dǒng Zhōngwén."}], grp:0, wordAudio:"audio/lesson1/words/dong.mp3"},
+    {zh:"意思", py:"yìsi", pos:"dt.", meaning:"ý, ý nghĩa", ex:[{zh:"我不懂你的意思。",py:"Wǒ bù dǒng nǐ de yìsi."}, {zh:"这个词什么意思？",py:"Zhège cí shénme yìsi?"}], grp:0, wordAudio:"audio/lesson1/words/yisi.mp3"},
+    {zh:"北京烤鸭", py:"Běijīng Kǎoyā", pos:"dt. riêng", meaning:"vịt quay Bắc Kinh", ex:[{zh:"我想去北京吃北京烤鸭。",py:"Wǒ xiǎng qù Běijīng chī Běijīng Kǎoyā."}, {zh:"我喜欢吃北京烤鸭。",py:"Wǒ xǐhuan chī Běijīng Kǎoyā."}], grp:0, wordAudio:"audio/lesson1/words/beijingkaoya.mp3"},
+  ],
+  hanzi: [
+    {zh:"就", py:"jiù", meaning:"chính (là), thì", comps:[{c:"京",m:"kinh (kinh đô, trong 京)"}, {c:"尤",m:"vưu (đặc biệt, hơn nữa)"}]},
+    {zh:"给", py:"gěi", meaning:"cho", comps:[{c:"纟",m:"mịch (tơ, sợi)"}, {c:"合",m:"hợp"}]},
+    {zh:"让", py:"ràng", meaning:"bảo, cho phép, nhờ", comps:[{c:"讠",m:"ngôn (lời nói)"}, {c:"上",m:"thượng (trên)"}]},
+    {zh:"接", py:"jiē", meaning:"đón", comps:[{c:"扌",m:"thủ (tay)"}, {c:"妾",m:"thiếp"}]},
+    {zh:"次", py:"cì", meaning:"lần", comps:[{c:"冫",m:"băng (2 chấm thuỷ, đá lạnh)"}, {c:"欠",m:"khiếm (thiếu)"}]},
+    {zh:"旅", py:"lǚ", meaning:"lữ hành (trong 旅游)", comps:[{c:"方",m:"phương (lá cờ, hướng)"}, {c:"从",m:"tòng (đi theo, biến thể)"}]},
+    {zh:"游", py:"yóu", meaning:"du, đi chơi (trong 旅游)", comps:[{c:"氵",m:"thuỷ (nước)"}, {c:"斿",m:"biến thể của 遊 — du hành"}]},
+    {zh:"帮", py:"bāng", meaning:"giúp (trong 帮忙)", comps:[{c:"丰",m:"phong (x2, tượng hình)"}, {c:"巾",m:"cân (khăn)"}]},
+    {zh:"忙", py:"máng", meaning:"bận, vội (trong 帮忙)", comps:[{c:"忄",m:"tâm (trái tim, cảm xúc)"}, {c:"亡",m:"vong (mất, biến thể)"}]},
+    {zh:"不", py:"bù", meaning:"không (trong 不好意思)", comps:[{c:"一",m:"nhất (nét ngang, tượng hình chữ độc thể)"}]},
+    {zh:"好", py:"hǎo", meaning:"tốt, hay (trong 不好意思)", comps:[{c:"女",m:"nữ (con gái)"}, {c:"子",m:"tử (con)"}]},
+    {zh:"意", py:"yì", meaning:"ý (trong 不好意思/意思)", comps:[{c:"音",m:"âm (âm thanh)"}, {c:"心",m:"tâm (trái tim)"}]},
+    {zh:"思", py:"sī", meaning:"nghĩ, ý nghĩa (trong 不好意思/意思)", comps:[{c:"田",m:"điền (ruộng, biến thể)"}, {c:"心",m:"tâm (trái tim)"}]},
+    {zh:"已", py:"yǐ", meaning:"đã (trong 已经)", comps:[{c:"已",m:"chữ độc thể — bộ Kỷ biến thể"}]},
+    {zh:"经", py:"jīng", meaning:"đã trải qua (trong 已经)", comps:[{c:"纟",m:"mịch (tơ, sợi)"}, {c:"巠",m:"biến thể — dòng chảy"}]},
+    {zh:"那", py:"nà", meaning:"vậy thì, thế thì", comps:[{c:"⺕",m:"biến thể của 冄"}, {c:"阝",m:"ấp (thành, vùng đất — bên phải)"}]},
+    {zh:"介", py:"jiè", meaning:"giới (trong 介绍)", comps:[{c:"人",m:"nhân (người)"}, {c:"丨丨",m:"hai nét sổ — tượng hình ranh giới"}]},
+    {zh:"绍", py:"shào", meaning:"thiệu (trong 介绍)", comps:[{c:"纟",m:"mịch (tơ, sợi)"}, {c:"召",m:"triệu (gọi, mời)"}]},
+    {zh:"有", py:"yǒu", meaning:"có (trong 有时)", comps:[{c:"𠂇",m:"biến thể của tay"}, {c:"月",m:"nguyệt/nhục (thịt)"}]},
+    {zh:"时", py:"shí", meaning:"lúc, thời gian (trong 有时)", comps:[{c:"日",m:"nhật (mặt trời)"}, {c:"寺",m:"tự (chùa)"}]},
+    {zh:"懂", py:"dǒng", meaning:"hiểu", comps:[{c:"忄",m:"tâm (trái tim, nhận thức)"}, {c:"董",m:"đổng (họ Đổng, quản lý)"}]},
+    {zh:"北", py:"běi", meaning:"bắc (trong 北京烤鸭)", comps:[{c:"北",m:"chữ độc thể — tượng hình hai người quay lưng"}]},
+    {zh:"京", py:"jīng", meaning:"kinh đô (trong 北京烤鸭)", comps:[{c:"亠",m:"đầu (nét trên)"}, {c:"口",m:"khẩu (miệng)"}, {c:"小",m:"tiểu (biến thể — tượng hình gò cao)"}]},
+    {zh:"烤", py:"kǎo", meaning:"nướng (trong 北京烤鸭)", comps:[{c:"火",m:"hoả (lửa)"}, {c:"考",m:"khảo (thi, tra xét)"}]},
+    {zh:"鸭", py:"yā", meaning:"vịt (trong 北京烤鸭)", comps:[{c:"甲",m:"giáp (thứ nhất, mai)"}, {c:"鸟",m:"điểu (chim)"}]},
+  ],
+  hanziGroups: [
+    {word:"就", py:"jiù", chars:["就"]},
+    {word:"给", py:"gěi", chars:["给"]},
+    {word:"让", py:"ràng", chars:["让"]},
+    {word:"接", py:"jiē", chars:["接"]},
+    {word:"次", py:"cì", chars:["次"]},
+    {word:"旅游", py:"lǚyóu", chars:["旅", "游"]},
+    {word:"帮忙", py:"bāngmáng", chars:["帮", "忙"]},
+    {word:"不好意思", py:"bù hǎoyìsi", chars:["不", "好", "意", "思"]},
+    {word:"已经", py:"yǐjīng", chars:["已", "经"]},
+    {word:"那", py:"nà", chars:["那"]},
+    {word:"介绍", py:"jièshào", chars:["介", "绍"]},
+    {word:"有时", py:"yǒushí", chars:["有", "时"]},
+    {word:"懂", py:"dǒng", chars:["懂"]},
+    {word:"意思", py:"yìsi", chars:["意", "思"]},
+    {word:"北京烤鸭", py:"Běijīng Kǎoyā", chars:["北", "京", "烤", "鸭"]},
+  ],
+  sentences: [
+    {tokens:["我", "想", "请", "你", "帮", "个", "忙", "。"], answer:"我想请你帮个忙。", vi:"Tôi muốn nhờ bạn giúp một việc."},
+    {tokens:["你们", "就", "是", "她", "的", "学生", "吧", "？"], answer:"你们就是她的学生吧？", vi:"Các em chính là học sinh của cô ấy phải không?"},
+    {tokens:["我们", "是", "来", "旅游", "的", "。"], answer:"我们是来旅游的。", vi:"Chúng tôi đến đây để du lịch."},
+    {tokens:["王", "老师", "让", "我们", "说", "中文", "。"], answer:"王老师让我们说中文。", vi:"Cô Vương bảo chúng tôi nói tiếng Trung."},
+    {tokens:["我", "已经", "到", "北京", "了", "。"], answer:"我已经到北京了。", vi:"Tôi đã đến Bắc Kinh rồi."},
+    {tokens:["你", "是", "什么", "时候", "到", "的", "？"], answer:"你是什么时候到的？", vi:"Bạn đến vào lúc nào vậy?"},
+  ],
+  grammar: [
+    { tag:"Ngữ pháp", title:"Dùng “请”“让”“叫” để bày tỏ yêu cầu, thỉnh cầu (câu kiêm ngữ)", explain:"Vị ngữ của câu kiêm ngữ được tạo thành bởi hai cụm động từ, trong đó tân ngữ của động từ thứ nhất đồng thời là chủ ngữ của động từ thứ hai. Khi động từ thứ nhất là “请”, “让”, “叫”, dùng để biểu thị ý mời, phiền, nhờ, cho phép, yêu cầu, sai bảo... ai đó làm gì. Cấu trúc: Chủ ngữ + 请/让/叫 + tân ngữ (→chủ ngữ của động từ 2) + động từ hoặc cụm động từ.", examples:[{zh:"我想请你帮个忙。", vi:"Tôi muốn nhờ bạn giúp một việc."}, {zh:"王老师让我们说中文。", vi:"Cô Vương bảo chúng tôi nói tiếng Trung."}, {zh:"妈妈叫孩子们回家。", vi:"Mẹ gọi các con về nhà."}] },
+    { tag:"Ngữ khí", title:"Trợ từ ngữ khí “吧” (2)", explain:"Trợ từ ngữ khí “吧” đặt cuối câu nghi vấn để diễn đạt ngữ khí suy đoán, ước tính (người nói đã có phần chắc chắn về câu trả lời, chỉ hỏi lại để xác nhận).", examples:[{zh:"你们就是她的学生吧？", vi:"Các em chính là học sinh của cô ấy phải không?"}, {zh:"她唱歌很好听吧？", vi:"Cô ấy hát hay lắm phải không?"}, {zh:"陈天中是泰国人吧？", vi:"Trần Thiên Trung là người Thái Lan phải không?"}] },
+    { tag:"Ngữ pháp", title:"Câu “是……的”", explain:"Câu “是……的” dùng để nhấn mạnh thời gian, địa điểm, cách thức, người thực hiện động tác, mục đích... của một sự việc ĐÃ xảy ra. Trong câu khẳng định và câu nghi vấn có thể lược bỏ “是”, nhưng trong câu phủ định KHÔNG được lược bỏ “是”.", examples:[{zh:"我们是来旅游的。", vi:"Chúng tôi đến đây là để du lịch."}, {zh:"苹果在哪儿买的？", vi:"Táo mua ở đâu vậy?"}, {zh:"我们不是坐出租车去的。", vi:"Chúng tôi không phải đi bằng taxi."}] },
+  ],
+  grammarPractice: [
+    {question:"老师______我们多说中文。(Thầy giáo bảo chúng tôi nói nhiều tiếng Trung hơn.)", options:["请", "让", "那"], answer:"让"},
+    {question:"你们就是她的学生______？(Các em chính là học sinh của cô ấy phải không?)", options:["吧", "呢", "吗"], answer:"吧"},
+    {question:"我们______来旅游的，不是来学中文的。(Chúng tôi là đến du lịch, không phải đến học tiếng Trung.)", options:["是", "在", "会"], answer:"是"},
+    {question:"A：你是什么时候到的？ B：我______到的。(Tôi đến vào sáng nay.)", options:["今天早上", "早上会", "会今天早上"], answer:"今天早上"},
+    {question:"不好意思，我今天没时间______。(Xin lỗi, hôm nay tôi không có thời gian giúp đỡ.)", options:["帮忙", "帮个", "忙帮"], answer:"帮忙"},
+  ],
+};
+LESSONS_HSK2[1] = Object.assign(LESSONS_HSK2[1], LESSON_HSK2_1_CONTENT, {ready:true});
+[1].forEach(n => { if (LESSONS_HSK2[n]) rewriteMediaPaths(LESSONS_HSK2[n]); });
 // (WORKBOOK_LESSONS / MOCKTEST_LESSONS / PHONETICS_LESSONS được xử lý ở dưới,
 //  ngay sau khi chúng được khai báo — xem gần cuối file)
 
@@ -3713,6 +3879,7 @@ const PINYIN_ROWS = [
 
 const screens = {
   home: document.getElementById('screen-home'),
+  hskPicker: document.getElementById('screen-hsk-picker'),
   level: document.getElementById('screen-level'),
   lesson: document.getElementById('screen-lesson'),
   radicals: document.getElementById('screen-radicals'),
@@ -3725,6 +3892,14 @@ const backBtn = document.getElementById('back-btn');
 
 let currentScreen = 'home';
 let navStack = [];
+let currentCourse = 'hsk1'; // 'hsk1' | 'hsk2' — quyết định bộ dữ liệu LESSONS/MOCKTEST nào đang active
+const COURSE_TITLES = { hsk1: 'HSK 1', hsk2: 'HSK 2' };
+function activeLessonsMeta(){ return currentCourse === 'hsk2' ? LESSONS_META_HSK2 : LESSONS_META; }
+function activeLessons(){ return currentCourse === 'hsk2' ? LESSONS_HSK2 : LESSONS; }
+function activeMocktest(){ return currentCourse === 'hsk2' ? MOCKTEST_LESSONS_HSK2 : MOCKTEST_LESSONS; }
+function activeWorkbook(){ return currentCourse === 'hsk2' ? WORKBOOK_LESSONS_HSK2 : WORKBOOK_LESSONS; }
+function activeExerciseMap(){ return currentCourse === 'hsk2' ? MOCKTEST_EXERCISE_MAP_HSK2 : MOCKTEST_EXERCISE_MAP; }
+function activeFinalExamId(){ return currentCourse === 'hsk2' ? FINAL_EXAM_ID_HSK2 : FINAL_EXAM_ID; }
 
 function showScreen(name, title){
   Object.values(screens).forEach(s => s.classList.remove('active'));
@@ -3739,17 +3914,29 @@ function showScreen(name, title){
   }
 }
 
-function openLevelListScreen(){
+function openHskPickerScreen(){
   navStack = ['home'];
-  renderLessonGrid();
-  showScreen('level', 'HSK 1 · Danh sách bài');
+  showScreen('hskPicker', 'Chọn cấp độ HSK');
 }
-document.querySelectorAll('.level-card.enabled').forEach(card=>{
-  card.addEventListener('click', openLevelListScreen);
+function openLevelListScreen(course){
+  if(course) currentCourse = course;
+  navStack = ['home', 'hskPicker'];
+  renderLessonGrid();
+  const totalLessons = activeLessonsMeta().length;
+  document.getElementById('level-title').textContent = COURSE_TITLES[currentCourse] + ' · ' + totalLessons + ' bài học';
+  showScreen('level', COURSE_TITLES[currentCourse] + ' · Danh sách bài');
+}
+document.querySelectorAll('#hsk-level-grid .level-card.enabled').forEach(card=>{
+  card.addEventListener('click', ()=> openLevelListScreen(card.dataset.course));
+});
+['nav-open-hsk','footer-open-hsk'].forEach(id=>{
+  const el = document.getElementById(id);
+  if(el) el.addEventListener('click', (e)=>{ e.preventDefault(); openHskPickerScreen(); });
 });
 
 backBtn.addEventListener('click', ()=>{
-  if(currentScreen === 'lesson'){ showScreen('level','HSK 1 · Danh sách bài'); }
+  if(currentScreen === 'lesson'){ showScreen('level', COURSE_TITLES[currentCourse] + ' · Danh sách bài'); }
+  else if(currentScreen === 'level'){ showScreen('hskPicker', 'Chọn cấp độ HSK'); }
   else { showScreen('home'); }
 });
 
@@ -3976,9 +4163,6 @@ function renderSubmissions(rows){
 }
 
 
-document.getElementById('nav-open-hsk').addEventListener('click', (e)=>{ e.preventDefault(); openLevelListScreen(); });
-document.getElementById('footer-open-hsk').addEventListener('click', (e)=>{ e.preventDefault(); openLevelListScreen(); });
-
 document.querySelectorAll('[data-scroll]').forEach(el=>{
   el.addEventListener('click', (e)=>{
     e.preventDefault();
@@ -4038,9 +4222,12 @@ document.getElementById('radical-search').addEventListener('input', (e)=>{
 
 function renderLessonGrid(){
   const grid = document.getElementById('lesson-grid');
+  const META = activeLessonsMeta();
+  const LSN = activeLessons();
+  const examId = activeFinalExamId();
   let html = '';
-  LESSONS_META.forEach(m=>{
-    const ready = LESSONS[m.id].ready;
+  META.forEach(m=>{
+    const ready = LSN[m.id].ready;
     html += `<button class="lesson-card ${ready?'enabled':'locked'}" data-id="${m.id}" ${ready?'':'disabled'}>
       ${ready?'':'<span class="lesson-lock">🔒 sắp có</span>'}
       <div class="seal lesson-seal${SEAL_NUM[m.id].length>1?' seal-wide':''}">${SEAL_NUM[m.id]}</div>
@@ -4051,17 +4238,19 @@ function renderLessonGrid(){
       </div>
     </button>`;
   });
-  // Bài kiểm tra cuối khoá HSK1 — 1 thẻ duy nhất, đặt sau toàn bộ 15 bài
-  const examReady = LESSONS[FINAL_EXAM_ID] && LESSONS[FINAL_EXAM_ID].ready;
-  html += `<button class="lesson-card final-exam-card ${examReady?'enabled':'locked'}" data-id="${FINAL_EXAM_ID}" ${examReady?'':'disabled'}>
-    ${examReady?'':'<span class="lesson-lock">🔒 sắp có</span>'}
-    <div class="seal lesson-seal">🏆</div>
-    <div class="lesson-card-body">
-      <div class="num">Kiểm tra cuối khoá</div>
-      <div class="zh hanzi" style="font-size:18px;">HSK（一级）模拟试卷</div>
-      <div class="vi">Đề thi thử HSK1 chuẩn — 40 câu (20 nghe + 20 đọc)</div>
-    </div>
-  </button>`;
+  // Bài kiểm tra cuối khoá — 1 thẻ duy nhất, đặt sau toàn bộ bài học (nếu cấp độ này có)
+  if (examId) {
+    const examReady = LSN[examId] && LSN[examId].ready;
+    html += `<button class="lesson-card final-exam-card ${examReady?'enabled':'locked'}" data-id="${examId}" ${examReady?'':'disabled'}>
+      ${examReady?'':'<span class="lesson-lock">🔒 sắp có</span>'}
+      <div class="seal lesson-seal">🏆</div>
+      <div class="lesson-card-body">
+        <div class="num">Kiểm tra cuối khoá</div>
+        <div class="zh hanzi" style="font-size:18px;">HSK（${currentCourse==='hsk2'?'二':'一'}级）模拟试卷</div>
+        <div class="vi">Đề thi thử ${COURSE_TITLES[currentCourse]} chuẩn</div>
+      </div>
+    </button>`;
+  }
   grid.innerHTML = html;
   grid.querySelectorAll('.lesson-card.enabled').forEach(card=>{
     card.addEventListener('click', ()=> openLesson(parseInt(card.dataset.id)));
@@ -4070,8 +4259,8 @@ function renderLessonGrid(){
 
 function openLesson(id){
   currentLessonId = id;
-  const L = LESSONS[id];
-  const isExam = (id === FINAL_EXAM_ID);
+  const L = activeLessons()[id];
+  const isExam = (id === activeFinalExamId());
   const sealEl = document.getElementById('lesson-seal');
   sealEl.textContent = isExam ? '🏆' : SEAL_NUM[id];
   sealEl.classList.toggle('seal-wide', !isExam && SEAL_NUM[id].length > 1);
@@ -4125,9 +4314,9 @@ function initLessonPanels(L){
   initFlashcards(L.vocab);
   initTexts(L.texts);
   initPronun(L.vocab);
-  if (MOCKTEST_LESSONS[L.id]) {
+  if (activeMocktest()[L.id]) {
     initMockTestHomework(L.id);
-  } else if (WORKBOOK_LESSONS[L.id]) {
+  } else if (activeWorkbook()[L.id]) {
     initWorkbookHomework(L.id);
   } else {
     initHomework(L.homework);
@@ -5133,6 +5322,84 @@ const MOCKTEST_LESSONS = {
   },
 };
 
+const MOCKTEST_LESSONS_HSK2 = {
+  1: {
+    audio: "audio/lesson1/mocktest.mp3",
+    listening: [
+      {
+        part: "Phần 1 — Nghe và chọn đúng tranh", kind: "own_img",
+        questions: [
+          {images:["assets/lesson1/listen1_q1_A.jpg", "assets/lesson1/listen1_q1_B.jpg", "assets/lesson1/listen1_q1_C.jpg"], answer:0},
+          {images:["assets/lesson1/listen1_q2_A.jpg", "assets/lesson1/listen1_q2_B.jpg", "assets/lesson1/listen1_q2_C.jpg"], answer:2},
+          {images:["assets/lesson1/listen1_q3_A.jpg", "assets/lesson1/listen1_q3_B.jpg", "assets/lesson1/listen1_q3_C.jpg"], answer:1},
+        ],
+      },
+      {
+        part: "Phần 2 — Nghe hội thoại, chọn tranh phù hợp nhất", kind: "shared_img",
+        pool: ["assets/lesson1/listen2_A.jpg", "assets/lesson1/listen2_B.jpg", "assets/lesson1/listen2_C.jpg", "assets/lesson1/listen2_D.jpg"],
+        questions: [
+          {answer:2},
+          {answer:0},
+          {answer:1},
+        ],
+      },
+      {
+        part: "Phần 3 — Nghe hội thoại, chọn đáp án đúng", kind: "own_text",
+        questions: [
+          {options:[{zh:"饭店",py:"fàndiàn"}, {zh:"超市",py:"chāoshì"}, {zh:"学校",py:"xuéxiào"}], answer:0},
+          {options:[{zh:"北京",py:"Běijīng"}, {zh:"上海",py:"Shànghǎi"}, {zh:"西安",py:"Xī'ān"}], answer:1},
+          {options:[{zh:"学习",py:"xuéxí"}, {zh:"下班",py:"xiàbān"}, {zh:"买菜",py:"mǎi cài"}], answer:0},
+          {options:[{zh:"今天",py:"jīntiān"}, {zh:"明天",py:"míngtiān"}, {zh:"星期天",py:"Xīngqītiān"}], answer:2},
+        ],
+      },
+    ],
+    reading: [
+      {
+        part: "Phần 1 — Chọn tranh phù hợp với câu", kind: "shared_img_prompt",
+        pool: ["assets/lesson1/read1_A.jpg", "assets/lesson1/read1_B.jpg", "assets/lesson1/read1_C.jpg", "assets/lesson1/read1_D.jpg"],
+        questions: [
+          {prompt:{zh:"我们是来旅游的。",py:"Wǒmen shì lái lǚyóu de."}, answer:1},
+          {prompt:{zh:"我给你介绍几个新朋友。",py:"Wǒ gěi nǐ jièshào jǐ gè xīn péngyou."}, answer:2},
+          {prompt:{zh:"天中，请你说一下这个字的意思。",py:"Tiānzhōng, qǐng nǐ shuō yíxià zhège zì de yìsi."}, answer:0},
+        ],
+      },
+      {
+        part: "Phần 2 — Chọn từ điền vào chỗ trống", kind: "fill_blank",
+        pool: [{zh:"次",py:"cì"}, {zh:"懂",py:"dǒng"}, {zh:"给",py:"gěi"}, {zh:"不好意思",py:"bù hǎoyìsi"}, {zh:"完",py:"wán"}],
+        questions: [
+          {prompt:{zh:"我是昨天（　）妈妈打的电话。",py:"Wǒ shì zuótiān ( ) māma dǎ de diànhuà."}, answer:2},
+          {prompt:{zh:"这已经是我第三（　）来西安旅游了。",py:"Zhè yǐjīng shì wǒ dì-sān ( ) lái Xī'ān lǚyóu le."}, answer:0},
+          {prompt:{zh:"这几个字的意思我都不（　）。",py:"Zhè jǐ gè zì de yìsi wǒ dōu bù ( )."}, answer:1},
+          {prompt:{zh:"（　），我家里有点儿事，今天不能去了。",py:"( ), wǒ jiā li yǒu diǎnr shì, jīntiān bù néng qù le."}, answer:3},
+        ],
+      },
+      {
+        part: "Phần 3 — Nối câu", kind: "shared_text_prompt",
+        pool: [{zh:"不是，我是来上学的。",py:"Bú shì, wǒ shì lái shàngxué de."}, {zh:"不客气，有事就给我打电话。",py:"Bú kèqi, yǒu shì jiù gěi wǒ dǎ diànhuà."}, {zh:"王老师，她说这儿的饺子非常好吃。",py:"Wáng lǎoshī, tā shuō zhèr de jiǎozi fēicháng hǎochī."}, {zh:"我爸爸，他是中国人。",py:"Wǒ bàba, tā shì Zhōngguó rén."}, {zh:"他出去了，一会儿就回来。",py:"Tā chūqu le, yíhuìr jiù huílai."}],
+        questions: [
+          {prompt:{zh:"你是来旅游的吧？",py:"Nǐ shì lái lǚyóu de ba?"}, answer:0},
+          {prompt:{zh:"是谁给你介绍的这家饭店？",py:"Shì shéi gěi nǐ jièshào de zhè jiā fàndiàn?"}, answer:2},
+          {prompt:{zh:"谢谢你这几天都来帮忙。",py:"Xièxie nǐ zhè jǐ tiān dōu lái bāngmáng."}, answer:1},
+          {prompt:{zh:"是谁让你学中文的？",py:"Shì shéi ràng nǐ xué Zhōngwén de?"}, answer:3},
+        ],
+      },
+      {
+        part: "Phần 4 — Đọc đoạn văn, chọn đáp án đúng", kind: "reading_q",
+        questions: [
+          {options:[{zh:"车",py:"chē"}, {zh:"饭店",py:"fàndiàn"}, {zh:"西安",py:"Xī'ān"}], passage:{zh:"到了西安，朋友来接我们，还给我们介绍了一家饭店。我们开车去了那里，菜都很好吃。",py:"Dàole Xī'ān, péngyou lái jiē wǒmen, hái gěi wǒmen jièshàole yì jiā fàndiàn. Wǒmen kāichē qùle nàlǐ, cài dōu hěn hǎochī."}, question:{zh:"朋友介绍了什么？",py:"Péngyou jièshàole shénme?"}, answer:1},
+          {options:[{zh:"请他吃饭",py:"qǐng tā chī fàn"}, {zh:"开车接他",py:"kāichē jiē tā"}, {zh:"不在北京",py:"bú zài Běijīng"}], passage:{zh:"我在北京旅游的时候，一雪姐请我吃了烤鸭，还给我介绍了很多东西。现在，我们已经是好朋友了。",py:"Wǒ zài Běijīng lǚyóu de shíhou, Yīxuě jiě qǐng wǒ chīle kǎoyā, hái gěi wǒ jièshàole hěn duō dōngxi. Xiànzài, wǒmen yǐjīng shì hǎo péngyou le."}, question:{zh:"他在北京旅游时，一雪：",py:"Tā zài Běijīng lǚyóu shí, Yīxuě:"}, answer:0},
+          {options:[{zh:"北京",py:"Běijīng"}, {zh:"上海",py:"Shànghǎi"}, {zh:"西安",py:"Xī'ān"}], passage:{zh:"我家在北京，我爸爸现在在上海工作，他让我和妈妈这个星期六坐火车去上海看他。爸爸说，他会接我们。",py:"Wǒ jiā zài Běijīng, wǒ bàba xiànzài zài Shànghǎi gōngzuò, tā ràng wǒ hé māma zhège Xīngqīliù zuò huǒchē qù Shànghǎi kàn tā. Bàba shuō, tā huì jiē wǒmen."}, question:{zh:"爸爸现在在哪儿工作？",py:"Bàba xiànzài zài nǎr gōngzuò?"}, answer:1},
+        ],
+      },
+    ],
+  },
+};
+const WORKBOOK_LESSONS_HSK2 = {};
+rewriteMediaPaths(MOCKTEST_LESSONS_HSK2);
+const MOCKTEST_EXERCISE_MAP_HSK2 = {
+  1: 'ca111bb1-7f0a-4512-a9f9-0ba4fe273e2c',
+};
+
 const MOCKTEST_EXERCISE_MAP = {
   4: '3c8c9d5c-035c-4511-9b65-10b1e8d73315',
   5: '23ab708b-c8fe-4a33-9d38-6c6b803b7486',
@@ -5150,8 +5417,8 @@ const MOCKTEST_EXERCISE_MAP = {
 };
 async function initMockTestHomework(lessonId){
   const container = document.getElementById('hw-container');
-  const data = MOCKTEST_LESSONS[lessonId];
-  const exId = MOCKTEST_EXERCISE_MAP[lessonId];
+  const data = activeMocktest()[lessonId];
+  const exId = activeExerciseMap()[lessonId];
   if(!data || !exId){ container.innerHTML = '<p style="color:var(--ink-soft);font-size:16px;">Bài này chưa có bài thi mô phỏng.</p>'; return; }
 
   const isPreview = TEACHER_PREVIEW_MODE;
@@ -5626,8 +5893,8 @@ async function initPhoneticsHomework(lessonId){
 
 async function initWorkbookHomework(lessonId){
   const container = document.getElementById('hw-container');
-  const data = WORKBOOK_LESSONS[lessonId];
-  const map = WORKBOOK_EXERCISE_MAP[lessonId];
+  const data = activeWorkbook()[lessonId];
+  const map = (currentCourse === 'hsk2' ? (typeof WORKBOOK_EXERCISE_MAP_HSK2 !== 'undefined' ? WORKBOOK_EXERCISE_MAP_HSK2 : {}) : WORKBOOK_EXERCISE_MAP)[lessonId];
   if(!data || !map){ container.innerHTML = '<p style="color:var(--ink-soft);font-size:16px;">Bài này chưa có dữ liệu bài tập.</p>'; return; }
 
   const isPreview = TEACHER_PREVIEW_MODE;

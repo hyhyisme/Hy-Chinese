@@ -49,6 +49,14 @@
 <script src="js/supabase-config.js"></script>
 <script src="js/supabase-client.js"></script>
 <script>
+// Chống lỗi Chrome/Safari phục hồi trang cũ từ bộ nhớ đệm back-forward (bfcache)
+// khi bấm Back/Forward hoặc điều hướng lại — nếu không ép tải lại, trang sẽ giữ
+// nguyên trạng thái đăng nhập CŨ (vd: còn hiện học sinh khác dù vừa đăng nhập giáo viên).
+window.addEventListener('pageshow', (event) => {
+  if (event.persisted) window.location.reload();
+});
+</script>
+<script>
 // nếu học sinh đã join trước đó trên thiết bị này -> vào thẳng
 (async () => {
   const existing = await getCurrentStudent();

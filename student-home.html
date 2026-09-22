@@ -873,6 +873,14 @@ a{color:inherit;text-decoration:none;}
 <script src="js/supabase-config.js"></script>
 <script src="js/supabase-client.js"></script>
 <script>
+// Chống lỗi Chrome/Safari phục hồi trang cũ từ bộ nhớ đệm back-forward (bfcache)
+// khi bấm Back/Forward hoặc điều hướng lại — nếu không ép tải lại, trang sẽ giữ
+// nguyên trạng thái đăng nhập CŨ (vd: còn hiện học sinh khác dù vừa đăng nhập giáo viên).
+window.addEventListener('pageshow', (event) => {
+  if (event.persisted) window.location.reload();
+});
+</script>
+<script>
 // TRACKING khai báo sớm ở đây (thay vì ở dưới) để gán được studentName/studentClass
 // thật từ Supabase ngay khi xác thực xong — endpoint Google Sheets cũ vẫn giữ để
 // log các sự kiện học tập KHÁC (không phải bài tập nộp), không bắt buộc phải hoạt động.

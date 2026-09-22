@@ -121,7 +121,7 @@ async function getCurrentStudent() {
   // Lớp bảo vệ: phiên KHÔNG ẩn danh (đăng nhập email/mật khẩu = giáo viên) không bao giờ
   // được coi là học sinh, kể cả nếu dữ liệu cũ trong bảng students lỡ bị gán nhầm auth_uid.
   if (!user.is_anonymous) return null;
-  const { data, error } = await sb.from('students').select('*, classes(name)').eq('auth_uid', user.id).maybeSingle();
+  const { data, error } = await sb.from('students').select('*, classes(name, hsk_level)').eq('auth_uid', user.id).maybeSingle();
   if (error) return null;
   return data;
 }

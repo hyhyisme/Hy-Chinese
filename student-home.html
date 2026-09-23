@@ -881,6 +881,19 @@ window.addEventListener('pageshow', (event) => {
 });
 </script>
 <script>
+// Chỉ cho phép 1 audio phát cùng lúc trên toàn trang (bài khoá, từ vựng, phát âm,
+// bài tập nộp...) — hễ bấm play file nào thì mọi audio khác đang chạy tự động dừng lại.
+// Dùng "capture: true" vì sự kiện 'play' của thẻ <audio> KHÔNG bubble lên document,
+// nên phải bắt ở pha capture (từ document đi xuống) mới nghe được cho mọi audio,
+// kể cả những audio được thêm động vào trang sau này (không cần gắn listener riêng lẻ).
+document.addEventListener('play', function(e){
+  if (e.target.tagName !== 'AUDIO' && e.target.tagName !== 'VIDEO') return;
+  document.querySelectorAll('audio, video').forEach(function(el){
+    if (el !== e.target && !el.paused) el.pause();
+  });
+}, true);
+</script>
+<script>
 // TRACKING khai báo sớm ở đây (thay vì ở dưới) để gán được studentName/studentClass
 // thật từ Supabase ngay khi xác thực xong — endpoint Google Sheets cũ vẫn giữ để
 // log các sự kiện học tập KHÁC (không phải bài tập nộp), không bắt buộc phải hoạt động.
@@ -5522,8 +5535,7 @@ async function initMockTestHomework(lessonId){
     let audioHtml = '';
     if(item.q.qAudio){
       audioHtml = `<div style="margin:4px 0 8px;">
-        <audio class="mt-q-audio" data-gidx="${gIdx}" src="${item.q.qAudio}" style="height:32px;vertical-align:middle;"></audio>
-        <button type="button" class="mt-replay-btn" data-gidx="${gIdx}" style="margin-left:6px;font-size:13px;padding:4px 10px;border-radius:8px;border:1px solid var(--line,#ecdfd0);background:#fff;cursor:pointer;">🔊 Nghe lại câu này</button>
+        <audio class="mt-q-audio" data-gidx="${gIdx}" src="${item.q.qAudio}" controls style="width:100%;max-width:360px;height:36px;vertical-align:middle;"></audio>
       </div>`;
     }
     let transcriptHtml = '';
@@ -5569,15 +5581,6 @@ async function initMockTestHomework(lessonId){
   `;
 
   const selected = {}; // gIdx -> chosen option index
-
-  // Nút "Nghe lại câu này" — dùng được cả khi đang làm bài lẫn sau khi nộp/xem trước
-  container.querySelectorAll('.mt-replay-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const gIdx = btn.dataset.gidx;
-      const audioEl = container.querySelector(`.mt-q-audio[data-gidx="${gIdx}"]`);
-      if(audioEl){ audioEl.currentTime = 0; audioEl.play(); }
-    });
-  });
 
   // Transcript chỉ hiện SAU khi nộp bài / ở chế độ xem trước — tránh lộ đáp án khi đang làm bài
   function revealTranscripts(){

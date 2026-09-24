@@ -3661,6 +3661,7 @@ function rewriteMediaPaths(obj, seen = new Set()){
 // ============================================================
 const LESSONS_META_HSK2 = [
   {id:1, zh:"她请我们吃了北京烤鸭", py:"Tā qǐng wǒmen chīle Běijīng Kǎoyā", vi:"Chị ấy đã mời chúng em ăn vịt quay Bắc Kinh", goals:["Dùng “请”“让”“叫” để bày tỏ yêu cầu, thỉnh cầu","Trợ từ ngữ khí “吧” (2)","Câu “是……的”","Vịt quay Bắc Kinh và cách thưởng thức"]},
+  {id:2, zh:"还是打车去北大吧", py:"Háishi dǎchē qù Běidà ba", vi:"Chúng ta vẫn nên gọi taxi đi Đại học Bắc Kinh nhé", goals:["Giới thiệu thông tin cơ bản của một trường học","Sử dụng “多” để diễn đạt số ước lượng","Cấu trúc cố định “还是……吧”","Đại học Bắc Kinh"]},
 ];
 const LESSONS_HSK2 = {};
 LESSONS_META_HSK2.forEach(m => {
@@ -3793,7 +3794,137 @@ const LESSON_HSK2_1_CONTENT = {
   ],
 };
 LESSONS_HSK2[1] = Object.assign(LESSONS_HSK2[1], LESSON_HSK2_1_CONTENT, {ready:true});
-[1].forEach(n => { if (LESSONS_HSK2[n]) rewriteMediaPaths(LESSONS_HSK2[n]); });
+const LESSON_HSK2_2_CONTENT = {
+  texts: [
+    {
+      label:"Bài khoá 1", page:11, context:"Ở sảnh khách sạn, Bạch Gia Nguyệt và Annie hỏi nhân viên phục vụ.", audio:"audio/hsk2/lesson2/text1.mp3", lines:[
+        {speaker:"白家月", speakerPy:"Bái Jiāyuè", speakerVi:"Bạch Gia Nguyệt", zh:"请问，这儿有到北京大学的公交车吗？", py:"Qǐngwèn, zhèr yǒu dào Běijīng Dàxué de gōngjiāochē ma?", vi:"Xin hỏi, ở đây có xe buýt đi đến Đại học Bắc Kinh không ạ?"},
+        {speaker:"服务员", speakerPy:"fúwùyuán", speakerVi:"Nhân viên phục vụ", zh:"有，但车站有点儿远。", py:"Yǒu, dàn chēzhàn yǒudiǎnr yuǎn.", vi:"Có ạ, nhưng bến xe hơi xa một chút."},
+        {speaker:"白家月", speakerPy:"Bái Jiāyuè", speakerVi:"Bạch Gia Nguyệt", zh:"这儿好打车吗？", py:"Zhèr hǎo dǎchē ma?", vi:"Ở đây có dễ gọi taxi không ạ?"},
+        {speaker:"服务员", speakerPy:"fúwùyuán", speakerVi:"Nhân viên phục vụ", zh:"好打车。", py:"Hǎo dǎchē.", vi:"Dễ gọi taxi ạ."},
+        {speaker:"白家月", speakerPy:"Bái Jiāyuè", speakerVi:"Bạch Gia Nguyệt", zh:"谢谢。安妮，我们还是打车去吧。", py:"Xièxie. Ānnī, wǒmen háishi dǎchē qù ba.", vi:"Cảm ơn chị. Annie, chúng ta vẫn nên gọi taxi đi thôi."},
+        {speaker:"安妮", speakerPy:"Ānnī", speakerVi:"Annie", zh:"好，没问题。", py:"Hǎo, méi wèntí.", vi:"Được, không vấn đề gì."},
+      ]
+    },
+    {
+      label:"Bài khoá 2", page:12, context:"Ở Đại học Bắc Kinh, Bạch Gia Nguyệt và Annie đang tham quan khuôn viên trường.", audio:"audio/hsk2/lesson2/text2.mp3", lines:[
+        {speaker:"白家月", speakerPy:"Bái Jiāyuè", speakerVi:"Bạch Gia Nguyệt", zh:"学校里人真多啊！", py:"Xuéxiào li rén zhēn duō a!", vi:"Trường học đông người thật đấy!"},
+        {speaker:"安妮", speakerPy:"Ānnī", speakerVi:"Annie", zh:"是啊，北京大学有四万多名学生呢！", py:"Shì a, Běijīng Dàxué yǒu sìwàn duō míng xuésheng ne!", vi:"Đúng vậy, Đại học Bắc Kinh có hơn bốn vạn sinh viên đấy!"},
+        {speaker:"白家月", speakerPy:"Bái Jiāyuè", speakerVi:"Bạch Gia Nguyệt", zh:"你是怎么知道的？", py:"Nǐ shì zěnme zhīdào de?", vi:"Bạn biết được điều đó bằng cách nào vậy?"},
+        {speaker:"安妮", speakerPy:"Ānnī", speakerVi:"Annie", zh:"是网上说的，网上还说北京大学有三千多名外国学生。", py:"Shì wǎngshang shuō de, wǎngshang hái shuō Běijīng Dàxué yǒu sānqiān duō míng wàiguó xuésheng.", vi:"Là trên mạng nói vậy, trên mạng còn nói Đại học Bắc Kinh có hơn ba nghìn sinh viên nước ngoài."},
+        {speaker:"白家月", speakerPy:"Bái Jiāyuè", speakerVi:"Bạch Gia Nguyệt", zh:"我也想来这儿学习。", py:"Wǒ yě xiǎng lái zhèr xuéxí.", vi:"Mình cũng muốn đến đây học tập."},
+        {speaker:"安妮", speakerPy:"Ānnī", speakerVi:"Annie", zh:"那边就有一间教室，我们去看一下吧。", py:"Nàbian jiù yǒu yì jiān jiàoshì, wǒmen qù kàn yíxià ba.", vi:"Đằng kia có một phòng học, chúng ta đến xem thử đi."},
+      ]
+    },
+    {
+      label:"Bài khoá 3", page:14, context:"Ở Đại học Bắc Kinh, Bạch Gia Nguyệt và Annie đang tham quan khuôn viên trường.", audio:"audio/hsk2/lesson2/text3.mp3", lines:[
+        {speaker:"安妮", speakerPy:"Ānnī", speakerVi:"Annie", zh:"家月，你看，学校里有家电影院！", py:"Jiāyuè, nǐ kàn, xuéxiào li yǒu jiā diànyǐngyuàn!", vi:"Gia Nguyệt, bạn xem này, trong trường có một rạp chiếu phim đấy!"},
+        {speaker:"白家月", speakerPy:"Bái Jiāyuè", speakerVi:"Bạch Gia Nguyệt", zh:"是啊，电影院还不小。", py:"Shì a, diànyǐngyuàn hái bù xiǎo.", vi:"Đúng vậy, rạp chiếu phim còn không nhỏ nữa."},
+        {speaker:"安妮", speakerPy:"Ānnī", speakerVi:"Annie", zh:"他们卖的电影票也很便宜。", py:"Tāmen mài de diànyǐngpiào yě hěn piányi.", vi:"Vé xem phim họ bán cũng rất rẻ."},
+        {speaker:"白家月", speakerPy:"Bái Jiāyuè", speakerVi:"Bạch Gia Nguyệt", zh:"天啊！有的还不到二十块钱。", py:"Tiān a! Yǒude hái bú dào èrshí kuài qián.", vi:"Trời ạ! Có loại còn không đến hai mươi đồng."},
+        {speaker:"安妮", speakerPy:"Ānnī", speakerVi:"Annie", zh:"那你想不想去看个电影？", py:"Nà nǐ xiǎng bu xiǎng qù kàn gè diànyǐng?", vi:"Vậy bạn có muốn đi xem phim không?"},
+        {speaker:"白家月", speakerPy:"Bái Jiāyuè", speakerVi:"Bạch Gia Nguyệt", zh:"还是别看电影了，北京大学就很好看！", py:"Háishi bié kàn diànyǐng le, Běijīng Dàxué jiù hěn hǎokàn!", vi:"Thôi đừng xem phim nữa, Đại học Bắc Kinh đã đẹp lắm rồi!"},
+      ]
+    },
+    {
+      label:"Bài khoá 4", page:16, context:"Ở cổng trường Đại học Bắc Kinh, Bạch Gia Nguyệt gửi tin nhắn cho Trần Thiên Trung.", audio:"audio/hsk2/lesson2/text4.mp3", lines:[
+        {speaker:"白家月", speakerPy:"Bái Jiāyuè", speakerVi:"Bạch Gia Nguyệt", zh:"北京大学很大，有四万多名学生。学校很漂亮，里边还有家电影院，电影票也不贵，我们有时间还想再过来看个电影。", py:"Běijīng Dàxué hěn dà, yǒu sìwàn duō míng xuésheng. Xuéxiào hěn piàoliang, lǐbian hái yǒu jiā diànyǐngyuàn, diànyǐngpiào yě bú guì, wǒmen yǒu shíjiān hái xiǎng zài guòlái kàn gè diànyǐng.", vi:"Đại học Bắc Kinh rất lớn, có hơn bốn vạn sinh viên. Trường rất đẹp, bên trong còn có một rạp chiếu phim, vé xem phim cũng không đắt, nếu có thời gian chúng em còn muốn quay lại xem phim."},
+      ]
+    },
+  ],
+  audio: {
+    vocab: [], text: ["audio/hsk2/lesson2/text1.mp3","audio/hsk2/lesson2/text2.mp3","audio/hsk2/lesson2/text3.mp3","audio/hsk2/lesson2/text4.mp3"], poem: "",
+  },
+  vocab: [
+    {zh:"公交车", py:"gōngjiāochē", pos:"dt.", meaning:"xe buýt", ex:[{zh:"他每天坐公交车上班。",py:"Tā měitiān zuò gōngjiāochē shàngbān."}, {zh:"我在这儿等公交车，已经等了20分钟了。",py:"Wǒ zài zhèr děng gōngjiāochē, yǐjīng děngle 20 fēnzhōng le."}], grp:0, wordAudio:"audio/hsk2/lesson2/words/gongjiaoche.mp3"},
+    {zh:"但", py:"dàn", pos:"liên.", meaning:"nhưng, nhưng mà", ex:[{zh:"今天下雨了，但不太冷。",py:"Jīntiān xiàyǔ le, dàn bú tài lěng."}, {zh:"我会说中文，但我的中文不太好。",py:"Wǒ huì shuō Zhōngwén, dàn wǒ de Zhōngwén bú tài hǎo."}], grp:0, wordAudio:"audio/hsk2/lesson2/words/dan.mp3"},
+    {zh:"车站", py:"chēzhàn", pos:"dt.", meaning:"bến xe buýt", ex:[{zh:"到北京大学的车站有点儿远。",py:"Dào Běijīng Dàxué de chēzhàn yǒudiǎnr yuǎn."}, {zh:"我走路到车站坐公交车。",py:"Wǒ zǒulù dào chēzhàn zuò gōngjiāochē."}], grp:0, wordAudio:"audio/hsk2/lesson2/words/chezhan.mp3"},
+    {zh:"远", py:"yuǎn", pos:"tt.", meaning:"xa", ex:[{zh:"学校离我家很远。",py:"Xuéxiào lí wǒ jiā hěn yuǎn."}, {zh:"车站不远，走五分钟就到。",py:"Chēzhàn bù yuǎn, zǒu wǔ fēnzhōng jiù dào."}], grp:0, wordAudio:"audio/hsk2/lesson2/words/yuan.mp3"},
+    {zh:"打车", py:"dǎchē", pos:"đgt.", meaning:"gọi xe, đi xe, bắt (taxi)", ex:[{zh:"车站太远了，我们打车去吧。",py:"Chēzhàn tài yuǎn le, wǒmen dǎchē qù ba."}, {zh:"我们一起打车去学校。",py:"Wǒmen yìqǐ dǎchē qù xuéxiào."}], grp:0, wordAudio:"audio/hsk2/lesson2/words/dache.mp3"},
+    {zh:"还是", py:"háishi", pos:"phó.", meaning:"vẫn, tốt hơn là...", ex:[{zh:"今天下雨了，还是明天去跑步吧。",py:"Jīntiān xiàyǔ le, háishi míngtiān qù pǎobù ba."}, {zh:"太晚了，还是别喝咖啡了。",py:"Tài wǎn le, háishi bié hē kāfēi le."}], grp:0, wordAudio:"audio/hsk2/lesson2/words/haishi.mp3"},
+    {zh:"北京大学", py:"Běijīng Dàxué", pos:"dt. riêng", meaning:"Đại học Bắc Kinh", ex:[{zh:"北京大学是中国有名的大学。",py:"Běijīng Dàxué shì Zhōngguó yǒumíng de dàxué."}, {zh:"我们要去北京大学看看。",py:"Wǒmen yào qù Běijīng Dàxué kànkan."}], grp:0, wordAudio:"audio/hsk2/lesson2/words/beijingdaxue.mp3"},
+    {zh:"啊", py:"a", pos:"trợ.", meaning:"trợ từ ngữ khí", ex:[{zh:"今天真冷啊！",py:"Jīntiān zhēn lěng a!"}, {zh:"这件衣服真漂亮啊！",py:"Zhè jiàn yīfu zhēn piàoliang a!"}], grp:0, wordAudio:"audio/hsk2/lesson2/words/a.mp3"},
+    {zh:"万", py:"wàn", pos:"số.", meaning:"vạn, mười nghìn", ex:[{zh:"我们学校有一万人。",py:"Wǒmen xuéxiào yǒu yí wàn rén."}, {zh:"你们公司有几万人？",py:"Nǐmen gōngsī yǒu jǐ wàn rén?"}], grp:0, wordAudio:"audio/hsk2/lesson2/words/wan.mp3"},
+    {zh:"名", py:"míng", pos:"lượng./dt.", meaning:"(lượng từ chỉ người), thứ hạng trong cuộc thi, tên", ex:[{zh:"她现在还是一名学生。",py:"Tā xiànzài hái shì yì míng xuésheng."}, {zh:"那本书的书名是什么？",py:"Nà běn shū de shūmíng shì shénme?"}], grp:0, wordAudio:"audio/hsk2/lesson2/words/ming.mp3"},
+    {zh:"网上", py:"wǎngshang", pos:"dt.", meaning:"trên mạng", ex:[{zh:"我在网上学习。",py:"Wǒ zài wǎngshang xuéxí."}, {zh:"妈妈喜欢在网上买东西。",py:"Māma xǐhuan zài wǎngshang mǎi dōngxi."}], grp:0, wordAudio:"audio/hsk2/lesson2/words/wangshang.mp3"},
+    {zh:"外国", py:"wàiguó", pos:"dt.", meaning:"nước ngoài", ex:[{zh:"白家月是外国人。",py:"Bái Jiāyuè shì wàiguó rén."}, {zh:"学校里有很多外国学生。",py:"Xuéxiào li yǒu hěn duō wàiguó xuésheng."}], grp:0, wordAudio:"audio/hsk2/lesson2/words/waiguo.mp3"},
+    {zh:"间", py:"jiān", pos:"lượng.", meaning:"gian, căn... (phòng)", ex:[{zh:"这间房间很小。",py:"Zhè jiān fángjiān hěn xiǎo."}, {zh:"这间教室里有三个人。",py:"Zhè jiān jiàoshì li yǒu sān gè rén."}], grp:0, wordAudio:"audio/hsk2/lesson2/words/jian.mp3"},
+    {zh:"教室", py:"jiàoshì", pos:"dt.", meaning:"phòng học", ex:[{zh:"他在教室里看书。",py:"Tā zài jiàoshì li kàn shū."}, {zh:"请问第二间教室在哪儿？",py:"Qǐngwèn dì-èr jiān jiàoshì zài nǎr?"}], grp:0, wordAudio:"audio/hsk2/lesson2/words/jiaoshi.mp3"},
+    {zh:"票", py:"piào", pos:"dt.", meaning:"vé", ex:[{zh:"最近飞北京的机票很贵。",py:"Zuìjìn fēi Běijīng de jīpiào hěn guì."}, {zh:"电影票多少钱？",py:"Diànyǐngpiào duōshao qián?"}], grp:0, wordAudio:"audio/hsk2/lesson2/words/piao.mp3"},
+    {zh:"别", py:"bié", pos:"phó.", meaning:"đừng", ex:[{zh:"别走，等等我！",py:"Bié zǒu, děngdeng wǒ!"}, {zh:"下雨了，别去打篮球了。",py:"Xiàyǔ le, bié qù dǎ lánqiú le."}], grp:0, wordAudio:"audio/hsk2/lesson2/words/bie.mp3"},
+    {zh:"过来", py:"guòlái", pos:"đgt.", meaning:"đến, đến đây", ex:[{zh:"你可以过来接我一下吗？",py:"Nǐ kěyǐ guòlái jiē wǒ yíxià ma?"}, {zh:"朋友过来找我。",py:"Péngyou guòlái zhǎo wǒ."}], grp:0, wordAudio:"audio/hsk2/lesson2/words/guolai.mp3"},
+  ],
+  hanzi: [
+    {zh:"公", py:"gōng", meaning:"chung, công (trong 公交车)", comps:[{c:"八",m:"bát (chia ra)"}, {c:"厶",m:"khư (riêng tư, biến thể)"}]},
+    {zh:"交", py:"jiāo", meaning:"giao (trong 公交车)", comps:[{c:"亠",m:"đầu (nét trên)"}, {c:"父",m:"biến thể — tượng hình người bắt chéo chân"}]},
+    {zh:"车", py:"chē", meaning:"xe (trong 公交车/车站/打车)", comps:[{c:"车",m:"chữ độc thể — tượng hình cái xe"}]},
+    {zh:"但", py:"dàn", meaning:"nhưng, nhưng mà", comps:[{c:"亻",m:"nhân (người, đứng)"}, {c:"旦",m:"đán (buổi sáng, mặt trời mọc)"}]},
+    {zh:"站", py:"zhàn", meaning:"bến, trạm (trong 车站)", comps:[{c:"立",m:"lập (đứng)"}, {c:"占",m:"chiêm (chiếm giữ)"}]},
+    {zh:"远", py:"yuǎn", meaning:"xa", comps:[{c:"辶",m:"sước (đi, chuyển động)"}, {c:"元",m:"nguyên (đầu tiên)"}]},
+    {zh:"打", py:"dǎ", meaning:"đánh, gọi (trong 打车)", comps:[{c:"扌",m:"thủ (tay)"}, {c:"丁",m:"đinh"}]},
+    {zh:"还", py:"hái", meaning:"vẫn, còn (trong 还是)", comps:[{c:"不",m:"bất (không, biến thể)"}, {c:"辶",m:"sước (đi, chuyển động)"}]},
+    {zh:"是", py:"shì", meaning:"là (trong 还是)", comps:[{c:"日",m:"nhật (mặt trời)"}, {c:"疋",m:"biến thể — chân, đi"}]},
+    {zh:"北", py:"běi", meaning:"bắc (trong 北京大学)", comps:[{c:"北",m:"chữ độc thể — tượng hình hai người quay lưng"}]},
+    {zh:"京", py:"jīng", meaning:"kinh đô (trong 北京大学)", comps:[{c:"亠",m:"đầu (nét trên)"}, {c:"口",m:"khẩu (miệng)"}, {c:"小",m:"tiểu (biến thể — tượng hình gò cao)"}]},
+    {zh:"大", py:"dà", meaning:"to, lớn (trong 北京大学)", comps:[{c:"大",m:"chữ độc thể — tượng hình người dang tay"}]},
+    {zh:"学", py:"xué", meaning:"học (trong 北京大学)", comps:[{c:"冖",m:"mịch (che, mái)"}, {c:"子",m:"tử (con)"}]},
+    {zh:"啊", py:"a", meaning:"trợ từ ngữ khí", comps:[{c:"口",m:"khẩu (miệng)"}, {c:"阿",m:"a (biến thể ngữ âm)"}]},
+    {zh:"万", py:"wàn", meaning:"vạn, mười nghìn", comps:[{c:"万",m:"chữ độc thể — biến thể giản thể của 萬"}]},
+    {zh:"名", py:"míng", meaning:"tên, (lượng từ chỉ người)", comps:[{c:"夕",m:"tịch (buổi tối)"}, {c:"口",m:"khẩu (miệng)"}]},
+    {zh:"网", py:"wǎng", meaning:"lưới, mạng (trong 网上)", comps:[{c:"网",m:"chữ độc thể — tượng hình cái lưới"}]},
+    {zh:"上", py:"shàng", meaning:"trên (trong 网上)", comps:[{c:"上",m:"chữ độc thể — chỉ sự, nghĩa \"trên\""}]},
+    {zh:"外", py:"wài", meaning:"ngoài (trong 外国)", comps:[{c:"夕",m:"tịch (buổi tối)"}, {c:"卜",m:"bốc (bói)"}]},
+    {zh:"国", py:"guó", meaning:"nước, quốc gia (trong 外国)", comps:[{c:"囗",m:"vi (bao quanh, vòng thành)"}, {c:"玉",m:"ngọc (biến thể)"}]},
+    {zh:"间", py:"jiān", meaning:"gian, căn (phòng)", comps:[{c:"门",m:"môn (cửa)"}, {c:"日",m:"nhật (mặt trời)"}]},
+    {zh:"教", py:"jiào", meaning:"dạy (trong 教室)", comps:[{c:"孝",m:"hiếu (biến thể)"}, {c:"攵",m:"phốc (gõ nhẹ)"}]},
+    {zh:"室", py:"shì", meaning:"phòng, thất (trong 教室)", comps:[{c:"宀",m:"miên (mái nhà)"}, {c:"至",m:"chí (đến)"}]},
+    {zh:"票", py:"piào", meaning:"vé", comps:[{c:"覀",m:"biến thể của tây"}, {c:"示",m:"thị (biểu thị, bàn thờ)"}]},
+    {zh:"别", py:"bié", meaning:"đừng", comps:[{c:"另",m:"linh (riêng, khác)"}, {c:"刂",m:"đao (dao)"}]},
+    {zh:"过", py:"guò", meaning:"qua, đến (trong 过来)", comps:[{c:"辶",m:"sước (đi, chuyển động)"}, {c:"寸",m:"thốn (tấc, đơn vị đo)"}]},
+    {zh:"来", py:"lái", meaning:"đến, lại (trong 过来)", comps:[{c:"来",m:"chữ độc thể — tượng hình cây lúa (nghĩa gốc), mượn nghĩa \"đến\""}]},
+  ],
+  hanziGroups: [
+    {word:"公交车", py:"gōngjiāochē", chars:["公", "交", "车"]},
+    {word:"但", py:"dàn", chars:["但"]},
+    {word:"车站", py:"chēzhàn", chars:["车", "站"]},
+    {word:"远", py:"yuǎn", chars:["远"]},
+    {word:"打车", py:"dǎchē", chars:["打", "车"]},
+    {word:"还是", py:"háishi", chars:["还", "是"]},
+    {word:"北京大学", py:"Běijīng Dàxué", chars:["北", "京", "大", "学"]},
+    {word:"啊", py:"a", chars:["啊"]},
+    {word:"万", py:"wàn", chars:["万"]},
+    {word:"名", py:"míng", chars:["名"]},
+    {word:"网上", py:"wǎngshang", chars:["网", "上"]},
+    {word:"外国", py:"wàiguó", chars:["外", "国"]},
+    {word:"间", py:"jiān", chars:["间"]},
+    {word:"教室", py:"jiàoshì", chars:["教", "室"]},
+    {word:"票", py:"piào", chars:["票"]},
+    {word:"别", py:"bié", chars:["别"]},
+    {word:"过来", py:"guòlái", chars:["过", "来"]},
+  ],
+  sentences: [
+    {tokens:["请问", "，", "这儿", "有", "到", "北京大学", "的", "公交车", "吗", "？"], answer:"请问，这儿有到北京大学的公交车吗？", vi:"Xin hỏi, ở đây có xe buýt đi đến Đại học Bắc Kinh không?"},
+    {tokens:["车站", "有点儿", "远", "。"], answer:"车站有点儿远。", vi:"Bến xe buýt hơi xa."},
+    {tokens:["我们", "还是", "打车", "去", "吧", "。"], answer:"我们还是打车去吧。", vi:"Chúng ta vẫn nên gọi taxi đi thôi."},
+    {tokens:["北京大学", "有", "四万", "多", "名", "学生", "呢", "！"], answer:"北京大学有四万多名学生呢！", vi:"Đại học Bắc Kinh có hơn bốn vạn sinh viên đấy!"},
+    {tokens:["他们", "卖", "的", "电影票", "也", "很", "便宜", "。"], answer:"他们卖的电影票也很便宜。", vi:"Vé xem phim họ bán cũng rất rẻ."},
+    {tokens:["还是", "别", "看", "电影", "了", "。"], answer:"还是别看电影了。", vi:"Thôi đừng xem phim nữa."},
+  ],
+  grammar: [
+    { tag:"Ngữ pháp", title:"Cấu trúc cố định “vẫn nên... thôi” (还是……吧)", explain:"Cấu trúc cố định “还是……吧” dùng để chỉ lựa chọn thiên về một hướng nào đó, có ý “làm vậy sẽ tốt hơn”.", examples:[{zh:"我们还是打车去吧。", vi:"Chúng ta vẫn nên gọi taxi đi thôi."}, {zh:"那件衣服很好看，还是买那件吧。", vi:"Chiếc áo đó rất đẹp, thôi mua chiếc đó đi."}, {zh:"你第一次去北京，还是找个人接你吧。", vi:"Bạn lần đầu đến Bắc Kinh, thôi nhờ người đón bạn đi."}] },
+    { tag:"Ngữ pháp", title:"Dùng “多” để diễn đạt số ước lượng", explain:"“多” được đặt sau số từ hoặc số lượng từ để chỉ số lẻ (có dư). Khi con số là bội số của 10, “多” thường đặt sau số từ; khi con số không phải là bội số của 10, “多” thường đặt sau lượng từ.", examples:[{zh:"北京大学有四万多名学生呢！", vi:"Đại học Bắc Kinh có hơn bốn vạn sinh viên đấy!"}, {zh:"教室里有二十多个学生。", vi:"Trong phòng học có hơn hai mươi học sinh."}, {zh:"这两个苹果五块多钱。", vi:"Hai quả táo này hơn năm đồng."}] },
+    { tag:"Ngữ pháp", title:"Động từ, cụm động từ, cụm chủ vị làm định ngữ", explain:"Động từ, cụm động từ, cụm chủ vị đặt trước danh từ, biểu thị đặc trưng hoặc trạng thái của danh từ đó.", examples:[{zh:"他们卖的电影票也很便宜。", vi:"Vé xem phim họ bán cũng rất rẻ."}, {zh:"现在学中文的学生很多。", vi:"Hiện nay có rất nhiều học sinh học tiếng Trung."}, {zh:"这是朋友给我的杯子。", vi:"Đây là cái cốc bạn tôi tặng tôi."}] },
+  ],
+  grammarPractice: [
+    {question:"这儿有没有到北京大学的______？(Ở đây có xe đi đến Đại học Bắc Kinh không?)", options:["公交车", "飞机", "火车"], answer:"公交车"},
+    {question:"车站太远了，我们______去吧。(Bến xe hơi xa, chúng ta đi taxi thôi.)", options:["打车", "走路", "游泳"], answer:"打车"},
+    {question:"今天下雨了，______明天去吧。(Hôm nay trời mưa rồi, thôi thì mai đi vậy.)", options:["还是", "但", "别"], answer:"还是"},
+    {question:"北京大学有三千______名外国学生。(Đại học Bắc Kinh có hơn 3000 sinh viên nước ngoài.)", options:["多", "个", "些"], answer:"多"},
+    {question:"下雨了，______去打篮球了。(Trời mưa rồi, đừng đi chơi bóng rổ nữa.)", options:["别", "还是", "啊"], answer:"别"},
+  ],
+};
+LESSONS_HSK2[2] = Object.assign(LESSONS_HSK2[2], LESSON_HSK2_2_CONTENT, {ready:true});
+[1,2].forEach(n => { if (LESSONS_HSK2[n]) rewriteMediaPaths(LESSONS_HSK2[n]); });
 // (WORKBOOK_LESSONS / MOCKTEST_LESSONS / PHONETICS_LESSONS được xử lý ở dưới,
 //  ngay sau khi chúng được khai báo — xem gần cuối file)
 
@@ -5451,11 +5582,82 @@ const MOCKTEST_LESSONS_HSK2 = {
       },
     ],
   },
+  2: {
+    audio: "audio/hsk2/lesson2/mocktest.mp3",
+    listening: [
+      {
+        part: "Phần 1 — Nghe và chọn đúng tranh", kind: "own_img",
+        questions: [
+          {images:["assets/hsk2/lesson2/listen1_q1_A.jpg", "assets/hsk2/lesson2/listen1_q1_B.jpg", "assets/hsk2/lesson2/listen1_q1_C.jpg"], qAudio:"audio/hsk2/lesson2/mocktest/q1.mp3", transcript:[{zh:"教室里有十多名学生。",py:"Jiàoshì li yǒu shí duō míng xuésheng.",vi:"Trong phòng học có hơn mười học sinh."}], answer:0},
+          {images:["assets/hsk2/lesson2/listen1_q2_A.jpg", "assets/hsk2/lesson2/listen1_q2_B.jpg", "assets/hsk2/lesson2/listen1_q2_C.jpg"], qAudio:"audio/hsk2/lesson2/mocktest/q2.mp3", transcript:[{zh:"我们还是开车去吧。",py:"Wǒmen háishi kāichē qù ba.",vi:"Chúng ta vẫn nên lái xe đi thôi."}], answer:2},
+          {images:["assets/hsk2/lesson2/listen1_q3_A.jpg", "assets/hsk2/lesson2/listen1_q3_B.jpg", "assets/hsk2/lesson2/listen1_q3_C.jpg"], qAudio:"audio/hsk2/lesson2/mocktest/q3.mp3", transcript:[{zh:"王老师的儿子六岁多了。",py:"Wáng lǎoshī de érzi liù suì duō le.",vi:"Con trai của thầy/cô Vương đã hơn sáu tuổi rồi."}], answer:2},
+        ],
+      },
+      {
+        part: "Phần 2 — Nghe hội thoại, chọn tranh phù hợp nhất", kind: "shared_img",
+        pool: ["assets/hsk2/lesson2/listen2_A.jpg", "assets/hsk2/lesson2/listen2_B.jpg", "assets/hsk2/lesson2/listen2_C.jpg", "assets/hsk2/lesson2/listen2_D.jpg"],
+        questions: [
+          {qAudio:"audio/hsk2/lesson2/mocktest/q4.mp3", transcript:[{speaker:"女",zh:"我们还是打车去吧。",py:"Wǒmen háishi dǎchē qù ba.",vi:"Chúng ta vẫn nên đi taxi thôi."},{speaker:"男",zh:"好，打车能早一点儿到。",py:"Hǎo, dǎchē néng zǎo yìdiǎnr dào.",vi:"Được, đi taxi có thể đến sớm hơn một chút."}], answer:1},
+          {qAudio:"audio/hsk2/lesson2/mocktest/q5.mp3", transcript:[{speaker:"男",zh:"电影票贵不贵？",py:"Diànyǐngpiào guì bu guì?",vi:"Vé xem phim có đắt không?"},{speaker:"女",zh:"不太贵，我是在网上买的。",py:"Bú tài guì, wǒ shì zài wǎngshang mǎi de.",vi:"Không đắt lắm, tôi mua trên mạng đấy."}], answer:0},
+          {qAudio:"audio/hsk2/lesson2/mocktest/q6.mp3", transcript:[{speaker:"女",zh:"老师，您在哪儿？我有事找您。",py:"Lǎoshī, nín zài nǎr? Wǒ yǒu shì zhǎo nín.",vi:"Thầy/Cô ơi, thầy/cô đang ở đâu ạ? Em có việc muốn tìm thầy/cô."},{speaker:"男",zh:"我在教室，你过来吧。",py:"Wǒ zài jiàoshì, nǐ guòlái ba.",vi:"Thầy đang ở phòng học, em qua đây đi."}], answer:2},
+        ],
+      },
+      {
+        part: "Phần 3 — Nghe hội thoại, chọn đáp án đúng", kind: "own_text",
+        questions: [
+          {options:[{zh:"公交站",py:"gōngjiāozhàn"}, {zh:"出租车里",py:"chūzūchē li"}, {zh:"公交车上",py:"gōngjiāochē shang"}], qAudio:"audio/hsk2/lesson2/mocktest/q7.mp3", transcript:[{speaker:"女",zh:"已经二十多分钟了，公交车还没来。",py:"Yǐjīng èrshí duō fēnzhōng le, gōngjiāochē hái méi lái.",vi:"Đã hơn hai mươi phút rồi, xe buýt vẫn chưa đến."},{speaker:"男",zh:"是啊，我们还是坐出租车吧。",py:"Shì a, wǒmen háishi zuò chūzūchē ba.",vi:"Đúng vậy, chúng ta đi taxi thôi."},{speaker:"问",zh:"他们现在在哪儿？",py:"Tāmen xiànzài zài nǎr?",vi:"Hỏi: Họ hiện đang ở đâu?"}], answer:0},
+          {options:[{zh:"菜",py:"cài"}, {zh:"米饭",py:"mǐfàn"}, {zh:"饺子",py:"jiǎozi"}], qAudio:"audio/hsk2/lesson2/mocktest/q8.mp3", transcript:[{speaker:"男",zh:"今天别吃饺子了，我买了很多菜，还是吃米饭吧。",py:"Jīntiān bié chī jiǎozi le, wǒ mǎile hěn duō cài, háishi chī mǐfàn ba.",vi:"Hôm nay đừng ăn sủi cảo nữa, anh mua nhiều rau rồi, ăn cơm thôi."},{speaker:"女",zh:"好，那明天再吃饺子。",py:"Hǎo, nà míngtiān zài chī jiǎozi.",vi:"Được, vậy mai ăn sủi cảo."},{speaker:"问",zh:"明天他们吃什么？",py:"Míngtiān tāmen chī shénme?",vi:"Hỏi: Ngày mai họ ăn gì?"}], answer:2},
+          {options:[{zh:"打车",py:"dǎchē"}, {zh:"坐火车",py:"zuò huǒchē"}, {zh:"坐公交车",py:"zuò gōngjiāochē"}], qAudio:"audio/hsk2/lesson2/mocktest/q9.mp3", transcript:[{speaker:"女",zh:"我们去北京大学了，北京大学真大啊！",py:"Wǒmen qù Běijīng Dàxué le, Běijīng Dàxué zhēn dà a!",vi:"Chúng tôi đã đến Đại học Bắc Kinh rồi, Đại học Bắc Kinh to thật đấy!"},{speaker:"男",zh:"你们是怎么去的？",py:"Nǐmen shì zěnme qù de?",vi:"Các bạn đi bằng cách nào vậy?"},{speaker:"女",zh:"坐公交车去的，去那儿的公交车很多。",py:"Zuò gōngjiāochē qù de, qù nàr de gōngjiāochē hěn duō.",vi:"Đi xe buýt, có rất nhiều xe buýt đến đó."},{speaker:"男",zh:"北京大学太远了，下次你们还是打车吧。",py:"Běijīng Dàxué tài yuǎn le, xiàcì nǐmen háishi dǎchē ba.",vi:"Đại học Bắc Kinh xa quá, lần sau các bạn đi taxi thôi."},{speaker:"问",zh:"男的让女的下次怎么去北京大学？",py:"Nán de ràng nǚ de xiàcì zěnme qù Běijīng Dàxué?",vi:"Hỏi: Người nam bảo người nữ lần sau đi Đại học Bắc Kinh bằng cách nào?"}], answer:0},
+          {options:[{zh:"爸爸",py:"bàba"}, {zh:"妈妈",py:"māma"}, {zh:"老师",py:"lǎoshī"}], qAudio:"audio/hsk2/lesson2/mocktest/q10.mp3", transcript:[{speaker:"男",zh:"您是小明妈妈吧？您什么时候来接孩子？",py:"Nín shì Xiǎomíng māma ba? Nín shénme shíhou lái jiē háizi?",vi:"Cô là mẹ của Tiểu Minh phải không? Khi nào cô đến đón bé vậy?"},{speaker:"女",zh:"李老师，今天我有事，他爸爸去接了。",py:"Lǐ lǎoshī, jīntiān wǒ yǒu shì, tā bàba qù jiē le.",vi:"Thầy Lý ơi, hôm nay tôi có việc, bố bé đã đi đón rồi."},{speaker:"男",zh:"他爸爸没来啊！您还是打个电话问一下吧。",py:"Tā bàba méi lái a! Nín háishi dǎ gè diànhuà wèn yíxià ba.",vi:"Bố bé không có đến đây! Cô gọi điện hỏi thử xem."},{speaker:"女",zh:"不好意思，我现在就打电话。",py:"Bù hǎoyìsi, wǒ xiànzài jiù dǎ diànhuà.",vi:"Xin lỗi thầy, tôi gọi điện ngay đây."},{speaker:"问",zh:"谁去接孩子了？",py:"Shéi qù jiē háizi le?",vi:"Hỏi: Ai đã đi đón bé?"}], answer:0},
+        ],
+      },
+    ],
+    reading: [
+      {
+        part: "Phần 1 — Chọn tranh phù hợp với câu", kind: "shared_img_prompt",
+        pool: ["assets/hsk2/lesson2/read1_A.jpg", "assets/hsk2/lesson2/read1_B.jpg", "assets/hsk2/lesson2/read1_C.jpg", "assets/hsk2/lesson2/read1_D.jpg"],
+        questions: [
+          {prompt:{zh:"我和朋友去看电影了，是她买的票。",py:"Wǒ hé péngyou qù kàn diànyǐng le, shì tā mǎi de piào."}, answer:0},
+          {prompt:{zh:"这是我们的教室，但学生们都去外边玩了。",py:"Zhè shì wǒmen de jiàoshì, dàn xuéshengmen dōu qù wàibian wán le."}, answer:1},
+          {prompt:{zh:"这家饭店的菜都不贵，一个菜十多块钱，还很好吃。",py:"Zhè jiā fàndiàn de cài dōu bú guì, yí gè cài shí duō kuài qián, hái hěn hǎochī."}, answer:2},
+        ],
+      },
+      {
+        part: "Phần 2 — Chọn từ điền vào chỗ trống", kind: "fill_blank",
+        pool: [{zh:"万",py:"wàn"}, {zh:"远",py:"yuǎn"}, {zh:"教室",py:"jiàoshì"}, {zh:"车站",py:"chēzhàn"}, {zh:"完",py:"wán"}],
+        questions: [
+          {prompt:{zh:"下课了，但外边下雨了，我还是在（　）里看书吧。",py:"Xiàkè le, dàn wàibian xiàyǔ le, wǒ háishi zài (　) li kàn shū ba."}, answer:2},
+          {prompt:{zh:"那个（　）没有到北京大学的公交车。",py:"Nàge (　) méiyǒu dào Běijīng Dàxué de gōngjiāochē."}, answer:3},
+          {prompt:{zh:"女：我让一雪来接我们吧。\\n男：一雪家有点儿（　），别让她来接我们了。",py:"Nǚ: Wǒ ràng Yīxuě lái jiē wǒmen ba.\\nNán: Yīxuě jiā yǒudiǎnr (　), bié ràng tā lái jiē wǒmen le."}, answer:1},
+          {prompt:{zh:"男：你们学校有多少学生？\\n女：有一（　）多名中国学生，还有两千多名外国学生。",py:"Nán: Nǐmen xuéxiào yǒu duōshao xuésheng?\\nNǚ: Yǒu yī (　) duō míng Zhōngguó xuésheng, hái yǒu liǎngqiān duō míng wàiguó xuésheng."}, answer:0},
+        ],
+      },
+      {
+        part: "Phần 3 — Nối câu", kind: "shared_text_prompt",
+        pool: [{zh:"我去找几个人过来帮忙。",py:"Wǒ qù zhǎo jǐ gè rén guòlái bāngmáng."}, {zh:"他五岁多了。",py:"Tā wǔ suì duō le."}, {zh:"天气不好，我们还是在家看电视吧。",py:"Tiānqì bù hǎo, wǒmen háishi zài jiā kàn diànshì ba."}, {zh:"我没事，你别过来了。",py:"Wǒ méishì, nǐ bié guòlái le."}, {zh:"他出去了，一会儿就回来。",py:"Tā chūqu le, yíhuìr jiù huílai."}],
+        questions: [
+          {prompt:{zh:"小王说你生病了，我下班后就去看你。",py:"Xiǎo Wáng shuō nǐ shēngbìng le, wǒ xiàbān hòu jiù qù kàn nǐ."}, answer:3},
+          {prompt:{zh:"王老师，你儿子几岁了？",py:"Wáng lǎoshī, nǐ érzi jǐ suì le?"}, answer:1},
+          {prompt:{zh:"今天星期天，我们去看电影吧。",py:"Jīntiān Xīngqītiān, wǒmen qù kàn diànyǐng ba."}, answer:2},
+          {prompt:{zh:"今天工作太多了。",py:"Jīntiān gōngzuò tài duō le."}, answer:0},
+        ],
+      },
+      {
+        part: "Phần 4 — Đọc đoạn văn, chọn đáp án đúng", kind: "reading_q",
+        questions: [
+          {options:[{zh:"找朋友",py:"zhǎo péngyou"}, {zh:"上大学",py:"shàng dàxué"}, {zh:"打电话",py:"dǎ diànhuà"}], passage:{zh:"我今年要去外国上大学，我妈有个朋友在那儿工作，她让我有事就给她的朋友打电话。",py:"Wǒ jīnnián yào qù wàiguó shàng dàxué, wǒ mā yǒu gè péngyou zài nàr gōngzuò, tā ràng wǒ yǒushì jiù gěi tā de péngyou dǎ diànhuà."}, question:{zh:"他要到外国做什么？",py:"Tā yào dào wàiguó zuò shénme?"}, answer:1},
+          {options:[{zh:"旅游",py:"lǚyóu"}, {zh:"找朋友",py:"zhǎo péngyou"}, {zh:"学中文",py:"xué Zhōngwén"}], passage:{zh:"我在网上认识了一个外国朋友。他九月要来北京学中文，他说到时候来西安找我玩。",py:"Wǒ zài wǎngshang rènshile yí gè wàiguó péngyou. Tā jiǔyuè yào lái Běijīng xué Zhōngwén, tā shuō dào shíhou lái Xī'ān zhǎo wǒ wán."}, question:{zh:"外国朋友来北京做什么？",py:"Wàiguó péngyou lái Běijīng zuò shénme?"}, answer:2},
+          {options:[{zh:"开车上班",py:"kāichē shàngbān"}, {zh:"打车上学",py:"dǎchē shàngxué"}, {zh:"坐公交车上班",py:"zuò gōngjiāochē shàngbān"}], passage:{zh:"下雪天不好打车，但坐公交车太冷。爸爸说：\\u201c你还是去学开车吧，开车上下班就不会冷了。\\u201d",py:"Xiàxuětiān bù hǎo dǎchē, dàn zuò gōngjiāochē tài lěng. Bàba shuō: \\u201cNǐ háishi qù xué kāichē ba, kāichē shàng-xiàbān jiù bú huì lěng le.\\u201d"}, question:{zh:"爸爸让他：",py:"Bàba ràng tā:"}, answer:0},
+        ],
+      },
+    ],
+  },
 };
 const WORKBOOK_LESSONS_HSK2 = {};
 rewriteMediaPaths(MOCKTEST_LESSONS_HSK2);
 const MOCKTEST_EXERCISE_MAP_HSK2 = {
   1: 'ca111bb1-7f0a-4512-a9f9-0ba4fe273e2c',
+  2: '6e79aadb-ee78-4c2e-8dbf-882b5012f4c0',
 };
 
 const MOCKTEST_EXERCISE_MAP = {
@@ -5575,7 +5777,7 @@ async function initMockTestHomework(lessonId){
       <p style="font-size:15.5px;color:var(--ink-soft);margin-bottom:8px;">🎧 Nghe file audio dưới đây (đúng như trong sách), sau đó làm lần lượt các câu hỏi. Phần Đọc không cần nghe.</p>
       <audio controls src="${data.audio}" style="width:100%;"></audio>
     </div>
-    ${isPreview ? '<p style="font-size:14.5px;color:var(--seal,#8B2C2C);background:var(--seal-tint,#f4e6e3);padding:10px 14px;border-radius:10px;margin-bottom:10px;">👁️ Chế độ xem trước (giáo viên) — đáp án đúng được tô sẵn màu xanh bên dưới, mục "Nộp bài" đã ẩn vì đây chỉ để tham khảo nội dung.</p>' : ''}
+    ${isPreview ? '<p style="font-size:14.5px;color:var(--seal,#8B2C2C);background:var(--seal-tint,#f4e6e3);padding:10px 14px;border-radius:10px;margin-bottom:10px;">👁️ Xem trước — đáp án đúng đã tô sẵn.</p>' : ''}
     ${sectionsHtml}
     ${isPreview ? '' : '<button class="btn-primary" id="mt-submit-btn" style="margin-top:16px;">Nộp bài →</button><p id="mt-submit-status" style="font-size:15.5px;margin-top:10px;"></p>'}
   `;
@@ -5857,7 +6059,7 @@ async function initPhoneticsHomework(lessonId){
   if(!data || !exId){ container.innerHTML = '<p style="color:var(--ink-soft);font-size:16px;">Bài này chưa có bài tập.</p>'; return; }
 
   if (TEACHER_PREVIEW_MODE) {
-    container.innerHTML = '<p style="color:var(--ink-soft);font-size:16px;">👁️ Chế độ xem trước (giáo viên) — không thể làm/nộp bài tập ở đây.</p>';
+    container.innerHTML = '<p style="color:var(--ink-soft);font-size:16px;">👁️ Xem trước — không làm bài ở đây được.</p>';
     return;
   }
 
@@ -6044,7 +6246,7 @@ async function initWorkbookHomework(lessonId){
     <div style="margin-bottom:18px;">
       <audio controls src="${data.audio}" style="width:100%;"></audio>
     </div>
-    ${isPreview ? '<p style="font-size:14.5px;color:var(--seal,#8B2C2C);background:var(--seal-tint,#f4e6e3);padding:10px 14px;border-radius:10px;margin-bottom:14px;">👁️ Chế độ xem trước (giáo viên) — đáp án đúng đã được điền sẵn bên dưới, mục "Nộp bài" đã ẩn vì đây chỉ để tham khảo nội dung.</p>' : ''}
+    ${isPreview ? '<p style="font-size:14.5px;color:var(--seal,#8B2C2C);background:var(--seal-tint,#f4e6e3);padding:10px 14px;border-radius:10px;margin-bottom:14px;">👁️ Xem trước — đáp án đúng đã điền sẵn.</p>' : ''}
     ${toneToolbarHtml}
     ${renderDictationSection('1️⃣ Nghe và điền thanh mẫu (声母) còn thiếu', data.initials, 'initials', false)}
     ${renderDictationSection('2️⃣ Nghe và điền vận mẫu (韵母) còn thiếu — nhớ ghi đúng dấu thanh điệu', data.finals, 'finals', false)}
@@ -6216,7 +6418,7 @@ async function initHomework(homework){
     return;
   }
   if (TEACHER_PREVIEW_MODE) {
-    container.innerHTML = '<p style="color:var(--ink-soft);font-size:16px;">👁️ Chế độ xem trước (giáo viên) — không thể làm/nộp bài tập ở đây.</p>';
+    container.innerHTML = '<p style="color:var(--ink-soft);font-size:16px;">👁️ Xem trước — không làm bài ở đây được.</p>';
     return;
   }
   const map = EXERCISE_MAP[currentLessonId];

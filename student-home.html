@@ -3666,6 +3666,10 @@ const LESSONS_META_HSK2 = [
   {id:4, zh:"你穿红色的很好看", py:"Nǐ chuān hóngsè de hěn hǎokàn", vi:"Con mặc đồ màu đỏ rất đẹp", goals:["Trợ từ động thái “过” (biểu thị kinh nghiệm)","Câu ghép nhân quả “因为……, 所以……”","Cụm từ chữ “的”","Mua sắm quần áo, màu sắc"]},
   {id:5, zh:"第一次去中国朋友家", py:"Dì-yī cì qù Zhōngguó péngyou jiā", vi:"Lần đầu đến thăm nhà bạn người Trung Quốc", goals:["Bổ ngữ xu hướng đơn (1) — Động từ + 来/去","Bổ ngữ xu hướng đơn (2) — vị trí của tân ngữ","Cấu trúc cố định “都……了”","Đến thăm nhà bạn người Trung Quốc"]},
   {id:6, zh:"小雪，生日快乐！", py:"Xiǎoxuě, shēngrì kuàilè!", vi:"Tiểu Tuyết, chúc mừng sinh nhật!", goals:["Tính từ lặp lại (形容词重叠)","Cụm từ cố định “什么的”","Trợ từ kết cấu “地”","Tổ chức sinh nhật"]},
+  {id:7, zh:"他篮球打得很好", py:"Tā lánqiú dǎ de hěn hǎo", vi:"Anh ấy chơi bóng rổ rất giỏi", goals:["Cấu trúc cố định “一……就……”","Bổ ngữ trạng thái “得” (1)","Bổ ngữ trạng thái “得” (2)","Sở thích, thể thao"]},
+  {id:8, zh:"虽然你忘了，但是我记得", py:"Suīrán nǐ wàng le, dànshì wǒ jìde", vi:"Tuy anh quên rồi, nhưng em vẫn nhớ", goals:["So sánh với “比” (1)","So sánh với “比” (2)","Câu ghép chuyển ý “虽然……但是……”","Xem phim, hẹn hò"]},
+  {id:9, zh:"那个男孩儿是我们班的", py:"Nàge nánháir shì wǒmen bān de", vi:"Cậu bé đó là bạn cùng lớp chúng em", goals:["So sánh với “没有”","Động từ “离”","Bổ ngữ thời lượng (1)","Miêu tả ngoại hình, khoảng cách"]},
+  {id:10, zh:"就要考试了", py:"Jiù yào kǎoshì le", vi:"Sắp thi rồi", goals:["Câu chủ vị làm vị ngữ (主谓谓语句)","Câu hỏi lựa chọn với “还是”","Cấu trúc cố định “要/快/快要/就要……了”","Chuẩn bị thi cử"]},
 ];
 const LESSONS_HSK2 = {};
 LESSONS_META_HSK2.forEach(m => {
@@ -4420,8 +4424,493 @@ const LESSON_HSK2_6_CONTENT = {
     {question:"她喜欢______，你觉得画笔怎么样？(Cô ấy thích vẽ tranh, bạn thấy bút vẽ thế nào?)", options:["画画", "过生日", "打开"], answer:"画画"},
   ],
 };LESSONS_HSK2[6] = Object.assign(LESSONS_HSK2[6], LESSON_HSK2_6_CONTENT, {ready:true});
+const LESSON_HSK2_7_CONTENT = {
+  texts: [
+    {
+      label:"Bài khoá 1", page:57, context:"Trong lớp học, Annie và Trần Thiên Trung đang trò chuyện.", audio:"audio/hsk2/lesson7/text1.mp3", lines:[
+        {speaker:"陈天中", speakerPy:"Chén Tiānzhōng", speakerVi:"Trần Thiên Trung", zh:"安妮，你是什么时候从北京回来的？", py:"Ānnī, nǐ shì shénme shíhou cóng Běijīng huílái de?", vi:"Annie, cậu từ Bắc Kinh về khi nào vậy?"},
+        {speaker:"安妮", speakerPy:"Ānnī", speakerVi:"Annie", zh:"昨天下午。天中，你怎么一下课就往外跑？", py:"Zuótiān xiàwǔ. Tiānzhōng, nǐ zěnme yí xiàkè jiù wǎng wài pǎo?", vi:"Chiều hôm qua. Thiên Trung, sao vừa tan học cậu đã chạy ra ngoài vậy?"},
+        {speaker:"陈天中", speakerPy:"Chén Tiānzhōng", speakerVi:"Trần Thiên Trung", zh:"我跟同学说好了，一起去打篮球。", py:"Wǒ gēn tóngxué shuōhǎo le, yìqǐ qù dǎ lánqiú.", vi:"Mình đã hẹn với các bạn cùng đi chơi bóng rổ rồi."},
+        {speaker:"安妮", speakerPy:"Ānnī", speakerVi:"Annie", zh:"我也想跟你们一起玩。", py:"Wǒ yě xiǎng gēn nǐmen yìqǐ wán.", vi:"Mình cũng muốn chơi cùng các cậu."},
+        {speaker:"陈天中", speakerPy:"Chén Tiānzhōng", speakerVi:"Trần Thiên Trung", zh:"没问题，走吧。", py:"Méi wèntí, zǒu ba.", vi:"Không vấn đề gì, đi thôi!"},
+      ]
+    },
+    {
+      label:"Bài khoá 2", page:58, context:"Trong khuôn viên trường, Annie và Trần Thiên Trung vừa đi vừa trò chuyện.", audio:"audio/hsk2/lesson7/text2.mp3", lines:[
+        {speaker:"安妮", speakerPy:"Ānnī", speakerVi:"Annie", zh:"天中，你是不是很喜欢打篮球？", py:"Tiānzhōng, nǐ shì bu shì hěn xǐhuan dǎ lánqiú?", vi:"Thiên Trung, có phải cậu rất thích chơi bóng rổ không?"},
+        {speaker:"陈天中", speakerPy:"Chén Tiānzhōng", speakerVi:"Trần Thiên Trung", zh:"没错。", py:"Méi cuò.", vi:"Đúng vậy."},
+        {speaker:"安妮", speakerPy:"Ānnī", speakerVi:"Annie", zh:"你还喜欢什么运动？", py:"Nǐ hái xǐhuan shénme yùndòng?", vi:"Cậu còn thích môn thể thao nào khác?"},
+        {speaker:"陈天中", speakerPy:"Chén Tiānzhōng", speakerVi:"Trần Thiên Trung", zh:"我还喜欢踢足球，一到星期天就跟朋友们去踢球。", py:"Wǒ hái xǐhuan tī zúqiú, yí dào xīngqītiān jiù gēn péngyoumen qù tī qiú.", vi:"Mình còn thích đá bóng nữa, cứ đến Chủ nhật mình lại đi đá bóng cùng bạn bè."},
+        {speaker:"安妮", speakerPy:"Ānnī", speakerVi:"Annie", zh:"你踢得怎么样？", py:"Nǐ tī de zěnmeyàng?", vi:"Cậu đá có tốt không?"},
+        {speaker:"陈天中", speakerPy:"Chén Tiānzhōng", speakerVi:"Trần Thiên Trung", zh:"我踢得还可以。", py:"Wǒ tī de hái kěyǐ.", vi:"Mình đá cũng tạm được."},
+      ]
+    },
+    {
+      label:"Bài khoá 3", page:60, context:"Trong khuôn viên trường, Annie và Trần Thiên Trung vừa đi vừa trò chuyện.", audio:"audio/hsk2/lesson7/text3.mp3", lines:[
+        {speaker:"陈天中", speakerPy:"Chén Tiānzhōng", speakerVi:"Trần Thiên Trung", zh:"你篮球打得怎么样？", py:"Nǐ lánqiú dǎ de zěnmeyàng?", vi:"Bóng rổ cậu chơi thế nào?"},
+        {speaker:"安妮", speakerPy:"Ānnī", speakerVi:"Annie", zh:"打得还可以。", py:"Dǎ de hái kěyǐ.", vi:"Chơi cũng tạm được."},
+        {speaker:"陈天中", speakerPy:"Chén Tiānzhōng", speakerVi:"Trần Thiên Trung", zh:"跑步呢？你跑得快不快？", py:"Pǎobù ne? Nǐ pǎo de kuài bu kuài?", vi:"Còn chạy bộ thì sao? Cậu chạy có nhanh không?"},
+        {speaker:"安妮", speakerPy:"Ānnī", speakerVi:"Annie", zh:"我跑得不快，也不太喜欢跑步。", py:"Wǒ pǎo de bú kuài, yě bú tài xǐhuan pǎobù.", vi:"Mình chạy không nhanh, cũng không thích chạy bộ lắm."},
+        {speaker:"陈天中", speakerPy:"Chén Tiānzhōng", speakerVi:"Trần Thiên Trung", zh:"那你喜欢游泳吗？", py:"Nà nǐ xǐhuan yóuyǒng ma?", vi:"Vậy cậu có thích bơi không?"},
+        {speaker:"安妮", speakerPy:"Ānnī", speakerVi:"Annie", zh:"喜欢，但我游泳游得不快。", py:"Xǐhuan, dàn wǒ yóuyǒng yóu de bú kuài.", vi:"Có, nhưng mình bơi không nhanh lắm."},
+      ]
+    },
+    {
+      label:"Bài khoá 4", page:62, context:"Trong phòng, Trần Thiên Trung đang viết nhật ký.", audio:"audio/hsk2/lesson7/text4.mp3", lines:[
+        {speaker:"陈天中", speakerPy:"Chén Tiānzhōng", speakerVi:"Trần Thiên Trung", zh:"我的爱好是运动。从上小学开始，我每天都跟爸爸去运动。现在我篮球打得很好，足球踢得不错，游泳游得也很快。我一有时间就去运动。", py:"Wǒ de àihào shì yùndòng. Cóng shàng xiǎoxué kāishǐ, wǒ měitiān dōu gēn bàba qù yùndòng. Xiànzài wǒ lánqiú dǎ de hěn hǎo, zúqiú tī de búcuò, yóuyǒng yóu de yě hěn kuài. Wǒ yì yǒu shíjiān jiù qù yùndòng.", vi:"Sở thích của mình là thể thao. Từ khi học tiểu học, ngày nào mình cũng cùng bố đi tập thể dục. Bây giờ mình chơi bóng rổ rất giỏi, đá bóng cũng khá tốt, bơi cũng rất nhanh. Hễ có thời gian là mình lại đi vận động."},
+      ]
+    },
+  ],
+  audio: {
+    vocab: [], text: ["audio/hsk2/lesson7/text1.mp3","audio/hsk2/lesson7/text2.mp3","audio/hsk2/lesson7/text3.mp3","audio/hsk2/lesson7/text4.mp3"], poem: "",
+  },
+  vocab: [
+    {zh:"从", py:"cóng", pos:"giới.", meaning:"từ", ex:[{zh:"从我家到学校很近。",py:"Cóng wǒ jiā dào xuéxiào hěn jìn."}, {zh:"他昨天从北京回来了。",py:"Tā zuótiān cóng Běijīng huílái le."}], grp:0, wordAudio:"audio/hsk2/lesson7/words/cong.mp3"},
+    {zh:"往", py:"wǎng", pos:"giới./đgt.", meaning:"hướng tới, đi đến, về phía", ex:[{zh:"往前走，学校就在前面。",py:"Wǎng qián zǒu, xuéxiào jiù zài qiánmiàn."}, {zh:"往外看，那是谁？",py:"Wǎng wài kàn, nà shì shéi?"}], grp:0, wordAudio:"audio/hsk2/lesson7/words/wang.mp3"},
+    {zh:"跑", py:"pǎo", pos:"đgt.", meaning:"chạy", ex:[{zh:"他每天早上六点起床跑步。",py:"Tā měitiān zǎoshang liù diǎn qǐchuáng pǎobù."}, {zh:"别往外跑了，今天天气不好。",py:"Bié wǎng wài pǎo le, jīntiān tiānqì bù hǎo."}], grp:0, wordAudio:"audio/hsk2/lesson7/words/pao.mp3"},
+    {zh:"打", py:"dǎ", pos:"đgt.", meaning:"đánh, chơi (thể thao)", ex:[{zh:"我很喜欢打篮球。",py:"Wǒ hěn xǐhuan dǎ lánqiú."}, {zh:"你想和我一起打球吗？",py:"Nǐ xiǎng hé wǒ yìqǐ dǎ qiú ma?"}], grp:0, wordAudio:"audio/hsk2/lesson7/words/da.mp3"},
+    {zh:"篮球", py:"lánqiú", pos:"dt.", meaning:"bóng rổ", ex:[{zh:"我喜欢打篮球。",py:"Wǒ xǐhuan dǎ lánqiú."}, {zh:"走，一起去打篮球吧！",py:"Zǒu, yìqǐ qù dǎ lánqiú ba!"}], grp:0, wordAudio:"audio/hsk2/lesson7/words/lanqiu.mp3"},
+    {zh:"运动", py:"yùndòng", pos:"dt./đgt.", meaning:"thể thao, môn thể thao, vận động, tập thể dục", ex:[{zh:"运动对身体很好。",py:"Yùndòng duì shēntǐ hěn hǎo."}, {zh:"你每天运动多长时间？",py:"Nǐ měitiān yùndòng duō cháng shíjiān?"}], grp:0, wordAudio:"audio/hsk2/lesson7/words/yundong.mp3"},
+    {zh:"踢", py:"tī", pos:"đgt.", meaning:"đá", ex:[{zh:"我喜欢踢足球。",py:"Wǒ xǐhuan tī zúqiú."}, {zh:"请不要踢桌子。",py:"Qǐng bú yào tī zhuōzi."}], grp:0, wordAudio:"audio/hsk2/lesson7/words/ti.mp3"},
+    {zh:"足球", py:"zúqiú", pos:"dt.", meaning:"bóng đá", ex:[{zh:"你喜欢踢足球吗？",py:"Nǐ xǐhuan tī zúqiú ma?"}, {zh:"弟弟每个星期天都踢足球。",py:"Dìdi měi gè xīngqītiān dōu tī zúqiú."}], grp:0, wordAudio:"audio/hsk2/lesson7/words/zuqiu.mp3"},
+    {zh:"球", py:"qiú", pos:"dt.", meaning:"quả bóng", ex:[{zh:"爸爸喜欢踢足球。",py:"Bàba xǐhuan tī zúqiú."}, {zh:"你喜欢踢足球还是打篮球？",py:"Nǐ xǐhuan tī zúqiú háishi dǎ lánqiú?"}], grp:0, wordAudio:"audio/hsk2/lesson7/words/qiu.mp3"},
+    {zh:"得", py:"de", pos:"trợ.", meaning:"dùng giữa động từ/tính từ và bổ ngữ để chỉ kết quả/trình độ", ex:[{zh:"哥哥跑得很快。",py:"Gēge pǎo de hěn kuài."}, {zh:"天中篮球打得很好。",py:"Tiānzhōng lánqiú dǎ de hěn hǎo."}], grp:0, wordAudio:"audio/hsk2/lesson7/words/de.mp3"},
+    {zh:"跑步", py:"pǎobù", pos:"đgt.", meaning:"chạy bộ", ex:[{zh:"姐姐喜欢跑步。",py:"Jiějie xǐhuan pǎobù."}, {zh:"我每天早上都在学校跑步。",py:"Wǒ měitiān zǎoshang dōu zài xuéxiào pǎobù."}], grp:0, wordAudio:"audio/hsk2/lesson7/words/paobu.mp3"},
+    {zh:"游泳", py:"yóuyǒng", pos:"đgt.", meaning:"bơi, bơi lội", ex:[{zh:"今天很热，我想去游泳。",py:"Jīntiān hěn rè, wǒ xiǎng qù yóuyǒng."}, {zh:"你喜欢游泳吗？",py:"Nǐ xǐhuan yóuyǒng ma?"}], grp:0, wordAudio:"audio/hsk2/lesson7/words/youyong.mp3"},
+    {zh:"游", py:"yóu", pos:"đgt.", meaning:"bơi, bơi lội", ex:[{zh:"哥哥喜欢游泳，他游得很快。",py:"Gēge xǐhuan yóuyǒng, tā yóu de hěn kuài."}, {zh:"小鱼在水里游。",py:"Xiǎo yú zài shuǐ li yóu."}], grp:0, wordAudio:"audio/hsk2/lesson7/words/you.mp3"},
+    {zh:"爱好", py:"àihào", pos:"dt./đgt.", meaning:"sở thích, thích", ex:[{zh:"你的爱好是什么？",py:"Nǐ de àihào shì shénme?"}, {zh:"我的爱好是踢足球。",py:"Wǒ de àihào shì tī zúqiú."}], grp:0, wordAudio:"audio/hsk2/lesson7/words/aihao.mp3"},
+    {zh:"开始", py:"kāishǐ", pos:"đgt./dt.", meaning:"bắt đầu, lúc đầu", ex:[{zh:"他每天九点开始工作。",py:"Tā měitiān jiǔ diǎn kāishǐ gōngzuò."}, {zh:"从今天开始，我要学游泳。",py:"Cóng jīntiān kāishǐ, wǒ yào xué yóuyǒng."}], grp:0, wordAudio:"audio/hsk2/lesson7/words/kaishi.mp3"},
+  ],
+  hanzi: [
+    {zh:"从", py:"cóng", meaning:"từ (giới từ chỉ xuất phát điểm)", comps:[{c:"人",m:"nhân (người)"}, {c:"人",m:"nhân (người) — lặp lại, biểu thị nghĩa đi theo, từ"}]},
+    {zh:"往", py:"wǎng", meaning:"hướng tới, đi đến, về phía", comps:[{c:"彳",m:"xích (bước chân trái, chỉ sự di chuyển)"}, {c:"主",m:"chủ — biến thể ngữ âm"}]},
+    {zh:"跑", py:"pǎo", meaning:"chạy", comps:[{c:"足",m:"túc (chân)"}, {c:"包",m:"bao — biến thể ngữ âm"}]},
+    {zh:"打", py:"dǎ", meaning:"đánh, chơi (thể thao)", comps:[{c:"扌",m:"thủ (tay)"}, {c:"丁",m:"đinh — biến thể ngữ âm"}]},
+    {zh:"篮", py:"lán", meaning:"rổ (trong 篮球)", comps:[{c:"竹",m:"trúc (tre)"}, {c:"监",m:"giam — biến thể ngữ âm"}]},
+    {zh:"球", py:"qiú", meaning:"quả bóng", comps:[{c:"王",m:"biến thể của 玉 (ngọc)"}, {c:"求",m:"cầu — biến thể ngữ âm"}]},
+    {zh:"运", py:"yùn", meaning:"vận, chuyển động (trong 运动)", comps:[{c:"辶",m:"sước (đi, chuyển động)"}, {c:"云",m:"vân — biến thể ngữ âm"}]},
+    {zh:"动", py:"dòng", meaning:"động, hoạt động (trong 运动)", comps:[{c:"云",m:"vân — biến thể ngữ âm"}, {c:"力",m:"lực (sức mạnh)"}]},
+    {zh:"踢", py:"tī", meaning:"đá", comps:[{c:"足",m:"túc (chân)"}, {c:"易",m:"dịch — biến thể ngữ âm"}]},
+    {zh:"足", py:"zú", meaning:"chân, bóng (trong 足球)", comps:[{c:"足",m:"chữ độc thể — tượng hình bàn chân"}]},
+    {zh:"得", py:"de", meaning:"trợ từ nối động từ/tính từ với bổ ngữ", comps:[{c:"彳",m:"xích (bước chân, hành động)"}, {c:"寸",m:"thốn (tấc, chỉ mức độ/kết quả)"}]},
+    {zh:"步", py:"bù", meaning:"bước (trong 跑步)", comps:[{c:"止",m:"chỉ (bàn chân, dừng lại)"}, {c:"止",m:"chỉ (bàn chân) — biến thể phía dưới, hai bước nối tiếp"}]},
+    {zh:"游", py:"yóu", meaning:"bơi, bơi lội", comps:[{c:"氵",m:"thủy (nước)"}, {c:"斿",m:"du — biến thể ngữ âm"}]},
+    {zh:"泳", py:"yǒng", meaning:"bơi (trong 游泳)", comps:[{c:"氵",m:"thủy (nước)"}, {c:"永",m:"vĩnh — biến thể ngữ âm"}]},
+    {zh:"爱", py:"ài", meaning:"yêu, thích (trong 爱好)", comps:[{c:"爫",m:"trảo (bàn tay, móng tay)"}, {c:"友",m:"hữu (bạn bè) — biến thể giản thể, chỉ tình cảm"}]},
+    {zh:"好", py:"hǎo", meaning:"tốt, thích (trong 爱好)", comps:[{c:"女",m:"nữ (con gái)"}, {c:"子",m:"tử (con trai)"}]},
+    {zh:"开", py:"kāi", meaning:"bắt đầu, mở (trong 开始)", comps:[{c:"开",m:"chữ độc thể — tượng hình cánh cửa mở ra"}]},
+    {zh:"始", py:"shǐ", meaning:"bắt đầu (trong 开始)", comps:[{c:"女",m:"nữ (con gái)"}, {c:"台",m:"đài — biến thể ngữ âm"}]},
+  ],
+  hanziGroups: [
+    {word:"从", py:"cóng", chars:["从"]},
+    {word:"往", py:"wǎng", chars:["往"]},
+    {word:"跑", py:"pǎo", chars:["跑"]},
+    {word:"打", py:"dǎ", chars:["打"]},
+    {word:"篮球", py:"lánqiú", chars:["篮", "球"]},
+    {word:"运动", py:"yùndòng", chars:["运", "动"]},
+    {word:"踢", py:"tī", chars:["踢"]},
+    {word:"足球", py:"zúqiú", chars:["足", "球"]},
+    {word:"球", py:"qiú", chars:["球"]},
+    {word:"得", py:"de", chars:["得"]},
+    {word:"跑步", py:"pǎobù", chars:["跑", "步"]},
+    {word:"游泳", py:"yóuyǒng", chars:["游", "泳"]},
+    {word:"游", py:"yóu", chars:["游"]},
+    {word:"爱好", py:"àihào", chars:["爱", "好"]},
+    {word:"开始", py:"kāishǐ", chars:["开", "始"]},
+  ],
+  sentences: [
+    {tokens:["你", "怎么", "一", "下课", "就", "往", "外", "跑", "？"], answer:"你怎么一下课就往外跑？", vi:"Sao con vừa tan học đã chạy ra ngoài vậy?"},
+    {tokens:["我", "一", "到家", "，", "妈妈", "就", "打来", "电话", "了", "。"], answer:"我一到家，妈妈就打来电话了。", vi:"Tôi vừa về đến nhà thì mẹ đã gọi điện tới."},
+    {tokens:["一", "到", "星期六", "，", "陈天中", "就", "跟", "同学", "去", "打篮球", "。"], answer:"一到星期六，陈天中就跟同学去打篮球。", vi:"Cứ đến thứ Bảy là Trần Thiên Trung lại cùng bạn học đi chơi bóng rổ."},
+    {tokens:["我", "踢", "得", "还", "可以", "。"], answer:"我踢得还可以。", vi:"Tôi đá bóng cũng tạm được."},
+    {tokens:["他们", "玩", "得", "很", "高兴", "。"], answer:"他们玩得很高兴。", vi:"Họ chơi rất vui."},
+    {tokens:["我", "游泳", "游", "得", "不", "快", "。"], answer:"我游泳游得不快。", vi:"Tôi bơi không nhanh."},
+  ],
+  grammar: [
+    { tag:"Ngữ pháp", title:"Câu ghép rút gọn “一……就……”", explain:"Câu ghép rút gọn “一……就……” biểu thị hành động thứ hai xảy ra ngay sau hành động thứ nhất; đồng thời cũng thể hiện hành động thứ nhất là điều kiện hoặc nguyên nhân, còn hành động thứ hai là kết quả. Khi chủ ngữ giống nhau, chủ ngữ được đặt trước “一” hoặc “就”; khi chủ ngữ khác nhau, hai chủ ngữ lần lượt đứng trước “一” và “就”.", examples:[{zh:"你怎么一下课就往外跑？", vi:"Sao con vừa tan học đã chạy ra ngoài vậy?"}, {zh:"我一到家，妈妈就打来电话了。", vi:"Tôi vừa về đến nhà thì mẹ đã gọi điện tới."}, {zh:"一到星期六，陈天中就跟同学去打篮球。", vi:"Cứ đến thứ Bảy là Trần Thiên Trung lại cùng bạn học đi chơi bóng rổ."}] },
+    { tag:"Ngữ pháp", title:"Bổ ngữ trạng thái (1)", explain:"Bổ ngữ trạng thái đứng sau động từ để nói rõ thêm trạng thái của hành động. Cấu trúc cơ bản: Động từ + 得 + cụm tính từ. Hình thức phủ định là thêm “不” trước tính từ. Hình thức nghi vấn có ba dạng: (1) thêm “吗” ở cuối câu; (2) động từ + 得 + tính từ + 不 + tính từ; (3) động từ + 得 + 怎么样.", examples:[{zh:"我踢得还可以。", vi:"Tôi đá bóng cũng tạm được."}, {zh:"他们玩得很高兴。", vi:"Họ chơi rất vui."}, {zh:"白家月跑得不快。", vi:"Bạch Gia Nguyệt chạy không nhanh."}] },
+    { tag:"Ngữ pháp", title:"Bổ ngữ trạng thái (2)", explain:"Trong câu có bổ ngữ trạng thái, nếu động từ là từ li hợp thì cần lặp lại từ tố có tính chất động từ. Nếu động từ có tân ngữ, có thể đảo tân ngữ lên trước động từ hoặc lặp lại động từ.", examples:[{zh:"我游泳游得不快。", vi:"Tôi bơi không nhanh."}, {zh:"你篮球打得怎么样？", vi:"Bạn chơi bóng rổ thế nào?"}, {zh:"白家月写汉字写得很好看。", vi:"Bạch Gia Nguyệt viết chữ Hán rất đẹp."}] },
+  ],
+  grammarPractice: [
+    {question:"你(___)前走，那边有一个公交站。(Bạn đi thẳng về phía trước, đằng kia có một trạm xe buýt.)", options:["往", "从", "打"], answer:"往"},
+    {question:"他每天早上都(___)。(Mỗi buổi sáng anh ấy đều chạy bộ.)", options:["跑步", "开始", "爱好"], answer:"跑步"},
+    {question:"你篮球(___)得怎么样？(Bạn chơi bóng rổ thế nào?)", options:["打", "踢", "游"], answer:"打"},
+    {question:"我的(___)是运动，我每天都游泳、跑步。(Sở thích của tôi là thể thao, ngày nào tôi cũng bơi, chạy bộ.)", options:["爱好", "开始", "足球"], answer:"爱好"},
+    {question:"从上小学(___)，我每天都跟爸爸去运动。(Từ khi học tiểu học, ngày nào tôi cũng đi tập thể dục cùng bố.)", options:["开始", "得", "往"], answer:"开始"},
+  ],
+};
+LESSONS_HSK2[7] = Object.assign(LESSONS_HSK2[7], LESSON_HSK2_7_CONTENT, {ready:true});
+const LESSON_HSK2_8_CONTENT = {
+  texts: [
+    {
+      label:"Bài khoá 1", page:65, context:"Trong trung tâm thương mại, Vương Nhất Tuyết và Lưu Minh đang mua sắm.", audio:"audio/hsk2/lesson8/text1.mp3", lines:[
+        {speaker:"王一雪", speakerPy:"Wáng Yīxuě", speakerVi:"Vương Nhất Tuyết", zh:"你看，这两块手表怎么样？", py:"Nǐ kàn, zhè liǎng kuài shǒubiǎo zěnmeyàng?", vi:"Anh nhìn này, hai chiếc đồng hồ này thế nào?"},
+        {speaker:"刘明", speakerPy:"Liú Míng", speakerVi:"Lưu Minh", zh:"都不错！", py:"Dōu búcuò!", vi:"Đều rất đẹp!"},
+        {speaker:"王一雪", speakerPy:"Wáng Yīxuě", speakerVi:"Vương Nhất Tuyết", zh:"我喜欢左边这个。", py:"Wǒ xǐhuan zuǒbian zhège.", vi:"Em thích chiếc bên trái này."},
+        {speaker:"刘明", speakerPy:"Liú Míng", speakerVi:"Lưu Minh", zh:"我也觉得左边的比右边的好看。", py:"Wǒ yě juéde zuǒbian de bǐ yòubian de hǎokàn.", vi:"Anh cũng thấy chiếc bên trái đẹp hơn chiếc bên phải."},
+        {speaker:"王一雪", speakerPy:"Wáng Yīxuě", speakerVi:"Vương Nhất Tuyết", zh:"你看看要多少钱！", py:"Nǐ kànkan yào duōshao qián!", vi:"Anh nhìn xem bao nhiêu tiền!"},
+        {speaker:"刘明", speakerPy:"Liú Míng", speakerVi:"Lưu Minh", zh:"真不便宜！八千八！", py:"Zhēn bù piányi! Bā qiān bā!", vi:"Thật không rẻ! Tám nghìn tám!"},
+      ]
+    },
+    {
+      label:"Bài khoá 2", page:67, context:"Bên ngoài rạp chiếu phim, Vương Nhất Tuyết và Lưu Minh đang trò chuyện.", audio:"audio/hsk2/lesson8/text2.mp3", lines:[
+        {speaker:"刘明", speakerPy:"Liú Míng", speakerVi:"Lưu Minh", zh:"今天有不少电影，我们看个电影吧。", py:"Jīntiān yǒu bù shǎo diànyǐng, wǒmen kàn gè diànyǐng ba.", vi:"Hôm nay có rất nhiều phim, chúng ta đi xem phim nhé."},
+        {speaker:"王一雪", speakerPy:"Wáng Yīxuě", speakerVi:"Vương Nhất Tuyết", zh:"好啊！我们看哪个？", py:"Hǎo a! Wǒmen kàn nǎge?", vi:"Hay quá! Chúng ta xem phim nào?"},
+        {speaker:"刘明", speakerPy:"Liú Míng", speakerVi:"Lưu Minh", zh:"我记得你喜欢看爱情片，我们看那个爱情片，怎么样？", py:"Wǒ jìde nǐ xǐhuan kàn àiqíngpiàn, wǒmen kàn nàge àiqíngpiàn, zěnmeyàng?", vi:"Anh nhớ là em thích xem phim tình cảm, hay chúng ta xem bộ phim tình cảm kia, được không?"},
+        {speaker:"王一雪", speakerPy:"Wáng Yīxuě", speakerVi:"Vương Nhất Tuyết", zh:"还是看这个吧，我看网上说这个电影比那个爱情片更有意思。", py:"Háishi kàn zhège ba, wǒ kàn wǎngshang shuō zhège diànyǐng bǐ nàge àiqíngpiàn gèng yǒu yìsi.", vi:"Xem bộ phim này đi, em thấy trên mạng nói bộ phim này hay hơn bộ phim tình cảm đó."},
+        {speaker:"刘明", speakerPy:"Liú Míng", speakerVi:"Lưu Minh", zh:"好。我去买票。", py:"Hǎo. Wǒ qù mǎi piào.", vi:"Được, anh đi mua vé."},
+        {speaker:"王一雪", speakerPy:"Wáng Yīxuě", speakerVi:"Vương Nhất Tuyết", zh:"到网上买吧，网上买比在这里买便宜。", py:"Dào wǎngshang mǎi ba, wǎngshang mǎi bǐ zài zhèlǐ mǎi piányi.", vi:"Mua trên mạng đi ạ, mua trên mạng rẻ hơn mua ở đây."},
+      ]
+    },
+    {
+      label:"Bài khoá 3", page:69, context:"Trong nhà hàng, Vương Nhất Tuyết và Lưu Minh đang gọi món.", audio:"audio/hsk2/lesson8/text3.mp3", lines:[
+        {speaker:"刘明", speakerPy:"Liú Míng", speakerVi:"Lưu Minh", zh:"您好！就要这几个菜吧，谢谢！", py:"Nín hǎo! Jiù yào zhè jǐ gè cài ba, xièxie!", vi:"Chào chị! Chúng tôi sẽ gọi những món này nhé, cảm ơn!"},
+        {speaker:"王一雪", speakerPy:"Wáng Yīxuě", speakerVi:"Vương Nhất Tuyết", zh:"怎么点这么多菜？", py:"Zěnme diǎn zhème duō cài?", vi:"Sao anh gọi nhiều món thế?"},
+        {speaker:"刘明", speakerPy:"Liú Míng", speakerVi:"Lưu Minh", zh:"你想想，今天是几月几号？", py:"Nǐ xiǎngxiang, jīntiān shì jǐ yuè jǐ hào?", vi:"Em thử nghĩ xem, hôm nay là ngày mấy, tháng mấy vậy?"},
+        {speaker:"王一雪", speakerPy:"Wáng Yīxuě", speakerVi:"Vương Nhất Tuyết", zh:"8月27号。啊！我的生日！", py:"Bā yuè èrshíqī hào. À! Wǒ de shēngrì!", vi:"Ngày 27 tháng 8. À! Là ngày sinh nhật của em!"},
+        {speaker:"刘明", speakerPy:"Liú Míng", speakerVi:"Lưu Minh", zh:"生日快乐！虽然你忘了，但是我记得。看看这是什么？", py:"Shēngrì kuàilè! Suīrán nǐ wàngle, dànshì wǒ jìde. Kànkan zhè shì shénme?", vi:"Chúc mừng sinh nhật! Mặc dù em quên, nhưng anh vẫn nhớ. Em nhìn xem, đây là cái gì nào?"},
+        {speaker:"王一雪", speakerPy:"Wáng Yīxuě", speakerVi:"Vương Nhất Tuyết", zh:"手表！吃饭、看电影、买手表，今天花了不少钱吧？", py:"Shǒubiǎo! Chī fàn, kàn diànyǐng, mǎi shǒubiǎo, jīntiān huāle bù shǎo qián ba?", vi:"Đồng hồ đeo tay! Ăn cơm, xem phim, rồi còn mua đồng hồ nữa. Hôm nay anh đã tiêu tốn không ít tiền nhỉ?"},
+        {speaker:"刘明", speakerPy:"Liú Míng", speakerVi:"Lưu Minh", zh:"虽然花了一些钱，但是我们过了一个快乐的生日。", py:"Suīrán huāle yìxiē qián, dànshì wǒmen guòle yí gè kuàilè de shēngrì.", vi:"Mặc dù đã tiêu một ít tiền, nhưng chúng ta đã đón một sinh nhật vui vẻ."},
+      ]
+    },
+    {
+      label:"Bài khoá 4", page:70, context:"Tiểu Ngữ đang thuật lại một ngày của Vương Nhất Tuyết và Lưu Minh.", audio:"audio/hsk2/lesson8/text4.mp3", lines:[
+        {speaker:"小语", speakerPy:"Xiǎoyǔ", speakerVi:"Tiểu Ngữ", zh:"虽然妻子忘了今天是自己的生日，但是丈夫记得。丈夫请妻子去饭馆吃饭、去电影院看电影，还给妻子买了一块非常漂亮的手表。妻子觉得今天很快乐。", py:"Suīrán qīzi wàngle jīntiān shì zìjǐ de shēngrì, dànshì zhàngfu jìde. Zhàngfu qǐng qīzi qù fànguǎn chī fàn, qù diànyǐngyuàn kàn diànyǐng, hái gěi qīzi mǎile yí kuài fēicháng piàoliang de shǒubiǎo. Qīzi juéde jīntiān hěn kuàilè.", vi:"Mặc dù người vợ quên mất hôm nay là sinh nhật của mình, nhưng người chồng vẫn nhớ. Anh ấy mời vợ đi ăn ở nhà hàng, đi xem phim ở rạp chiếu phim, còn mua cho cô ấy một chiếc đồng hồ rất đẹp. Người vợ cảm thấy hôm nay rất vui."},
+      ]
+    },
+  ],
+  audio: {
+    vocab: [], text: ["audio/hsk2/lesson8/text1.mp3","audio/hsk2/lesson8/text2.mp3","audio/hsk2/lesson8/text3.mp3","audio/hsk2/lesson8/text4.mp3"], poem: "",
+  },
+  vocab: [
+    {zh:"手表", py:"shǒubiǎo", pos:"dt.", meaning:"đồng hồ đeo tay", ex:[{zh:"这是我从北京买的手表。",py:"Zhè shì wǒ cóng Běijīng mǎi de shǒubiǎo."}, {zh:"妈妈送了我一块手表。",py:"Māma sòngle wǒ yí kuài shǒubiǎo."}], grp:0, wordAudio:"audio/hsk2/lesson8/words/shoubiao.mp3"},
+    {zh:"左边", py:"zuǒbian", pos:"dt.", meaning:"bên trái", ex:[{zh:"坐在你左边的人是谁？",py:"Zuò zài nǐ zuǒbian de rén shì shéi?"}, {zh:"我觉得左边的手表更好看。",py:"Wǒ juéde zuǒbian de shǒubiǎo gèng hǎokàn."}], grp:0, wordAudio:"audio/hsk2/lesson8/words/zuobian.mp3"},
+    {zh:"左", py:"zuǒ", pos:"dt.", meaning:"trái", ex:[{zh:"出门往左走就到学校了。",py:"Chūmén wǎng zuǒ zǒu jiù dào xuéxiào le."}, {zh:"你左手里有什么？",py:"Nǐ zuǒshǒu li yǒu shénme?"}], grp:0, wordAudio:"audio/hsk2/lesson8/words/zuo.mp3"},
+    {zh:"比", py:"bǐ", pos:"giới./đgt.", meaning:"so, so với, hơn (so sánh)", ex:[{zh:"左边的笔比右边的笔长。",py:"Zuǒbian de bǐ bǐ yòubian de bǐ cháng."}, {zh:"姐姐比妹妹高。",py:"Jiějie bǐ mèimei gāo."}], grp:0, wordAudio:"audio/hsk2/lesson8/words/bi.mp3"},
+    {zh:"右边", py:"yòubian", pos:"dt.", meaning:"bên phải", ex:[{zh:"坐在右边的是我姐姐。",py:"Zuò zài yòubian de shì wǒ jiějie."}, {zh:"床的右边是桌子。",py:"Chuáng de yòubian shì zhuōzi."}], grp:0, wordAudio:"audio/hsk2/lesson8/words/youbian.mp3"},
+    {zh:"右", py:"yòu", pos:"dt.", meaning:"phải", ex:[{zh:"往左走还是往右走？",py:"Wǎng zuǒ zǒu háishi wǎng yòu zǒu?"}, {zh:"你右手里有什么？",py:"Nǐ yòushǒu li yǒu shénme?"}], grp:0, wordAudio:"audio/hsk2/lesson8/words/you.mp3"},
+    {zh:"记得", py:"jìde", pos:"đgt.", meaning:"nhớ, nhớ là", ex:[{zh:"我记得你的名字。",py:"Wǒ jìde nǐ de míngzi."}, {zh:"我记得星期天是妈妈的生日。",py:"Wǒ jìde xīngqītiān shì māma de shēngrì."}], grp:0, wordAudio:"audio/hsk2/lesson8/words/jide.mp3"},
+    {zh:"爱情片", py:"àiqíngpiàn", pos:"dt.", meaning:"phim tình cảm", ex:[{zh:"我喜欢看爱情片。",py:"Wǒ xǐhuan kàn àiqíngpiàn."}, {zh:"我们看爱情片吧。",py:"Wǒmen kàn àiqíngpiàn ba."}], grp:0, wordAudio:"audio/hsk2/lesson8/words/aiqingpian.mp3"},
+    {zh:"有意思", py:"yǒu yìsi", pos:"", meaning:"hay, thú vị", ex:[{zh:"这本书很有意思。",py:"Zhè běn shū hěn yǒu yìsi."}, {zh:"中文课很有意思。",py:"Zhōngwén kè hěn yǒu yìsi."}], grp:0, wordAudio:"audio/hsk2/lesson8/words/youyisi.mp3"},
+    {zh:"点", py:"diǎn", pos:"đgt.", meaning:"gọi, chọn (món)", ex:[{zh:"您好，现在点菜吗？",py:"Nín hǎo, xiànzài diǎn cài ma?"}, {zh:"我们点这几个菜，谢谢。",py:"Wǒmen diǎn zhè jǐ gè cài, xièxie."}], grp:0, wordAudio:"audio/hsk2/lesson8/words/dian.mp3"},
+    {zh:"虽然", py:"suīrán", pos:"liên.", meaning:"mặc dù, tuy", ex:[{zh:"虽然下雨了，但是不太冷。",py:"Suīrán xià yǔ le, dànshì bú tài lěng."}, {zh:"虽然我喜欢踢足球，但是踢得不太好。",py:"Suīrán wǒ xǐhuan tī zúqiú, dànshì tī de bú tài hǎo."}], grp:0, wordAudio:"audio/hsk2/lesson8/words/suiran.mp3"},
+    {zh:"但是", py:"dànshì", pos:"liên.", meaning:"nhưng", ex:[{zh:"虽然很晚了，但是爸爸还没回来。",py:"Suīrán hěn wǎn le, dànshì bàba hái méi huílái."}, {zh:"虽然有点儿累，但是我很喜欢游泳。",py:"Suīrán yǒudiǎnr lèi, dànshì wǒ hěn xǐhuan yóuyǒng."}], grp:0, wordAudio:"audio/hsk2/lesson8/words/danshi.mp3"},
+    {zh:"花", py:"huā", pos:"đgt.", meaning:"tiêu, chi tiêu", ex:[{zh:"妈妈买了很多东西，花了不少钱。",py:"Māma mǎile hěn duō dōngxi, huāle bù shǎo qián."}, {zh:"弟弟花了很多时间学游泳。",py:"Dìdi huāle hěn duō shíjiān xué yóuyǒng."}], grp:0, wordAudio:"audio/hsk2/lesson8/words/hua.mp3"},
+    {zh:"妻子", py:"qīzi", pos:"dt.", meaning:"vợ", ex:[{zh:"这是我的妻子。",py:"Zhè shì wǒ de qīzi."}, {zh:"这块手表是送给我妻子的。",py:"Zhè kuài shǒubiǎo shì sòng gěi wǒ qīzi de."}], grp:0, wordAudio:"audio/hsk2/lesson8/words/qizi.mp3"},
+    {zh:"丈夫", py:"zhàngfu", pos:"dt.", meaning:"chồng", ex:[{zh:"这是我丈夫。",py:"Zhè shì wǒ zhàngfu."}, {zh:"星期天，我和丈夫去看电影。",py:"Xīngqītiān, wǒ hé zhàngfu qù kàn diànyǐng."}], grp:0, wordAudio:"audio/hsk2/lesson8/words/zhangfu.mp3"},
+    {zh:"饭馆", py:"fànguǎn", pos:"dt.", meaning:"nhà hàng, quán ăn", ex:[{zh:"明天我们要去饭馆吃饭。",py:"Míngtiān wǒmen yào qù fànguǎn chī fàn."}, {zh:"饭馆的烤鸭很好吃。",py:"Fànguǎn de kǎoyā hěn hǎochī."}], grp:0, wordAudio:"audio/hsk2/lesson8/words/fanguan.mp3"},
+  ],
+  hanzi: [
+    {zh:"手", py:"shǒu", meaning:"tay (trong 手表)", comps:[{c:"手",m:"chữ độc thể — tượng hình bàn tay xòe ra"}]},
+    {zh:"表", py:"biǎo", meaning:"đồng hồ, biểu, bề mặt (trong 手表)", comps:[{c:"主",m:"chủ — biến thể ngữ âm"}, {c:"衣",m:"y (áo) — biểu thị mặt ngoài, bề mặt"}]},
+    {zh:"左", py:"zuǒ", meaning:"trái, bên trái", comps:[{c:"𠂇",m:"tay trái (biến thể)"}, {c:"工",m:"công (công cụ, thợ) — dùng tay trái cầm dụng cụ"}]},
+    {zh:"边", py:"biān", meaning:"bên, phía (trong 左边/右边)", comps:[{c:"辶",m:"sước (đi, di chuyển)"}, {c:"力",m:"lực — biến thể ngữ âm giản thể"}]},
+    {zh:"比", py:"bǐ", meaning:"so, so với, hơn", comps:[{c:"匕",m:"chuỷ (biến thể) — người đứng nghiêng, bên trái"}, {c:"匕",m:"chuỷ (biến thể) — người đứng nghiêng, bên phải, hai người đứng cạnh nhau để so sánh"}]},
+    {zh:"右", py:"yòu", meaning:"phải, bên phải", comps:[{c:"𠂇",m:"tay phải (biến thể)"}, {c:"口",m:"khẩu (miệng) — dùng tay phải, thuận miệng"}]},
+    {zh:"记", py:"jì", meaning:"ghi nhớ (trong 记得)", comps:[{c:"讠",m:"ngôn (lời nói, giản thể của 言)"}, {c:"己",m:"kỷ — biến thể ngữ âm"}]},
+    {zh:"得", py:"de", meaning:"trợ từ (trong 记得)", comps:[{c:"彳",m:"xích (bước chân, hành động)"}, {c:"寸",m:"thốn (tấc, chỉ mức độ/kết quả)"}]},
+    {zh:"爱", py:"ài", meaning:"yêu, thích (trong 爱情片)", comps:[{c:"爫",m:"trảo (bàn tay, móng tay)"}, {c:"友",m:"hữu (bạn bè) — biến thể giản thể, chỉ tình cảm"}]},
+    {zh:"情", py:"qíng", meaning:"tình cảm (trong 爱情片)", comps:[{c:"忄",m:"tâm (trái tim, tình cảm)"}, {c:"青",m:"thanh — biến thể ngữ âm"}]},
+    {zh:"片", py:"piàn", meaning:"phim, tấm, mảnh (trong 爱情片)", comps:[{c:"片",m:"chữ độc thể — tượng hình mảnh gỗ mỏng, tấm phim"}]},
+    {zh:"有", py:"yǒu", meaning:"có (trong 有意思)", comps:[{c:"𠂇",m:"tay (biến thể) — cầm giữ"}, {c:"月",m:"nhục (thịt, biến thể) — có được, sở hữu"}]},
+    {zh:"意", py:"yì", meaning:"ý (trong 有意思)", comps:[{c:"音",m:"âm — biến thể ngữ âm"}, {c:"心",m:"tâm (trái tim, ý nghĩ)"}]},
+    {zh:"思", py:"sī", meaning:"nghĩ, ý nghĩ (trong 有意思)", comps:[{c:"田",m:"điền — biến thể của 囟 (đầu óc)"}, {c:"心",m:"tâm (trái tim, suy nghĩ)"}]},
+    {zh:"点", py:"diǎn", meaning:"gọi, chọn (món)", comps:[{c:"占",m:"chiêm — biến thể ngữ âm"}, {c:"灬",m:"hỏa (lửa, biến thể — dấu chấm nhỏ)"}]},
+    {zh:"虽", py:"suī", meaning:"tuy, mặc dù (trong 虽然)", comps:[{c:"口",m:"khẩu (miệng) — biến thể ngữ âm"}, {c:"虫",m:"trùng (côn trùng, biến thể)"}]},
+    {zh:"然", py:"rán", meaning:"vậy, thế (trong 虽然)", comps:[{c:"月",m:"nhục (thịt, biến thể)"}, {c:"犬",m:"khuyển (con chó)"}, {c:"灬",m:"hỏa (lửa) — nghĩa gốc là đốt cháy, sau mượn làm hư từ"}]},
+    {zh:"但", py:"dàn", meaning:"nhưng (trong 但是)", comps:[{c:"亻",m:"nhân (người)"}, {c:"旦",m:"đán — biến thể ngữ âm"}]},
+    {zh:"是", py:"shì", meaning:"là, đúng (trong 但是)", comps:[{c:"日",m:"nhật (mặt trời)"}, {c:"疋",m:"biến thể — chỉ sự chính xác, đúng"}]},
+    {zh:"花", py:"huā", meaning:"tiêu, chi tiêu", comps:[{c:"艹",m:"thảo (cỏ, cây cối)"}, {c:"化",m:"hoá — biến thể ngữ âm"}]},
+    {zh:"妻", py:"qī", meaning:"vợ (trong 妻子)", comps:[{c:"女",m:"nữ (con gái, phụ nữ)"}, {c:"⺕",m:"biến thể — tay cầm đồ, chỉ người vợ quán xuyến việc nhà"}]},
+    {zh:"子", py:"zǐ", meaning:"hậu tố danh từ (trong 妻子)", comps:[{c:"子",m:"chữ độc thể — tượng hình đứa trẻ nhỏ"}]},
+    {zh:"丈", py:"zhàng", meaning:"trượng (đơn vị đo cũ, trong 丈夫)", comps:[{c:"十",m:"thập (số mười, biến thể — cây gậy đo)"}, {c:"又",m:"hựu (biến thể — bàn tay cầm gậy)"}]},
+    {zh:"夫", py:"fū", meaning:"chồng, người đàn ông (trong 丈夫)", comps:[{c:"大",m:"đại (to lớn, hình người dang tay)"}, {c:"一",m:"nhất — nét ngang tượng trưng cây trâm cài tóc của người đàn ông trưởng thành"}]},
+    {zh:"饭", py:"fàn", meaning:"cơm, ăn (trong 饭馆)", comps:[{c:"饣",m:"thực (ăn, giản thể của 食)"}, {c:"反",m:"phản — biến thể ngữ âm"}]},
+    {zh:"馆", py:"guǎn", meaning:"quán, tòa nhà công cộng (trong 饭馆)", comps:[{c:"饣",m:"thực (ăn, giản thể của 食)"}, {c:"官",m:"quan — biến thể ngữ âm"}]},
+  ],
+  hanziGroups: [
+    {word:"手表", py:"shǒubiǎo", chars:["手", "表"]},
+    {word:"左边", py:"zuǒbian", chars:["左", "边"]},
+    {word:"左", py:"zuǒ", chars:["左"]},
+    {word:"比", py:"bǐ", chars:["比"]},
+    {word:"右边", py:"yòubian", chars:["右", "边"]},
+    {word:"右", py:"yòu", chars:["右"]},
+    {word:"记得", py:"jìde", chars:["记", "得"]},
+    {word:"爱情片", py:"àiqíngpiàn", chars:["爱", "情", "片"]},
+    {word:"有意思", py:"yǒuyìsi", chars:["有", "意", "思"]},
+    {word:"点", py:"diǎn", chars:["点"]},
+    {word:"虽然", py:"suīrán", chars:["虽", "然"]},
+    {word:"但是", py:"dànshì", chars:["但", "是"]},
+    {word:"花", py:"huā", chars:["花"]},
+    {word:"妻子", py:"qīzi", chars:["妻", "子"]},
+    {word:"丈夫", py:"zhàngfu", chars:["丈", "夫"]},
+    {word:"饭馆", py:"fànguǎn", chars:["饭", "馆"]},
+  ],
+  sentences: [
+    {tokens:["我", "也", "觉得", "左边", "的", "比", "右边", "的", "好看", "。"], answer:"我也觉得左边的比右边的好看。", vi:"Anh cũng thấy chiếc bên trái đẹp hơn chiếc bên phải."},
+    {tokens:["今天", "比", "昨天", "冷", "。"], answer:"今天比昨天冷。", vi:"Hôm nay lạnh hơn hôm qua."},
+    {tokens:["他", "觉得", "踢", "足球", "比", "打", "篮球", "有意思", "。"], answer:"他觉得踢足球比打篮球有意思。", vi:"Anh ấy thấy đá bóng thú vị hơn chơi bóng rổ."},
+    {tokens:["虽然", "你", "忘", "了", "，", "但是", "我", "记得", "。"], answer:"虽然你忘了，但是我记得。", vi:"Mặc dù em quên, nhưng anh vẫn nhớ."},
+    {tokens:["外边", "下雪", "了", "，", "但是", "不", "太", "冷", "。"], answer:"外边下雪了，但是不太冷。", vi:"Bên ngoài có tuyết rơi, nhưng không lạnh lắm."},
+    {tokens:["虽然", "有点儿", "累", "，", "我", "还是", "走", "回家", "了", "。"], answer:"虽然有点儿累，我还是走回家了。", vi:"Mặc dù hơi mệt, nhưng tôi vẫn đi bộ về nhà."},
+  ],
+  grammar: [
+    { tag:"Ngữ pháp", title:"Câu so sánh (1)", explain:"Trong bài này, chúng ta học câu so sánh dùng giới từ “比” để so sánh sự khác biệt về tính chất và trạng thái. Cấu trúc cơ bản: A 比 B + tính từ/cụm tính từ.", examples:[{zh:"我也觉得左边的比右边的好看。", vi:"Anh cũng thấy chiếc bên trái đẹp hơn chiếc bên phải."}, {zh:"今天比昨天冷。", vi:"Hôm nay lạnh hơn hôm qua."}, {zh:"他觉得踢足球比打篮球有意思。", vi:"Anh ấy thấy đá bóng thú vị hơn chơi bóng rổ."}] },
+    { tag:"Ngữ pháp", title:"Câu so sánh (2)", explain:"Trong câu so sánh dùng “比”, không thể thêm phó từ chỉ mức độ như “很”, “非常” vào trước tính từ, có thể thêm “还” và “更” để chỉ mức độ cao.", examples:[{zh:"我看网上说这个电影比那个爱情片更有意思。", vi:"Em thấy trên mạng nói bộ phim này hay hơn bộ phim tình cảm đó."}, {zh:"今天比昨天更热。", vi:"Hôm nay nóng hơn hôm qua."}, {zh:"我觉得奶茶比牛奶还好喝。", vi:"Tôi thấy trà sữa ngon hơn sữa."}] },
+    { tag:"Ngữ pháp", title:"Câu ghép chuyển ý “虽然……，但是……”", explain:"Câu ghép chuyển ý được tạo bởi cấu trúc “虽然……，但是……”. “虽然” và “但是” có thể sử dụng thành cặp, cũng có thể lược bớt một trong hai từ này.", examples:[{zh:"虽然你忘了，但是我记得。", vi:"Mặc dù em quên, nhưng anh vẫn nhớ."}, {zh:"外边下雪了，但是不太冷。", vi:"Bên ngoài có tuyết rơi, nhưng không lạnh lắm."}, {zh:"虽然觉得有点儿累，我还是走回家了。", vi:"Mặc dù thấy hơi mệt, tôi vẫn đi bộ về nhà."}] },
+  ],
+  grammarPractice: [
+    {question:"我(___)你矮一点儿。(Tôi thấp hơn bạn một chút.)", options:["比", "记得", "花"], answer:"比"},
+    {question:"(___)下雨了，但是我们还是出去散步了。(Mặc dù trời mưa, nhưng chúng tôi vẫn ra ngoài đi dạo.)", options:["虽然", "但是", "比"], answer:"虽然"},
+    {question:"我很忙，(___)还是来看你了。(Tôi rất bận, nhưng vẫn đến thăm bạn.)", options:["但是", "虽然", "比"], answer:"但是"},
+    {question:"你(___)吃什么菜？(Bạn gọi món gì?)", options:["点", "花", "记得"], answer:"点"},
+    {question:"我一直(___)你的生日。(Tôi luôn nhớ sinh nhật của bạn.)", options:["记得", "点", "比"], answer:"记得"},
+  ],
+};
+LESSONS_HSK2[8] = Object.assign(LESSONS_HSK2[8], LESSON_HSK2_8_CONTENT, {ready:true});
+const LESSON_HSK2_9_CONTENT = {
+  texts: [
+    {
+      label:"Bài khoá 1", page:74, context:"Trong cửa hàng, Vương Nhất Tuyết và Lưu Minh đang xem quần.", audio:"audio/hsk2/lesson9/text1.mp3", lines:[
+        {speaker:"王一雪", speakerPy:"Wáng Yīxuě", speakerVi:"Vương Nhất Tuyết", zh:"儿子的裤子坏了，我们给他买条新的吧。", py:"Érzi de kùzi huài le, wǒmen gěi tā mǎi tiáo xīn de ba.", vi:"Quần của con trai bị rách rồi, chúng ta mua cho con một chiếc mới đi."},
+        {speaker:"刘明", speakerPy:"Liú Míng", speakerVi:"Lưu Minh", zh:"好啊。", py:"Hǎo a.", vi:"Nhất trí nhé."},
+        {speaker:"王一雪", speakerPy:"Wáng Yīxuě", speakerVi:"Vương Nhất Tuyết", zh:"你看这条黑色的怎么样？", py:"Nǐ kàn zhè tiáo hēisè de zěnmeyàng?", vi:"Anh xem chiếc màu đen này thế nào?"},
+        {speaker:"刘明", speakerPy:"Liú Míng", speakerVi:"Lưu Minh", zh:"没有你上次买的那条好看。", py:"Méiyǒu nǐ shàng cì mǎi de nà tiáo hǎokàn.", vi:"Không đẹp bằng chiếc mà em đã mua lần trước."},
+        {speaker:"王一雪", speakerPy:"Wáng Yīxuě", speakerVi:"Vương Nhất Tuyết", zh:"旁边那个男孩儿就穿了这样的裤子，我觉得很好看啊！", py:"Pángbiān nàge nánháir jiù chuānle zhèyàng de kùzi, wǒ juéde hěn hǎokàn a!", vi:"Cậu bé bên cạnh đang mặc kiểu quần này đấy, em thấy rất đẹp mà!"},
+        {speaker:"刘明", speakerPy:"Liú Míng", speakerVi:"Lưu Minh", zh:"儿子的个子没有他那么高，穿上就不会太好看。", py:"Érzi de gèzi méiyǒu tā nàme gāo, chuānshàng jiù bú huì tài hǎokàn.", vi:"Con trai chúng ta không cao bằng cậu bé đó, mặc vào có thể không đẹp được thế."},
+        {speaker:"王一雪", speakerPy:"Wáng Yīxuě", speakerVi:"Vương Nhất Tuyết", zh:"好吧，我们再去那边看看。", py:"Hǎo ba, wǒmen zài qù nàbiān kànkan.", vi:"Vâng, chúng ta qua bên kia xem thêm nhé."},
+      ]
+    },
+    {
+      label:"Bài khoá 2", page:76, context:"Ở cửa hàng, Vương Nhất Tuyết và Lưu Minh bước ra ngoài.", audio:"audio/hsk2/lesson9/text2.mp3", lines:[
+        {speaker:"王一雪", speakerPy:"Wáng Yīxuě", speakerVi:"Vương Nhất Tuyết", zh:"门口有家奶茶店。你想喝杯奶茶吗？", py:"Ménkǒu yǒu jiā nǎichádiàn. Nǐ xiǎng hē bēi nǎichá ma?", vi:"Trước cửa có quán trà sữa. Anh có muốn uống trà sữa không?"},
+        {speaker:"刘明", speakerPy:"Liú Míng", speakerVi:"Lưu Minh", zh:"我想喝咖啡，还是去咖啡店吧。", py:"Wǒ xiǎng hē kāfēi, háishi qù kāfēidiàn ba.", vi:"Anh muốn uống cà phê, hay là đến quán cà phê đi."},
+        {speaker:"王一雪", speakerPy:"Wáng Yīxuě", speakerVi:"Vương Nhất Tuyết", zh:"咖啡店离这儿有点儿远。", py:"Kāfēidiàn lí zhèr yǒudiǎnr yuǎn.", vi:"Quán cà phê cách chỗ này hơi xa."},
+        {speaker:"刘明", speakerPy:"Liú Míng", speakerVi:"Lưu Minh", zh:"没关系，那家店的咖啡很好喝。", py:"Méi guānxi, nà jiā diàn de kāfēi hěn hǎohē.", vi:"Không sao đâu, cà phê ở quán đó rất ngon."},
+        {speaker:"王一雪", speakerPy:"Wáng Yīxuě", speakerVi:"Vương Nhất Tuyết", zh:"那你等一下，我去买杯奶茶。", py:"Nà nǐ děng yíxià, wǒ qù mǎi bēi nǎichá.", vi:"Vậy anh đợi một lát, em đi mua cốc trà sữa."},
+        {speaker:"刘明", speakerPy:"Liú Míng", speakerVi:"Lưu Minh", zh:"你不想喝咖啡吗？", py:"Nǐ bù xiǎng hē kāfēi ma?", vi:"Em không muốn uống cà phê sao?"},
+        {speaker:"王一雪", speakerPy:"Wáng Yīxuě", speakerVi:"Vương Nhất Tuyết", zh:"喝了咖啡，晚上就别想睡觉了。", py:"Hēle kāfēi, wǎnshang jiù bié xiǎng shuìjiào le.", vi:"Uống cà phê thì buổi tối khỏi ngủ mất."},
+      ]
+    },
+    {
+      label:"Bài khoá 3", page:78, context:"Trước cửa quán cà phê, Vương Nhất Tuyết và Lưu Minh đang trò chuyện.", audio:"audio/hsk2/lesson9/text3.mp3", lines:[
+        {speaker:"刘明", speakerPy:"Liú Míng", speakerVi:"Lưu Minh", zh:"我们打车回去吧。", py:"Wǒmen dǎchē huíqù ba.", vi:"Chúng ta bắt taxi về nhé."},
+        {speaker:"王一雪", speakerPy:"Wáng Yīxuě", speakerVi:"Vương Nhất Tuyết", zh:"这里离家很近，还是走路吧。", py:"Zhèlǐ lí jiā hěn jìn, háishi zǒulù ba.", vi:"Chỗ này cách nhà mình rất gần, hay là đi bộ về đi."},
+        {speaker:"刘明", speakerPy:"Liú Míng", speakerVi:"Lưu Minh", zh:"要走多长时间？", py:"Yào zǒu duō cháng shíjiān?", vi:"Đi bộ mất bao lâu vậy?"},
+        {speaker:"王一雪", speakerPy:"Wáng Yīxuě", speakerVi:"Vương Nhất Tuyết", zh:"走半个多小时就到了。", py:"Zǒu bàn gè duō xiǎoshí jiù dào le.", vi:"Đi bộ hơn nửa tiếng thì sẽ tới."},
+        {speaker:"刘明", speakerPy:"Liú Míng", speakerVi:"Lưu Minh", zh:"好的。每天上下班都坐车，今天运动运动吧。", py:"Hǎo de. Měitiān shàng xià bān dōu zuò chē, jīntiān yùndòng yùndòng ba.", vi:"Được rồi. Hàng ngày anh đi làm bằng ô tô, hôm nay vận động một chút vậy."},
+      ]
+    },
+    {
+      label:"Bài khoá 4", page:80, context:"Trong phòng, Vương Nhất Tuyết đang viết nhật ký.", audio:"audio/hsk2/lesson9/text4.mp3", lines:[
+        {speaker:"王一雪", speakerPy:"Wáng Yīxuě", speakerVi:"Vương Nhất Tuyết", zh:"这周刘明休息，我下班后跟他去了一家商店。商店里边的衣服没有大商场里的好看。我们没有买到喜欢的衣服，从商店出来就到咖啡店坐了坐。因为想运动运动，所以喝完东西，我们就走回家了。", py:"Zhè zhōu Liú Míng xiūxi, wǒ xiàbān hòu gēn tā qùle yì jiā shāngdiàn. Shāngdiàn lǐbian de yīfu méiyǒu dà shāngchǎng li de hǎokàn. Wǒmen méiyǒu mǎidào xǐhuan de yīfu, cóng shāngdiàn chūlái jiù dào kāfēidiàn zuòle zuò. Yīnwèi xiǎng yùndòng yùndòng, suǒyǐ hēwán dōngxi, wǒmen jiù zǒuhuí jiā le.", vi:"Tuần này, Lưu Minh được nghỉ, sau giờ làm tôi đã đi cùng anh ấy đến một cửa hàng. Quần áo trong cửa hàng đó không đẹp bằng quần áo trong trung tâm thương mại. Chúng tôi không mua được quần áo nào mình thích, vì vậy sau khi rời cửa hàng, chúng tôi đến quán cà phê ngồi một lúc. Vì muốn vận động một chút, nên sau khi uống xong cà phê chúng tôi đã đi bộ về nhà."},
+      ]
+    },
+  ],
+  audio: {
+    vocab: [], text: ["audio/hsk2/lesson9/text1.mp3","audio/hsk2/lesson9/text2.mp3","audio/hsk2/lesson9/text3.mp3","audio/hsk2/lesson9/text4.mp3"], poem: "",
+  },
+  vocab: [
+    {zh:"坏", py:"huài", pos:"tt.", meaning:"xấu, hỏng", ex:[{zh:"他不是一个坏人。",py:"Tā bú shì yí gè huài rén."}, {zh:"这个手机坏了。",py:"Zhège shǒujī huài le."}], grp:0, wordAudio:"audio/hsk2/lesson9/words/huai.mp3"},
+    {zh:"旁边", py:"pángbiān", pos:"dt.", meaning:"bên cạnh", ex:[{zh:"医院旁边有家超市。",py:"Yīyuàn pángbiān yǒu jiā chāoshì."}, {zh:"上课的时候，我坐在他旁边。",py:"Shàngkè de shíhou, wǒ zuò zài tā pángbiān."}], grp:0, wordAudio:"audio/hsk2/lesson9/words/pangbian.mp3"},
+    {zh:"男孩儿", py:"nánháir", pos:"dt.", meaning:"con trai, cậu bé", ex:[{zh:"他是一个聪明的男孩儿。",py:"Tā shì yí gè cōngmíng de nánháir."}, {zh:"这个男孩儿喜欢踢球。",py:"Zhège nánháir xǐhuan tī qiú."}], grp:0, wordAudio:"audio/hsk2/lesson9/words/nanhair.mp3"},
+    {zh:"这样", py:"zhèyàng", pos:"đt.", meaning:"như thế này", ex:[{zh:"你这样做不对。",py:"Nǐ zhèyàng zuò bú duì."}, {zh:"我喜欢这样的天气。",py:"Wǒ xǐhuan zhèyàng de tiānqì."}], grp:0, wordAudio:"audio/hsk2/lesson9/words/zheyang.mp3"},
+    {zh:"个子", py:"gèzi", pos:"dt.", meaning:"chiều cao", ex:[{zh:"我的个子很高。",py:"Wǒ de gèzi hěn gāo."}, {zh:"爸爸的个子很高。",py:"Bàba de gèzi hěn gāo."}], grp:0, wordAudio:"audio/hsk2/lesson9/words/gezi.mp3"},
+    {zh:"那么", py:"nàme", pos:"đt.", meaning:"như thế, vậy", ex:[{zh:"他那么高。",py:"Tā nàme gāo."}, {zh:"今天没有昨天那么热。",py:"Jīntiān méiyǒu zuótiān nàme rè."}], grp:0, wordAudio:"audio/hsk2/lesson9/words/name.mp3"},
+    {zh:"高", py:"gāo", pos:"tt.", meaning:"cao", ex:[{zh:"他个子高，跑得也快。",py:"Tā gèzi gāo, pǎo de yě kuài."}, {zh:"爸爸比我高很多。",py:"Bàba bǐ wǒ gāo hěn duō."}], grp:0, wordAudio:"audio/hsk2/lesson9/words/gao.mp3"},
+    {zh:"门口", py:"ménkǒu", pos:"dt.", meaning:"cửa ra vào, cổng", ex:[{zh:"我们在门口见面吧。",py:"Wǒmen zài ménkǒu jiànmiàn ba."}, {zh:"学校门口有一颗树。",py:"Xuéxiào ménkǒu yǒu yì kē shù."}], grp:0, wordAudio:"audio/hsk2/lesson9/words/menkou.mp3"},
+    {zh:"咖啡", py:"kāfēi", pos:"dt.", meaning:"cà phê", ex:[{zh:"他喜欢每天早上喝一杯咖啡。",py:"Tā xǐhuan měitiān zǎoshang hē yì bēi kāfēi."}, {zh:"你喝不喝咖啡？",py:"Nǐ hē bu hē kāfēi?"}], grp:0, wordAudio:"audio/hsk2/lesson9/words/kafei.mp3"},
+    {zh:"离", py:"lí", pos:"đgt.", meaning:"cách, cách xa", ex:[{zh:"请问，学校离这儿远吗？",py:"Qǐngwèn, xuéxiào lí zhèr yuǎn ma?"}, {zh:"我们的教室离图书馆很近。",py:"Wǒmen de jiàoshì lí túshūguǎn hěn jìn."}], grp:0, wordAudio:"audio/hsk2/lesson9/words/li.mp3"},
+    {zh:"近", py:"jìn", pos:"tt.", meaning:"gần", ex:[{zh:"公司离我家很近。",py:"Gōngsī lí wǒ jiā hěn jìn."}, {zh:"找个离这儿近的饭馆吧。",py:"Zhǎo gè lí zhèr jìn de fànguǎn ba."}], grp:0, wordAudio:"audio/hsk2/lesson9/words/jin.mp3"},
+    {zh:"走路", py:"zǒulù", pos:"đgt.", meaning:"đi bộ", ex:[{zh:"走路要半个小时，你坐车去吧。",py:"Zǒulù yào bàn gè xiǎoshí, nǐ zuò chē qù ba."}, {zh:"咱们一起走路上学吧。",py:"Zánmen yìqǐ zǒulù shàngxué ba."}], grp:0, wordAudio:"audio/hsk2/lesson9/words/zoulu.mp3"},
+    {zh:"周", py:"zhōu", pos:"dt.", meaning:"tuần", ex:[{zh:"我一周上五天课。",py:"Wǒ yì zhōu shàng wǔ tiān kè."}, {zh:"他每周都学习中文。",py:"Tā měi zhōu dōu xuéxí Zhōngwén."}], grp:0, wordAudio:"audio/hsk2/lesson9/words/zhou.mp3"},
+  ],
+  hanzi: [
+    {zh:"坏", py:"huài", meaning:"hỏng, xấu (trong 坏)", comps:[{c:"土",m:"thổ (đất)"}, {c:"不",m:"bất (không) — biến thể ngữ âm"}]},
+    {zh:"旁", py:"páng", meaning:"bên (trong 旁边)", comps:[{c:"立",m:"lập (đứng) — biến thể phía trên"}, {c:"方",m:"phương (phương hướng) — chỉ bên, phía"}]},
+    {zh:"边", py:"biān", meaning:"bên, phía (trong 旁边)", comps:[{c:"辶",m:"sước (đi, di chuyển)"}, {c:"力",m:"lực — biến thể ngữ âm giản thể"}]},
+    {zh:"男", py:"nán", meaning:"con trai, nam (trong 男孩儿)", comps:[{c:"田",m:"điền (ruộng)"}, {c:"力",m:"lực (sức lực) — người dùng sức làm việc ở ruộng"}]},
+    {zh:"孩", py:"hái", meaning:"trẻ con (trong 男孩儿)", comps:[{c:"子",m:"tử (con)"}, {c:"亥",m:"hợi — biến thể ngữ âm"}]},
+    {zh:"儿", py:"ér", meaning:"trẻ con, hậu tố (trong 男孩儿)", comps:[{c:"儿",m:"nhi — chữ độc thể, tượng hình đôi chân người"}]},
+    {zh:"这", py:"zhè", meaning:"này (trong 这样)", comps:[{c:"辶",m:"sước (đi)"}, {c:"文",m:"văn — biến thể ngữ âm giản thể"}]},
+    {zh:"样", py:"yàng", meaning:"kiểu, dáng, như thế (trong 这样)", comps:[{c:"木",m:"mộc (cây, gỗ)"}, {c:"羊",m:"dương — biến thể ngữ âm"}]},
+    {zh:"个", py:"gè", meaning:"cái, lượng từ (trong 个子)", comps:[{c:"人",m:"nhân (người) — biến thể"}, {c:"丨",m:"nét sổ"}]},
+    {zh:"子", py:"zi", meaning:"hậu tố danh từ, con (trong 个子)", comps:[{c:"子",m:"tử — chữ độc thể, tượng hình đứa trẻ nhỏ"}]},
+    {zh:"那", py:"nà", meaning:"kia, đó (trong 那么)", comps:[{c:"冄",m:"biến thể phía trái"}, {c:"阝",m:"ấp (vùng đất, thành ấp)"}]},
+    {zh:"么", py:"me", meaning:"hậu tố nghi vấn (trong 那么)", comps:[{c:"么",m:"yêu — chữ độc thể, biến thể giản thể của 麼"}]},
+    {zh:"高", py:"gāo", meaning:"cao", comps:[{c:"高",m:"cao — chữ độc thể, tượng hình ngôi nhà cao tầng"}]},
+    {zh:"门", py:"mén", meaning:"cửa (trong 门口)", comps:[{c:"门",m:"môn — chữ độc thể, tượng hình cánh cửa hai cánh"}]},
+    {zh:"口", py:"kǒu", meaning:"miệng, cửa ra vào (trong 门口)", comps:[{c:"口",m:"khẩu — chữ độc thể, tượng hình cái miệng"}]},
+    {zh:"咖", py:"kā", meaning:"cà (trong 咖啡)", comps:[{c:"口",m:"khẩu (miệng) — liên quan ăn uống"}, {c:"加",m:"gia — biến thể ngữ âm"}]},
+    {zh:"啡", py:"fēi", meaning:"phê (trong 咖啡)", comps:[{c:"口",m:"khẩu (miệng)"}, {c:"非",m:"phi — biến thể ngữ âm"}]},
+    {zh:"离", py:"lí", meaning:"cách, rời (trong 离)", comps:[{c:"离",m:"ly — chữ độc thể, nguyên nghĩa chỉ một loài chim, mượn nghĩa chỉ sự rời xa, cách biệt"}]},
+    {zh:"近", py:"jìn", meaning:"gần", comps:[{c:"辶",m:"sước (đi)"}, {c:"斤",m:"cân — biến thể ngữ âm"}]},
+    {zh:"走", py:"zǒu", meaning:"đi, chạy (trong 走路)", comps:[{c:"走",m:"tẩu — chữ độc thể, tượng hình người vung tay bước đi"}]},
+    {zh:"路", py:"lù", meaning:"đường, con đường (trong 走路)", comps:[{c:"足",m:"túc (chân) — biến thể"}, {c:"各",m:"các — biến thể ngữ âm"}]},
+    {zh:"周", py:"zhōu", meaning:"tuần", comps:[{c:"土",m:"thổ — biến thể phía trên"}, {c:"口",m:"khẩu — biến thể, bao quanh, chỉ chu kỳ khép kín"}]},
+  ],
+  hanziGroups: [
+    {word:"坏", py:"huài", chars:["坏"]},
+    {word:"旁边", py:"pángbiān", chars:["旁", "边"]},
+    {word:"男孩儿", py:"nánháir", chars:["男", "孩", "儿"]},
+    {word:"这样", py:"zhèyàng", chars:["这", "样"]},
+    {word:"个子", py:"gèzi", chars:["个", "子"]},
+    {word:"那么", py:"nàme", chars:["那", "么"]},
+    {word:"高", py:"gāo", chars:["高"]},
+    {word:"门口", py:"ménkǒu", chars:["门", "口"]},
+    {word:"咖啡", py:"kāfēi", chars:["咖", "啡"]},
+    {word:"离", py:"lí", chars:["离"]},
+    {word:"近", py:"jìn", chars:["近"]},
+    {word:"走路", py:"zǒulù", chars:["走", "路"]},
+    {word:"周", py:"zhōu", chars:["周"]},
+  ],
+  sentences: [
+    {tokens:["儿子", "的", "个子", "没有", "他", "那么", "高", "。"], answer:"儿子的个子没有他那么高。", vi:"Chiều cao của con trai không cao bằng anh ấy."},
+    {tokens:["这块", "手表", "没有", "那块", "好看", "。"], answer:"这块手表没有那块好看。", vi:"Chiếc đồng hồ này không đẹp bằng chiếc kia."},
+    {tokens:["咖啡店", "离", "这儿", "有点儿", "远", "。"], answer:"咖啡店离这儿有点儿远。", vi:"Quán cà phê cách đây hơi xa."},
+    {tokens:["学校", "离", "医院", "不远", "。"], answer:"学校离医院不远。", vi:"Trường học cách bệnh viện không xa."},
+    {tokens:["走", "半个", "多", "小时", "就", "到了", "。"], answer:"走半个多小时就到了。", vi:"Đi bộ hơn nửa tiếng là đến."},
+    {tokens:["他们", "学", "中文", "学了", "两年", "。"], answer:"他们学中文学了两年。", vi:"Họ học tiếng Trung đã hai năm rồi."},
+  ],
+  grammar: [
+    { tag:"Ngữ pháp", title:"Câu so sánh dùng “没有” (3)", explain:"Bài này học câu so sánh dùng “没有” để biểu thị ý “không bằng”, “kém hơn”. Cấu trúc cơ bản: A 没有 B + tính từ/cụm tính từ. Trước tính từ có thể thêm “这么” hoặc “那么” để nhấn mạnh mức độ cao hơn của B. Dạng khẳng định của “没有” trong câu so sánh là “有”, thường dùng trong câu nghi vấn so sánh.", examples:[{zh:"儿子的个子没有他那么高。", vi:"Chiều cao của con trai không cao bằng anh ấy."}, {zh:"昨天没有今天这么冷。", vi:"Hôm qua không lạnh bằng hôm nay."}, {zh:"妹妹有姐姐高吗？", vi:"Em gái có cao bằng chị gái không?"}] },
+    { tag:"Ngữ pháp", title:"Động từ “离”", explain:"Động từ “离” dùng để biểu thị khoảng cách về không gian hoặc thời gian. Cấu trúc cơ bản: A 离 B……", examples:[{zh:"咖啡店离这儿有点儿远。", vi:"Quán cà phê cách đây hơi xa."}, {zh:"学校离医院不远。", vi:"Trường học cách bệnh viện không xa."}, {zh:"现在离我的生日还有三天。", vi:"Bây giờ còn ba ngày nữa là đến sinh nhật của tôi."}] },
+    { tag:"Ngữ pháp", title:"Bổ ngữ thời lượng (1)", explain:"Từ ngữ biểu thị khoảng thời gian được đặt sau động từ làm bổ ngữ thời lượng, để miêu tả thời gian mà hành động hoặc trạng thái diễn ra. Cấu trúc cơ bản: Chủ ngữ + động từ + bổ ngữ thời lượng. Nếu tân ngữ là danh từ chỉ sự vật, tân ngữ thường đặt sau bổ ngữ thời lượng; nếu tân ngữ là đại từ hoặc từ xưng hô, tân ngữ đặt trước bổ ngữ thời lượng. Nếu động từ có tân ngữ, có thể lặp lại động từ rồi thêm bổ ngữ thời lượng.", examples:[{zh:"走半个多小时就到了。", vi:"Đi bộ hơn nửa tiếng là đến."}, {zh:"他们学中文学了两年。", vi:"Họ học tiếng Trung đã học hai năm rồi."}, {zh:"我们休息十分钟。", vi:"Chúng tôi nghỉ mười phút."}] },
+  ],
+  grammarPractice: [
+    {question:"你女儿(___)高啊！(Con gái bạn cao thế!)", options:["那么", "走路", "旁边"], answer:"那么"},
+    {question:"学校(___)不远，我们走路去吧。(Trường học cách không xa, chúng ta đi bộ đi.)", options:["离", "近", "高"], answer:"离"},
+    {question:"我家(___)有个咖啡店。(Nhà tôi bên cạnh có một quán cà phê.)", options:["旁边", "这样", "门口"], answer:"旁边"},
+    {question:"他每天(___)去上班。(Anh ấy mỗi ngày đi bộ đi làm.)", options:["走路", "近", "那么"], answer:"走路"},
+    {question:"这个手机(___)了。(Cái điện thoại này hỏng rồi.)", options:["坏", "高", "近"], answer:"坏"},
+  ],
+};
+LESSONS_HSK2[9] = Object.assign(LESSONS_HSK2[9], LESSON_HSK2_9_CONTENT, {ready:true});
+const LESSON_HSK2_10_CONTENT = {
+  texts: [
+    {
+      label:"Bài khoá 1", page:85, context:"Trong phòng, Lưu Minh đang chuẩn bị đồ giúp Lưu Tiểu Minh.", audio:"audio/hsk2/lesson10/text1.mp3", lines:[
+        {speaker:"刘明", speakerPy:"Liú Míng", speakerVi:"Lưu Minh", zh:"小明，你们明天开学，你准备好了吗？", py:"Xiǎomíng, nǐmen míngtiān kāixué, nǐ zhǔnbèi hǎo le ma?", vi:"Tiểu Minh, ngày mai khai giảng rồi, con đã chuẩn bị xong chưa?"},
+        {speaker:"刘小明", speakerPy:"Liú Xiǎomíng", speakerVi:"Lưu Tiểu Minh", zh:"明天就开学啊？爸爸，我的书包你看见了吗？", py:"Míngtiān jiù kāixué a? Bàba, wǒ de shūbāo nǐ kànjiànle ma?", vi:"Ngày mai khai giảng ạ? Bố ơi, bố có thấy cặp sách của con không?"},
+        {speaker:"刘明", speakerPy:"Liú Míng", speakerVi:"Lưu Minh", zh:"书包在门后面。", py:"Shūbāo zài mén hòumiàn.", vi:"Nó ở phía sau cửa."},
+        {speaker:"刘小明", speakerPy:"Liú Xiǎomíng", speakerVi:"Lưu Tiểu Minh", zh:"书在哪儿呢？笔呢？", py:"Shū zài nǎr ne? Bǐ ne?", vi:"Sách ở đâu nhỉ? Cả bút nữa?"},
+        {speaker:"刘明", speakerPy:"Liú Míng", speakerVi:"Lưu Minh", zh:"书在床上，笔在桌子上。", py:"Shū zài chuáng shang, bǐ zài zhuōzi shang.", vi:"Sách ở trên giường, bút ở trên bàn."},
+        {speaker:"刘小明", speakerPy:"Liú Xiǎomíng", speakerVi:"Lưu Tiểu Minh", zh:"太好了！现在都准备好了。", py:"Tài hǎo le! Xiànzài dōu zhǔnbèi hǎo le.", vi:"May quá! Bây giờ đã chuẩn bị xong rồi."},
+        {speaker:"刘明", speakerPy:"Liú Míng", speakerVi:"Lưu Minh", zh:"这次爸爸帮你，下次你自己准备，好不好？", py:"Zhè cì bàba bāng nǐ, xià cì nǐ zìjǐ zhǔnbèi, hǎo bu hǎo?", vi:"Lần này, bố đã giúp con. Lần sau con phải tự chuẩn bị nhé, được không?"},
+        {speaker:"刘小明", speakerPy:"Liú Xiǎomíng", speakerVi:"Lưu Tiểu Minh", zh:"好！", py:"Hǎo!", vi:"Vâng ạ!"},
+      ]
+    },
+    {
+      label:"Bài khoá 2", page:87, context:"Trong phòng, Vương Nhất Tuyết và Lưu Tiểu Tuyết đang nói về việc học tập.", audio:"audio/hsk2/lesson10/text2.mp3", lines:[
+        {speaker:"王一雪", speakerPy:"Wáng Yīxuě", speakerVi:"Vương Nhất Tuyết", zh:"小雪，你在做什么呢？", py:"Xiǎoxuě, nǐ zài zuò shénme ne?", vi:"Tiểu Tuyết, con đang làm gì vậy?"},
+        {speaker:"刘小雪", speakerPy:"Liú Xiǎoxuě", speakerVi:"Lưu Tiểu Tuyết", zh:"明天考试，我在看书呢。", py:"Míngtiān kǎoshì, wǒ zài kàn shū ne.", vi:"Ngày mai con thi, nên con đang học bài."},
+        {speaker:"王一雪", speakerPy:"Wáng Yīxuě", speakerVi:"Vương Nhất Tuyết", zh:"这些词要好好看看。", py:"Zhèxiē cí yào hǎohāo kànkan.", vi:"Con nên xem lại những từ này thật kỹ nhé."},
+        {speaker:"刘小雪", speakerPy:"Liú Xiǎoxuě", speakerVi:"Lưu Tiểu Tuyết", zh:"我看过了，意思也都懂了。", py:"Wǒ kànguo le, yìsi yě dōu dǒng le.", vi:"Con đã xem rồi, cũng đã hiểu hết nghĩa của chúng rồi."},
+        {speaker:"王一雪", speakerPy:"Wáng Yīxuě", speakerVi:"Vương Nhất Tuyết", zh:"你的本子呢？本子上做错的题也要看一看。", py:"Nǐ de běnzi ne? Běnzi shang zuòcuò de tí yě yào kàn yi kàn.", vi:"Vở của con đâu? Những câu làm sai trong vở con cũng cần xem lại nhé."},
+        {speaker:"刘小雪", speakerPy:"Liú Xiǎoxuě", speakerVi:"Lưu Tiểu Tuyết", zh:"妈妈，是您准备考试还是我准备考试？", py:"Māma, shì nín zhǔnbèi kǎoshì háishi wǒ zhǔnbèi kǎoshì?", vi:"Mẹ ơi, là mẹ chuẩn bị thi hay là con chuẩn bị thi vậy?"},
+      ]
+    },
+    {
+      label:"Bài khoá 3", page:89, context:"Trong phòng khách, Vương Nhất Tuyết đang trò chuyện với các con.", audio:"audio/hsk2/lesson10/text3.mp3", lines:[
+        {speaker:"刘小雪", speakerPy:"Liú Xiǎoxuě", speakerVi:"Lưu Tiểu Tuyết", zh:"妈妈，我回来了！", py:"Māma, wǒ huílái le!", vi:"Mẹ ơi, con về rồi!"},
+        {speaker:"王一雪", speakerPy:"Wáng Yīxuě", speakerVi:"Vương Nhất Tuyết", zh:"我买了奶茶，就在桌子上，自己去拿吧。", py:"Wǒ mǎile nǎichá, jiù zài zhuōzi shang, zìjǐ qù ná ba.", vi:"Mẹ đã mua trà sữa, để ngay trên bàn, con tự đi lấy nhé."},
+        {speaker:"刘小雪", speakerPy:"Liú Xiǎoxuě", speakerVi:"Lưu Tiểu Tuyết", zh:"谢谢妈妈！", py:"Xièxie māma!", vi:"Cảm ơn mẹ!"},
+        {speaker:"王一雪", speakerPy:"Wáng Yīxuě", speakerVi:"Vương Nhất Tuyết", zh:"今天考试考得怎么样？", py:"Jīntiān kǎoshì kǎo de zěnmeyàng?", vi:"Hôm nay con thi thế nào?"},
+        {speaker:"刘小雪", speakerPy:"Liú Xiǎoxuě", speakerVi:"Lưu Tiểu Tuyết", zh:"我觉得比上次好。", py:"Wǒ juéde bǐ shàng cì hǎo.", vi:"Con thấy tốt hơn lần trước."},
+        {speaker:"王一雪", speakerPy:"Wáng Yīxuě", speakerVi:"Vương Nhất Tuyết", zh:"真不错！饭菜快要做好了，你叫弟弟一起去洗手吧。", py:"Zhēn búcuò! Fàncài kuàiyào zuòhǎo le, nǐ jiào dìdi yìqǐ qù xǐshǒu ba.", vi:"Thật tuyệt! Cơm sắp nấu xong rồi. Con gọi em trai cùng đi rửa tay nhé."},
+        {speaker:"刘小明", speakerPy:"Liú Xiǎomíng", speakerVi:"Lưu Tiểu Minh", zh:"妈妈，我是第一名，姐姐还没洗完呢。", py:"Māma, wǒ shì dì-yī míng, jiějie hái méi xǐwán ne.", vi:"Mẹ ơi, con xong nhanh nhất, chị vẫn chưa rửa tay xong."},
+        {speaker:"王一雪", speakerPy:"Wáng Yīxuě", speakerVi:"Vương Nhất Tuyết", zh:"你洗得真快啊！", py:"Nǐ xǐ de zhēn kuài a!", vi:"Con rửa tay nhanh thật đấy!"},
+      ]
+    },
+    {
+      label:"Bài khoá 4", page:91, context:"Trong phòng, Lưu Tiểu Tuyết đang viết nhật ký.", audio:"audio/hsk2/lesson10/text4.mp3", lines:[
+        {speaker:"刘小雪", speakerPy:"Liú Xiǎoxuě", speakerVi:"Lưu Tiểu Tuyết", zh:"快要开学了，爸爸帮弟弟准备书包、本子和笔。我就要考试了，妈妈让我看书、看做错的题。我们上学，爸爸、妈妈比我们还忙。我问他们：“是我和弟弟上学还是你们上学？”我问完，他们都笑了。", py:"Kuàiyào kāixué le, bàba bāng dìdi zhǔnbèi shūbāo, běnzi hé bǐ. Wǒ jiù yào kǎoshì le, māma ràng wǒ kàn shū, kàn zuòcuò de tí. Wǒmen shàngxué, bàba, māma bǐ wǒmen hái máng. Wǒ wèn tāmen: “Shì wǒ hé dìdi shàngxué háishi nǐmen shàngxué?” Wǒ wènwán, tāmen dōu xiào le.", vi:"Sắp khai giảng rồi, bố giúp em trai chuẩn bị cặp sách, vở và bút. Tôi sắp thi, mẹ bảo tôi học bài và xem lại những câu làm sai. Chúng tôi đi học, nhưng bố mẹ còn bận hơn cả chúng tôi. Tôi hỏi bố mẹ rằng: “Là em trai và con đi học hay là bố mẹ đi học vậy?” Tôi hỏi xong, cả hai đều bật cười."},
+      ]
+    },
+  ],
+  audio: {
+    vocab: [], text: ["audio/hsk2/lesson10/text1.mp3","audio/hsk2/lesson10/text2.mp3","audio/hsk2/lesson10/text3.mp3","audio/hsk2/lesson10/text4.mp3"], poem: "",
+  },
+  vocab: [
+    {zh:"开学", py:"kāixué", pos:"đgt.", meaning:"khai giảng", ex:[{zh:"我明天开学。",py:"Wǒ míngtiān kāixué."}, {zh:"开学时间是9月1日。",py:"Kāixué shíjiān shì jiǔ yuè yī rì."}], grp:0, wordAudio:"audio/hsk2/lesson10/words/kaixue.mp3"},
+    {zh:"门", py:"mén", pos:"dt.", meaning:"cửa", ex:[{zh:"让我来开门吧！",py:"Ràng wǒ lái kāimén ba!"}, {zh:"他已经出门了。",py:"Tā yǐjīng chūmén le."}], grp:0, wordAudio:"audio/hsk2/lesson10/words/men.mp3"},
+    {zh:"后面", py:"hòumiàn", pos:"dt.", meaning:"phía sau, đằng sau", ex:[{zh:"上课的时候，他坐在我后面。",py:"Shàngkè de shíhou, tā zuò zài wǒ hòumiàn."}, {zh:"我家后面有一家超市。",py:"Wǒ jiā hòumiàn yǒu yì jiā chāoshì."}], grp:0, wordAudio:"audio/hsk2/lesson10/words/houmian.mp3"},
+    {zh:"笔", py:"bǐ", pos:"dt.", meaning:"bút, viết", ex:[{zh:"桌子下面有支笔。",py:"Zhuōzi xiàmiàn yǒu zhī bǐ."}, {zh:"他送给我一支笔。",py:"Tā sòng gěi wǒ yì zhī bǐ."}], grp:0, wordAudio:"audio/hsk2/lesson10/words/bi.mp3"},
+    {zh:"帮", py:"bāng", pos:"đgt.", meaning:"giúp, giúp đỡ", ex:[{zh:"你能帮我拿一下书包吗？",py:"Nǐ néng bāng wǒ ná yíxià shūbāo ma?"}, {zh:"爸爸帮弟弟准备书包。",py:"Bàba bāng dìdi zhǔnbèi shūbāo."}], grp:0, wordAudio:"audio/hsk2/lesson10/words/bang.mp3"},
+    {zh:"考试", py:"kǎoshì", pos:"đgt./dt.", meaning:"thi, kiểm tra, kỳ thi", ex:[{zh:"星期一要考试。",py:"Xīngqīyī yào kǎoshì."}, {zh:"同学们正在考试。",py:"Tóngxuémen zhèngzài kǎoshì."}], grp:0, wordAudio:"audio/hsk2/lesson10/words/kaoshi.mp3"},
+    {zh:"词", py:"cí", pos:"dt.", meaning:"từ", ex:[{zh:"我今天学了十个词。",py:"Wǒ jīntiān xuéle shí gè cí."}, {zh:"请你读这个词。",py:"Qǐng nǐ dú zhège cí."}], grp:0, wordAudio:"audio/hsk2/lesson10/words/ci.mp3"},
+    {zh:"本子", py:"běnzi", pos:"dt.", meaning:"vở, tập ghi chép", ex:[{zh:"我有一个本子。",py:"Wǒ yǒu yí gè běnzi."}, {zh:"这是我的本子。",py:"Zhè shì wǒ de běnzi."}], grp:0, wordAudio:"audio/hsk2/lesson10/words/benzi.mp3"},
+    {zh:"错", py:"cuò", pos:"tt.", meaning:"sai, nhầm", ex:[{zh:"这个字写错了，你再看看书。",py:"Zhège zì xiěcuò le, nǐ zài kànkan shū."}, {zh:"对不起，我认错人了。",py:"Duìbuqǐ, wǒ rèncuò rén le."}], grp:0, wordAudio:"audio/hsk2/lesson10/words/cuo.mp3"},
+    {zh:"题", py:"tí", pos:"dt.", meaning:"câu hỏi, bài tập, đề, tiêu đề", ex:[{zh:"这道题我做错了。",py:"Zhè dào tí wǒ zuòcuò le."}, {zh:"第五题太难了，我不知道怎么做。",py:"Dì-wǔ tí tài nán le, wǒ bù zhīdào zěnme zuò."}], grp:0, wordAudio:"audio/hsk2/lesson10/words/ti.mp3"},
+    {zh:"还是", py:"háishi", pos:"liên.", meaning:"hay, hay là (trong câu hỏi lựa chọn)", ex:[{zh:"你喝茶还是咖啡？",py:"Nǐ hē chá háishi kāfēi?"}, {zh:"今天去还是明天去？",py:"Jīntiān qù háishi míngtiān qù?"}], grp:0, wordAudio:"audio/hsk2/lesson10/words/haishi.mp3"},
+    {zh:"考", py:"kǎo", pos:"đgt.", meaning:"thi, kiểm tra", ex:[{zh:"今天我们考中文。",py:"Jīntiān wǒmen kǎo Zhōngwén."}, {zh:"他考得很好。",py:"Tā kǎo de hěn hǎo."}], grp:0, wordAudio:"audio/hsk2/lesson10/words/kao.mp3"},
+    {zh:"快要", py:"kuàiyào", pos:"phó.", meaning:"sắp, chuẩn bị", ex:[{zh:"我快要放假了。",py:"Wǒ kuàiyào fàngjià le."}, {zh:"电影快要开始了。",py:"Diànyǐng kuàiyào kāishǐ le."}], grp:0, wordAudio:"audio/hsk2/lesson10/words/kuaiyao.mp3"},
+    {zh:"笑", py:"xiào", pos:"đgt.", meaning:"cười", ex:[{zh:"我是一个爱笑的男生。",py:"Wǒ shì yí gè ài xiào de nánshēng."}, {zh:"他笑了笑，没说什么就走了。",py:"Tā xiàole xiào, méi shuō shénme jiù zǒu le."}], grp:0, wordAudio:"audio/hsk2/lesson10/words/xiao.mp3"},
+  ],
+  hanzi: [
+    {zh:"开", py:"kāi", meaning:"mở (trong 开学)", comps:[{c:"一",m:"nhất — nét ngang tượng trưng cánh cửa"}, {c:"廾",m:"củng — hai tay nâng, mở ra"}]},
+    {zh:"学", py:"xué", meaning:"học (trong 开学)", comps:[{c:"冖",m:"mịch (mái nhà, mái che)"}, {c:"子",m:"tử (con, trẻ nhỏ) — trẻ nhỏ học tập dưới mái nhà"}]},
+    {zh:"门", py:"mén", meaning:"cửa", comps:[{c:"门",m:"chữ độc thể — tượng hình cánh cửa hai cánh"}]},
+    {zh:"后", py:"hòu", meaning:"sau, phía sau (trong 后面)", comps:[{c:"厂",m:"hán (biến thể) — vách, mái che"}, {c:"口",m:"khẩu (miệng) — biến thể ngữ âm"}]},
+    {zh:"面", py:"miàn", meaning:"mặt, phía (trong 后面)", comps:[{c:"面",m:"chữ độc thể — tượng hình khuôn mặt người"}]},
+    {zh:"笔", py:"bǐ", meaning:"bút, viết", comps:[{c:"竹",m:"trúc (tre, biến thể ⺮) — thân bút làm từ tre"}, {c:"毛",m:"mao (lông) — ngòi bút làm từ lông"}]},
+    {zh:"帮", py:"bāng", meaning:"giúp, giúp đỡ", comps:[{c:"邦",m:"bang (nước, vùng) — biến thể ngữ âm"}, {c:"巾",m:"cân (khăn) — công cụ hỗ trợ"}]},
+    {zh:"考", py:"kǎo", meaning:"thi, kiểm tra", comps:[{c:"耂",m:"lão (biến thể của 老 — già, lâu năm)"}, {c:"丂",m:"khảo — biến thể ngữ âm"}]},
+    {zh:"试", py:"shì", meaning:"thi (trong 考试)", comps:[{c:"讠",m:"ngôn (lời nói, giản thể của 言)"}, {c:"式",m:"thức — biến thể ngữ âm"}]},
+    {zh:"词", py:"cí", meaning:"từ, từ ngữ", comps:[{c:"讠",m:"ngôn (lời nói)"}, {c:"司",m:"ty — biến thể ngữ âm"}]},
+    {zh:"本", py:"běn", meaning:"gốc, quyển, vở (trong 本子)", comps:[{c:"木",m:"mộc (cây)"}, {c:"一",m:"nhất — nét ngang chỉ vào gốc rễ của cây"}]},
+    {zh:"子", py:"zǐ", meaning:"hậu tố danh từ (trong 本子)", comps:[{c:"子",m:"chữ độc thể — tượng hình đứa trẻ nhỏ"}]},
+    {zh:"错", py:"cuò", meaning:"sai, nhầm", comps:[{c:"钅",m:"kim (kim loại, giản thể của 金)"}, {c:"昔",m:"tích (xưa) — biến thể ngữ âm"}]},
+    {zh:"题", py:"tí", meaning:"câu hỏi, bài tập, đề", comps:[{c:"是",m:"thị (là, đúng) — biến thể ngữ âm"}, {c:"页",m:"hiệt (đầu, trang) — liên quan tới nội dung, trang giấy"}]},
+    {zh:"还", py:"hái", meaning:"còn, hay là (trong 还是)", comps:[{c:"辶",m:"sước (đi, di chuyển)"}, {c:"不",m:"bất — biến thể giản thể, biểu thị âm đọc"}]},
+    {zh:"是", py:"shì", meaning:"là, đúng (trong 还是)", comps:[{c:"日",m:"nhật (mặt trời)"}, {c:"疋",m:"biến thể — chỉ sự chính xác, đúng"}]},
+    {zh:"快", py:"kuài", meaning:"nhanh, sắp (trong 快要)", comps:[{c:"忄",m:"tâm (trái tim, tâm trạng)"}, {c:"夬",m:"quyết — biến thể ngữ âm"}]},
+    {zh:"要", py:"yào", meaning:"cần, sắp (trong 快要)", comps:[{c:"覀",m:"biến thể tây (phương Tây)"}, {c:"女",m:"nữ"}]},
+    {zh:"笑", py:"xiào", meaning:"cười", comps:[{c:"竹",m:"trúc (tre, biến thể ⺮) — dáng lá tre cong như nụ cười"}, {c:"夭",m:"yêu — dáng người nghiêng đầu cười vui vẻ"}]},
+  ],
+  hanziGroups: [
+    {word:"开学", py:"kāixué", chars:["开", "学"]},
+    {word:"门", py:"mén", chars:["门"]},
+    {word:"后面", py:"hòumiàn", chars:["后", "面"]},
+    {word:"笔", py:"bǐ", chars:["笔"]},
+    {word:"帮", py:"bāng", chars:["帮"]},
+    {word:"考试", py:"kǎoshì", chars:["考", "试"]},
+    {word:"词", py:"cí", chars:["词"]},
+    {word:"本子", py:"běnzi", chars:["本", "子"]},
+    {word:"错", py:"cuò", chars:["错"]},
+    {word:"题", py:"tí", chars:["题"]},
+    {word:"还是", py:"háishi", chars:["还", "是"]},
+    {word:"考", py:"kǎo", chars:["考"]},
+    {word:"快要", py:"kuàiyào", chars:["快", "要"]},
+    {word:"笑", py:"xiào", chars:["笑"]},
+  ],
+  sentences: [
+    {tokens:["我的", "书包", "你", "看见", "了", "吗", "？"], answer:"我的书包你看见了吗？", vi:"Cặp sách của tôi bạn có nhìn thấy không?"},
+    {tokens:["弟弟", "手", "很", "小", "。"], answer:"弟弟手很小。", vi:"Tay của em trai rất nhỏ."},
+    {tokens:["你", "喝", "茶", "还是", "咖啡", "？"], answer:"你喝茶还是咖啡？", vi:"Bạn uống trà hay là cà phê?"},
+    {tokens:["我们", "下", "星期", "就要", "考试", "了", "。"], answer:"我们下星期就要考试了。", vi:"Tuần sau chúng tôi sắp thi rồi."},
+    {tokens:["火车", "快要", "开", "了", "。"], answer:"火车快要开了。", vi:"Tàu hỏa sắp chạy rồi."},
+    {tokens:["你", "能", "帮", "我", "拿", "一下", "书包", "吗", "？"], answer:"你能帮我拿一下书包吗？", vi:"Bạn có thể giúp tôi cầm cặp sách một chút được không?"},
+  ],
+  grammar: [
+    { tag:"Ngữ pháp", title:"Câu có cụm chủ vị làm vị ngữ", explain:"Cụm chủ vị có thể làm vị ngữ để giải thích hoặc miêu tả chủ ngữ, từ đó tạo thành câu có cụm chủ vị làm vị ngữ. Cấu trúc cơ bản: Chủ ngữ + cụm chủ vị.", examples:[{zh:"我的书包你看见了吗？", vi:"Cặp sách của tôi bạn có nhìn thấy không?"}, {zh:"弟弟手很小。", vi:"Tay của em trai rất nhỏ."}, {zh:"这件事他知道。", vi:"Việc này anh ấy biết rồi."}] },
+    { tag:"Ngữ pháp", title:"Câu hỏi lựa chọn", explain:"Liên từ “还是” dùng trong câu nghi vấn, chỉ sự lựa chọn. Cấu trúc cơ bản: （是）A还是B.", examples:[{zh:"妈妈，是您准备考试还是我准备考试？", vi:"Mẹ ơi, là mẹ chuẩn bị thi hay là con chuẩn bị thi vậy?"}, {zh:"你更喜欢打篮球还是踢足球？", vi:"Bạn thích chơi bóng rổ hay là đá bóng hơn?"}, {zh:"我们什么时候去看电影？今天还是明天？", vi:"Khi nào chúng ta đi xem phim? Hôm nay hay là ngày mai?"}] },
+    { tag:"Ngữ pháp", title:"Cấu trúc cố định “要/快/快要/就要……了”", explain:"Cấu trúc cố định “要/快/快要/就要……了” dùng để biểu thị một việc sắp xảy ra. Nếu trong câu có thêm trạng ngữ chỉ thời gian thì hay dùng “就要……了”.", examples:[{zh:"饭菜快要做好了。", vi:"Cơm canh sắp làm xong rồi."}, {zh:"火车快开了。", vi:"Tàu hỏa sắp chạy rồi."}, {zh:"我们下星期就要考试了。", vi:"Tuần sau chúng tôi sắp thi rồi."}] },
+  ],
+  grammarPractice: [
+    {question:"你想喝奶茶(___)咖啡？(Bạn muốn uống trà sữa hay là cà phê?)", options:["还是", "但是", "比"], answer:"还是"},
+    {question:"电影(___)要开始了，我们快进去吧。(Phim sắp bắt đầu rồi, chúng ta mau vào đi.)", options:["快要", "考试", "帮"], answer:"快要"},
+    {question:"你能(___)我拿一下书包吗？(Bạn có thể giúp tôi cầm cặp sách một chút không?)", options:["帮", "笑", "错"], answer:"帮"},
+    {question:"我的书包在门(___)。(Cặp sách của tôi ở phía sau cửa.)", options:["后面", "本子", "题"], answer:"后面"},
+    {question:"明天就要(___)了，你准备好了吗？(Ngày mai sắp thi rồi, bạn chuẩn bị xong chưa?)", options:["考试", "错", "词"], answer:"考试"},
+  ],
+};
+LESSONS_HSK2[10] = Object.assign(LESSONS_HSK2[10], LESSON_HSK2_10_CONTENT, {ready:true});
 
-[1,2,3,4,5,6].forEach(n => { if (LESSONS_HSK2[n]) rewriteMediaPaths(LESSONS_HSK2[n]); });
+
+
+
+[1,2,3,4,5,6,7,8,9,10].forEach(n => { if (LESSONS_HSK2[n]) rewriteMediaPaths(LESSONS_HSK2[n]); });
 // (WORKBOOK_LESSONS / MOCKTEST_LESSONS / PHONETICS_LESSONS được xử lý ở dưới,
 //  ngay sau khi chúng được khai báo — xem gần cuối file)
 
@@ -6429,6 +6918,286 @@ const MOCKTEST_LESSONS_HSK2 = {
       },
     ],
   },
+  7: {
+    audio: "audio/hsk2/lesson7/mocktest.mp3",
+    listening: [
+      {
+        part: "Phần 1 — Nghe và chọn đúng tranh", kind: "own_img",
+        questions: [
+          {images:["assets/hsk2/lesson7/listen1_q1_A.jpg", "assets/hsk2/lesson7/listen1_q1_B.jpg", "assets/hsk2/lesson7/listen1_q1_C.jpg"], qAudio:"audio/hsk2/lesson7/mocktest/q1.mp3", transcript:[{zh:"她游泳游得很快。",py:"Tā yóuyǒng yóu de hěn kuài.",vi:"Cô ấy bơi rất nhanh."}], answer:0},
+          {images:["assets/hsk2/lesson7/listen1_q2_A.jpg", "assets/hsk2/lesson7/listen1_q2_B.jpg", "assets/hsk2/lesson7/listen1_q2_C.jpg"], qAudio:"audio/hsk2/lesson7/mocktest/q2.mp3", transcript:[{zh:"他的爱好是跑步。",py:"Tā de àihào shì pǎobù.",vi:"Sở thích của anh ấy là chạy bộ."}], answer:2},
+          {images:["assets/hsk2/lesson7/listen1_q3_A.jpg", "assets/hsk2/lesson7/listen1_q3_B.jpg", "assets/hsk2/lesson7/listen1_q3_C.jpg"], qAudio:"audio/hsk2/lesson7/mocktest/q3.mp3", transcript:[{zh:"儿子每天一回家就要吃饭。",py:"Érzi měitiān yì huí jiā jiù yào chī fàn.",vi:"Con trai cứ về đến nhà là đòi ăn cơm ngay."}], answer:2},
+        ],
+      },
+      {
+        part: "Phần 2 — Nghe hội thoại, chọn tranh phù hợp nhất", kind: "shared_img",
+        pool: ["assets/hsk2/lesson7/listen2_A.jpg", "assets/hsk2/lesson7/listen2_B.jpg", "assets/hsk2/lesson7/listen2_C.jpg", "assets/hsk2/lesson7/listen2_D.jpg"],
+        questions: [
+          {qAudio:"audio/hsk2/lesson7/mocktest/q4.mp3", transcript:[{speaker:"女",zh:"开始下雨了。",py:"Kāishǐ xià yǔ le.",vi:"Trời bắt đầu mưa rồi."}, {speaker:"男",zh:"是啊，我们别出去了。",py:"Shì a, wǒmen bié chūqù le.",vi:"Đúng vậy, chúng ta đừng ra ngoài nữa."}], answer:2},
+          {qAudio:"audio/hsk2/lesson7/mocktest/q5.mp3", transcript:[{speaker:"男",zh:"你是从哪儿来的？",py:"Nǐ shì cóng nǎr lái de?",vi:"Bạn từ đâu đến vậy?"}, {speaker:"女",zh:"我是从法国来的。",py:"Wǒ shì cóng Fàguó lái de.",vi:"Mình đến từ Pháp."}], answer:1},
+          {qAudio:"audio/hsk2/lesson7/mocktest/q6.mp3", transcript:[{speaker:"女",zh:"你是从什么时候开始学画画的？",py:"Nǐ shì cóng shénme shíhou kāishǐ xué huàhuà de?",vi:"Bạn học vẽ tranh từ khi nào vậy?"}, {speaker:"男",zh:"小学，那个时候每天都有画画课。",py:"Xiǎoxué, nàge shíhou měitiān dōu yǒu huàhuà kè.",vi:"Từ tiểu học, hồi đó ngày nào cũng có tiết vẽ."}], answer:0},
+        ],
+      },
+      {
+        part: "Phần 3 — Nghe hội thoại, chọn đáp án đúng", kind: "own_text",
+        questions: [
+          {options:[{zh:"打球",py:"dǎ qiú"}, {zh:"回家",py:"huí jiā"}, {zh:"做饭",py:"zuò fàn"}], qAudio:"audio/hsk2/lesson7/mocktest/q7.mp3", transcript:[{speaker:"女",zh:"你今天怎么回来这么早？",py:"Nǐ jīntiān zěnme huílái zhème zǎo?",vi:"Sao hôm nay anh về sớm vậy?"}, {speaker:"男",zh:"我没去打球，一下班就回来了。",py:"Wǒ méi qù dǎ qiú, yí xiàbān jiù huílái le.",vi:"Anh không đi chơi bóng, vừa tan làm là về luôn."}, {speaker:"问",zh:"今天男的下班后做什么了？",py:"Jīntiān nán de xiàbān hòu zuò shénme le?",vi:"Hỏi: Hôm nay sau khi tan làm người nam đã làm gì?"}], answer:1},
+          {options:[{zh:"很好",py:"hěn hǎo"}, {zh:"不错",py:"búcuò"}, {zh:"不太好",py:"bú tài hǎo"}], qAudio:"audio/hsk2/lesson7/mocktest/q8.mp3", transcript:[{speaker:"男",zh:"你唱歌唱得怎么样？",py:"Nǐ chànggē chàng de zěnmeyàng?",vi:"Bạn hát thế nào?"}, {speaker:"女",zh:"不太好。家月跟我说，你唱得很好。",py:"Bú tài hǎo. Jiāyuè gēn wǒ shuō, nǐ chàng de hěn hǎo.",vi:"Không tốt lắm. Gia Nguyệt bảo mình là bạn hát rất hay."}, {speaker:"问",zh:"家月觉得男的唱歌怎么样？",py:"Jiāyuè juéde nán de chànggē zěnmeyàng?",vi:"Hỏi: Gia Nguyệt thấy người nam hát thế nào?"}], answer:0},
+          {options:[{zh:"很好",py:"hěn hǎo"}, {zh:"不好",py:"bù hǎo"}, {zh:"不太好",py:"bú tài hǎo"}], qAudio:"audio/hsk2/lesson7/mocktest/q9.mp3", transcript:[{speaker:"女",zh:"一到星期天，你就往外跑。",py:"Yí dào xīngqītiān, nǐ jiù wǎng wài pǎo.",vi:"Cứ đến Chủ nhật là anh lại chạy ra ngoài."}, {speaker:"男",zh:"我跟同学说好了一起踢球。",py:"Wǒ gēn tóngxué shuōhǎo le yìqǐ tī qiú.",vi:"Anh đã hẹn với bạn học cùng đi đá bóng."}, {speaker:"女",zh:"他们踢得怎么样？",py:"Tāmen tī de zěnmeyàng?",vi:"Họ đá thế nào?"}, {speaker:"男",zh:"他们踢得很好，我踢得也很好。",py:"Tāmen tī de hěn hǎo, wǒ tī de yě hěn hǎo.",vi:"Họ đá rất giỏi, anh cũng đá rất giỏi."}, {speaker:"问",zh:"男的觉得自己踢得怎么样？",py:"Nán de juéde zìjǐ tī de zěnmeyàng?",vi:"Hỏi: Người nam thấy mình đá thế nào?"}], answer:0},
+          {options:[{zh:"要出去旅游",py:"yào chūqù lǚyóu"}, {zh:"要去接爸妈",py:"yào qù jiē bà mā"}, {zh:"这几天不高兴",py:"zhè jǐ tiān bù gāoxìng"}], qAudio:"audio/hsk2/lesson7/mocktest/q10.mp3", transcript:[{speaker:"男",zh:"你一回来就不高兴，有什么事吗？",py:"Nǐ yì huílái jiù bù gāoxìng, yǒu shénme shì ma?",vi:"Em vừa về đã không vui, có chuyện gì vậy?"}, {speaker:"女",zh:"明天我想休息，但还有很多工作没做完。",py:"Míngtiān wǒ xiǎng xiūxi, dàn hái yǒu hěn duō gōngzuò méi zuòwán.",vi:"Mai em muốn nghỉ, nhưng vẫn còn nhiều việc chưa làm xong."}, {speaker:"男",zh:"明天不是星期天，你为什么要休息啊？",py:"Míngtiān bú shì xīngqītiān, nǐ wèi shénme yào xiūxi a?",vi:"Mai đâu phải Chủ nhật, sao em lại muốn nghỉ?"}, {speaker:"女",zh:"因为我爸妈旅游回来，我想去接他们。",py:"Yīnwèi wǒ bàmā lǚyóu huílái, wǒ xiǎng qù jiē tāmen.",vi:"Vì bố mẹ em đi du lịch về, em muốn đi đón họ."}, {speaker:"问",zh:"女的为什么想休息？",py:"Nǚ de wèi shénme xiǎng xiūxi?",vi:"Hỏi: Vì sao người nữ muốn nghỉ?"}], answer:1},
+        ],
+      },
+    ],
+    reading: [
+      {
+        part: "Phần 1 — Chọn tranh phù hợp với câu", kind: "shared_img_prompt",
+        pool: ["assets/hsk2/lesson7/read1_A.jpg", "assets/hsk2/lesson7/read1_B.jpg", "assets/hsk2/lesson7/read1_C.jpg", "assets/hsk2/lesson7/read1_D.jpg"],
+        questions: [
+          {prompt:{zh:"他字写得很漂亮。",py:"Tā zì xiě de hěn piàoliang."}, answer:2},
+          {prompt:{zh:"孩子们玩得很高兴。",py:"Háizimen wán de hěn gāoxìng."}, answer:0},
+          {prompt:{zh:"她一有时间就去旅游。",py:"Tā yì yǒu shíjiān jiù qù lǚyóu."}, answer:1},
+        ],
+      },
+      {
+        part: "Phần 2 — Chọn từ điền vào chỗ trống", kind: "fill_blank",
+        pool: [{zh:"往",py:"wǎng"}, {zh:"爱好",py:"àihào"}, {zh:"运动",py:"yùndòng"}, {zh:"跑步",py:"pǎobù"}, {zh:"完",py:"wán"}],
+        questions: [
+          {prompt:{zh:"你（　）前走，那边有一个公交站。",py:"Nǐ (　) qián zǒu, nàbian yǒu yí gè gōngjiāozhàn."}, answer:0},
+          {prompt:{zh:"爷爷、奶奶的（　）是看书、画画和写字。",py:"Yéye, nǎinai de (　) shì kànshū, huàhuà hé xiězì."}, answer:1},
+          {prompt:{zh:"女：你的爱好是什么？\\n男：我喜欢运动，游泳、（　）什么的。",py:"Nǚ: Nǐ de àihào shì shénme?\\nNán: Wǒ xǐhuan yùndòng, yóuyǒng, (　) shénmede."}, answer:3},
+          {prompt:{zh:"男：我们叫小李一起去打篮球吧？\\n女：他不爱（　），还是我们去打吧。",py:"Nán: Wǒmen jiào Xiǎo Lǐ yìqǐ qù dǎ lánqiú ba?\\nNǚ: Tā bú ài (　), háishi wǒmen qù dǎ ba."}, answer:2},
+        ],
+      },
+      {
+        part: "Phần 3 — Nối câu", kind: "shared_text_prompt",
+        pool: [{zh:"鱼做得很好，这两个菜也可以。",py:"Yú zuò de hěn hǎo, zhè liǎng gè cài yě kěyǐ."}, {zh:"会，但踢得不太好。",py:"Huì, dàn tī de bú tài hǎo."}, {zh:"那我们出去运动运动吧。",py:"Nà wǒmen chūqù yùndòng yùndòng ba."}, {zh:"是，我一下班就过来。",py:"Shì, wǒ yí xiàbān jiù guòlái."}, {zh:"他出去了，一会儿就回来。",py:"Tā chūqù le, yíhuìr jiù huílái."}],
+        questions: [
+          {prompt:{zh:"你会踢球吗？",py:"Nǐ huì tī qiú ma?"}, answer:1},
+          {prompt:{zh:"今天晚上的菜怎么样？",py:"Jīntiān wǎnshang de cài zěnmeyàng?"}, answer:0},
+          {prompt:{zh:"你每天都来这儿游泳吗？",py:"Nǐ měitiān dōu lái zhèr yóuyǒng ma?"}, answer:3},
+          {prompt:{zh:"你们不要在家看电视、玩手机了。",py:"Nǐmen búyào zài jiā kàn diànshì, wán shǒujī le."}, answer:2},
+        ],
+      },
+      {
+        part: "Phần 4 — Đọc đoạn văn, chọn đáp án đúng", kind: "reading_q",
+        questions: [
+          {options:[{zh:"不错",py:"búcuò"}, {zh:"不好",py:"bù hǎo"}, {zh:"不太好",py:"bú tài hǎo"}], passage:{zh:"朋友们都知道我是学中文的，他们问我中文说得怎么样，我会跟他们说不太好，但我的中文老师觉得我说得不错。",py:"Péngyoumen dōu zhīdào wǒ shì xué Zhōngwén de, tāmen wèn wǒ Zhōngwén shuō de zěnmeyàng, wǒ huì gēn tāmen shuō bú tài hǎo, dàn wǒ de Zhōngwén lǎoshī juéde wǒ shuō de búcuò."}, question:{zh:"老师觉得他的中文怎么样？",py:"Lǎoshī juéde tā de Zhōngwén zěnmeyàng?"}, answer:0},
+          {options:[{zh:"泰国",py:"Tàiguó"}, {zh:"中国",py:"Zhōngguó"}, {zh:"加拿大",py:"Jiānádà"}], passage:{zh:"我喜欢旅游，一有时间就往外跑。我去过泰国、加拿大，但我还没去过中国。今年我想去中国看一看。",py:"Wǒ xǐhuan lǚyóu, yì yǒu shíjiān jiù wǎng wài pǎo. Wǒ qùguo Tàiguó, Jiānádà, dàn wǒ hái méi qùguo Zhōngguó. Jīnnián wǒ xiǎng qù Zhōngguó kàn yi kàn."}, question:{zh:"他想去哪儿旅游？",py:"Tā xiǎng qù nǎr lǚyóu?"}, answer:1},
+          {options:[{zh:"爸爸",py:"bàba"}, {zh:"爷爷",py:"yéye"}, {zh:"妈妈",py:"māma"}], passage:{zh:"今天是奶奶的80岁生日。爸爸、妈妈从早上起床就开始准备饭菜，有鱼、肉什么的，妈妈还做了长长的生日面。奶奶说这个生日过得很高兴。",py:"Jīntiān shì nǎinai de bāshí suì shēngrì. Bàba, māma cóng zǎoshang qǐchuáng jiù kāishǐ zhǔnbèi fàncài, yǒu yú, ròu shénmede, māma hái zuòle chángcháng de shēngrìmiàn. Nǎinai shuō zhège shēngrì guò de hěn gāoxìng."}, question:{zh:"生日面是谁做的？",py:"Shēngrìmiàn shì shéi zuò de?"}, answer:2},
+        ],
+      },
+    ],
+},
+  8: {
+    audio: "audio/hsk2/lesson8/mocktest.mp3",
+    listening: [
+      {
+        part: "Phần 1 — Nghe và chọn đúng tranh", kind: "own_img",
+        questions: [
+          {images:["assets/hsk2/lesson8/listen1_q1_A.jpg", "assets/hsk2/lesson8/listen1_q1_B.jpg", "assets/hsk2/lesson8/listen1_q1_C.jpg"], qAudio:"audio/hsk2/lesson8/mocktest/q1.mp3", transcript:[{zh:"我们一到饭馆就开始点菜。",py:"Wǒmen yí dào fànguǎn jiù kāishǐ diǎn cài.",vi:"Chúng tôi vừa đến nhà hàng là bắt đầu gọi món."}], answer:1},
+          {images:["assets/hsk2/lesson8/listen1_q2_A.jpg", "assets/hsk2/lesson8/listen1_q2_B.jpg", "assets/hsk2/lesson8/listen1_q2_C.jpg"], qAudio:"audio/hsk2/lesson8/mocktest/q2.mp3", transcript:[{zh:"我今天看了一个很有意思的电影。",py:"Wǒ jīntiān kànle yí gè hěn yǒu yìsi de diànyǐng.",vi:"Hôm nay tôi đã xem một bộ phim rất thú vị."}], answer:2},
+          {images:["assets/hsk2/lesson8/listen1_q3_A.jpg", "assets/hsk2/lesson8/listen1_q3_B.jpg", "assets/hsk2/lesson8/listen1_q3_C.jpg"], qAudio:"audio/hsk2/lesson8/mocktest/q3.mp3", transcript:[{zh:"丈夫喜欢做菜，妻子也会过来帮忙。",py:"Zhàngfu xǐhuan zuò cài, qīzi yě huì guòlái bāngmáng.",vi:"Chồng thích nấu ăn, vợ cũng đến giúp."}], answer:2},
+        ],
+      },
+      {
+        part: "Phần 2 — Nghe hội thoại, chọn tranh phù hợp nhất", kind: "shared_img",
+        pool: ["assets/hsk2/lesson8/listen2_A.jpg", "assets/hsk2/lesson8/listen2_B.jpg", "assets/hsk2/lesson8/listen2_C.jpg", "assets/hsk2/lesson8/listen2_D.jpg"],
+        questions: [
+          {qAudio:"audio/hsk2/lesson8/mocktest/q4.mp3", transcript:[{speaker:"女",zh:"这两块手表怎么样？",py:"Zhè liǎng kuài shǒubiǎo zěnmeyàng?",vi:"Hai chiếc đồng hồ này thế nào?"}, {speaker:"男",zh:"我喜欢左边这个，颜色好看，还不贵。",py:"Wǒ xǐhuan zuǒbian zhège, yánsè hǎokàn, hái bú guì.",vi:"Anh thích chiếc bên trái, màu đẹp mà lại không đắt."}], answer:0},
+          {qAudio:"audio/hsk2/lesson8/mocktest/q5.mp3", transcript:[{speaker:"男",zh:"今天有点儿晚了，你怎么回去？",py:"Jīntiān yǒudiǎnr wǎn le, nǐ zěnme huíqù?",vi:"Hôm nay hơi muộn rồi, em về bằng gì?"}, {speaker:"女",zh:"打车吧，出租车比公交车快。",py:"Dǎchē ba, chūzūchē bǐ gōngjiāochē kuài.",vi:"Đi taxi thôi, taxi nhanh hơn xe buýt."}], answer:2},
+          {qAudio:"audio/hsk2/lesson8/mocktest/q6.mp3", transcript:[{speaker:"女",zh:"这本书很有意思，你想不想看看？",py:"Zhè běn shū hěn yǒu yìsi, nǐ xiǎng bu xiǎng kànkan?",vi:"Cuốn sách này rất hay, anh có muốn xem không?"}, {speaker:"男",zh:"虽然我很想看，但是没有时间。",py:"Suīrán wǒ hěn xiǎng kàn, dànshì méiyǒu shíjiān.",vi:"Mặc dù anh rất muốn xem, nhưng không có thời gian."}], answer:1},
+        ],
+      },
+      {
+        part: "Phần 3 — Nghe hội thoại, chọn đáp án đúng", kind: "own_text",
+        questions: [
+          {options:[{zh:"不喜欢吃鱼",py:"bù xǐhuan chī yú"}, {zh:"鱼做得不好",py:"yú zuò de bù hǎo"}, {zh:"不太想吃饭",py:"bú tài xiǎng chī fàn"}], qAudio:"audio/hsk2/lesson8/mocktest/q7.mp3", transcript:[{speaker:"女",zh:"我记得你喜欢吃鱼，今天怎么不吃啊？",py:"Wǒ jìde nǐ xǐhuan chī yú, jīntiān zěnme bù chī a?",vi:"Em nhớ là anh thích ăn cá, hôm nay sao không ăn vậy?"}, {speaker:"男",zh:"这个鱼做得不好吃。",py:"Zhège yú zuò de bù hǎochī.",vi:"Con cá này làm không ngon."}, {speaker:"问",zh:"男的为什么没吃鱼？",py:"Nán de wèi shénme méi chī yú?",vi:"Hỏi: Vì sao người nam không ăn cá?"}], answer:1},
+          {options:[{zh:"奶奶",py:"nǎinai"}, {zh:"爷爷",py:"yéye"}, {zh:"爸爸",py:"bàba"}], qAudio:"audio/hsk2/lesson8/mocktest/q8.mp3", transcript:[{speaker:"男",zh:"奶奶，今天晚上我们去饭馆吃饭吧。",py:"Nǎinai, jīntiān wǎnshang wǒmen qù fànguǎn chī fàn ba.",vi:"Bà ơi, tối nay chúng ta đi nhà hàng ăn cơm nhé."}, {speaker:"女",zh:"别去了，还是在家吃吧，你爷爷已经开始做饭了。",py:"Bié qù le, háishi zài jiā chī ba, nǐ yéye yǐjīng kāishǐ zuò fàn le.",vi:"Đừng đi nữa, ăn ở nhà thôi, ông con đã bắt đầu nấu cơm rồi."}, {speaker:"问",zh:"晚上谁做饭？",py:"Wǎnshang shéi zuò fàn?",vi:"Hỏi: Tối nay ai nấu cơm?"}], answer:1},
+          {options:[{zh:"教室大",py:"jiàoshì dà"}, {zh:"桌椅新",py:"zhuōyǐ xīn"}, {zh:"他们人太多",py:"tāmen rén tài duō"}], qAudio:"audio/hsk2/lesson8/mocktest/q9.mp3", transcript:[{speaker:"女",zh:"左边这间教室比右边那间大。",py:"Zuǒbian zhè jiān jiàoshì bǐ yòubian nà jiān dà.",vi:"Phòng học bên trái này lớn hơn phòng bên phải."}, {speaker:"男",zh:"但是右边那间教室里的桌椅更新。",py:"Dànshì yòubian nà jiān jiàoshì li de zhuōyǐ gèng xīn.",vi:"Nhưng bàn ghế trong phòng bên phải mới hơn."}, {speaker:"女",zh:"那我们去哪间教室学习？",py:"Nà wǒmen qù nǎ jiān jiàoshì xuéxí?",vi:"Vậy chúng ta học ở phòng nào?"}, {speaker:"男",zh:"我们人不多，还是去右边那间吧。",py:"Wǒmen rén bù duō, háishi qù yòubian nà jiān ba.",vi:"Chúng ta không đông người, cứ đến phòng bên phải đi."}, {speaker:"问",zh:"男的为什么想去右边的教室学习？",py:"Nán de wèi shénme xiǎng qù yòubian de jiàoshì xuéxí?",vi:"Hỏi: Vì sao người nam muốn học ở phòng bên phải?"}], answer:1},
+          {options:[{zh:"飞机快",py:"fēijī kuài"}, {zh:"机票便宜",py:"jīpiào piányi"}, {zh:"火车票卖完了",py:"huǒchēpiào màiwán le"}], qAudio:"audio/hsk2/lesson8/mocktest/q10.mp3", transcript:[{speaker:"男",zh:"我们这次怎么去上海？",py:"Wǒmen zhècì zěnme qù Shànghǎi?",vi:"Lần này chúng ta đi Thượng Hải bằng gì?"}, {speaker:"女",zh:"坐火车吧，火车票比飞机票便宜。",py:"Zuò huǒchē ba, huǒchēpiào bǐ jīpiào piányi.",vi:"Đi tàu hỏa đi, vé tàu rẻ hơn vé máy bay."}, {speaker:"男",zh:"但是坐飞机比坐火车快，两个多小时就到了。",py:"Dànshì zuò fēijī bǐ zuò huǒchē kuài, liǎng gè duō xiǎoshí jiù dào le.",vi:"Nhưng đi máy bay nhanh hơn đi tàu, hơn hai tiếng là đến nơi."}, {speaker:"女",zh:"我们有时间，没关系的。",py:"Wǒmen yǒu shíjiān, méi guānxi de.",vi:"Chúng ta có thời gian, không sao đâu."}, {speaker:"问",zh:"男的为什么想坐飞机？",py:"Nán de wèi shénme xiǎng zuò fēijī?",vi:"Hỏi: Vì sao người nam muốn đi máy bay?"}], answer:0},
+        ],
+      },
+    ],
+    reading: [
+      {
+        part: "Phần 1 — Chọn tranh phù hợp với câu", kind: "shared_img_prompt",
+        pool: ["assets/hsk2/lesson8/read1_A.jpg", "assets/hsk2/lesson8/read1_B.jpg", "assets/hsk2/lesson8/read1_C.jpg", "assets/hsk2/lesson8/read1_D.jpg"],
+        questions: [
+          {prompt:{zh:"你看看手表，都几点了？",py:"Nǐ kànkan shǒubiǎo, dōu jǐ diǎn le?"}, answer:1},
+          {prompt:{zh:"我点了几个菜，还要了一条鱼。",py:"Wǒ diǎnle jǐ gè cài, hái yàole yì tiáo yú."}, answer:2},
+          {prompt:{zh:"你往左边走，一会儿就能看见那家商场。",py:"Nǐ wǎng zuǒbian zǒu, yíhuìr jiù néng kànjiàn nà jiā shāngchǎng."}, answer:0},
+        ],
+      },
+      {
+        part: "Phần 2 — Chọn từ điền vào chỗ trống", kind: "fill_blank",
+        pool: [{zh:"点",py:"diǎn"}, {zh:"手表",py:"shǒubiǎo"}, {zh:"右边",py:"yòubian"}, {zh:"饭馆",py:"fànguǎn"}, {zh:"完",py:"wán"}],
+        questions: [
+          {prompt:{zh:"丈夫跟妻子看完电影就去（　）吃饭了。",py:"Zhàngfu gēn qīzi kànwán diànyǐng jiù qù (　) chī fàn le."}, answer:3},
+          {prompt:{zh:"你看看，我（　）这个人是不是你的中学同学？",py:"Nǐ kànkan, wǒ (　) zhège rén shì bu shì nǐ de zhōngxué tóngxué?"}, answer:2},
+          {prompt:{zh:"女：我（　）了一条鱼。\\n男：好，我看看再要点儿什么。",py:"Nǚ: Wǒ (　) le yì tiáo yú.\\nNán: Hǎo, wǒ kànkan zài yào diǎnr shénme."}, answer:0},
+          {prompt:{zh:"男：你们今天做什么了？\\n女：我们去新开的商场买了一块（　）。",py:"Nán: Nǐmen jīntiān zuò shénme le?\\nNǚ: Wǒmen qù xīn kāi de shāngchǎng mǎile yí kuài (　)."}, answer:1},
+        ],
+      },
+      {
+        part: "Phần 3 — Nối câu", kind: "shared_text_prompt",
+        pool: [{zh:"我觉得比昨天冷。",py:"Wǒ juéde bǐ zuótiān lěng."}, {zh:"是啊，网上的东西比超市的便宜。",py:"Shì a, wǎngshang de dōngxi bǐ chāoshì de piányi."}, {zh:"没事，你来了我们再点菜。",py:"Méishì, nǐ láile wǒmen zài diǎn cài."}, {zh:"我准备给她唱个歌，歌的名字叫《爱你一万年》。",py:"Wǒ zhǔnbèi gěi tā chàng gè gē, gē de míngzi jiào 《Ài Nǐ Yíwàn Nián》."}, {zh:"他出去了，一会儿就回来。",py:"Tā chūqù le, yíhuìr jiù huílái."}],
+        questions: [
+          {prompt:{zh:"这些都是在网上买的吗？",py:"Zhèxiē dōu shì zài wǎngshang mǎi de ma?"}, answer:1},
+          {prompt:{zh:"今天天气怎么样？",py:"Jīntiān tiānqì zěnmeyàng?"}, answer:0},
+          {prompt:{zh:"不好意思，我一会儿就到。",py:"Bù hǎoyìsi, wǒ yíhuìr jiù dào."}, answer:2},
+          {prompt:{zh:"今天是我妻子的生日。",py:"Jīntiān shì wǒ qīzi de shēngrì."}, answer:3},
+        ],
+      },
+      {
+        part: "Phần 4 — Đọc đoạn văn, chọn đáp án đúng", kind: "reading_q",
+        questions: [
+          {options:[{zh:"看病",py:"kànbìng"}, {zh:"跑步",py:"pǎobù"}, {zh:"吃早饭",py:"chī zǎofàn"}], passage:{zh:"这几天天气都很冷，今天比昨天更冷。但是爸爸还是早早地叫我起床，让我跟他一起去跑步。",py:"Zhè jǐ tiān tiānqì dōu hěn lěng, jīntiān bǐ zuótiān gèng lěng. Dànshì bàba háishi zǎozǎo de jiào wǒ qǐchuáng, ràng wǒ gēn tā yìqǐ qù pǎobù."}, question:{zh:"爸爸早早叫他起床去做什么？",py:"Bàba zǎozǎo jiào tā qǐchuáng qù zuò shénme?"}, answer:1},
+          {options:[{zh:"很贵",py:"hěn guì"}, {zh:"没意思",py:"méi yìsi"}, {zh:"不太快",py:"bú tài kuài"}], passage:{zh:"今天我是坐出租车去的公司，一个人坐在车上玩玩手机、听听歌，很快就到了。但是不能每天都坐出租车，因为坐出租车比坐公交车贵。",py:"Jīntiān wǒ shì zuò chūzūchē qù de gōngsī, yí gè rén zuò zài chē shang wánwan shǒujī, tīngting gē, hěn kuài jiù dào le. Dànshì bù néng měitiān dōu zuò chūzūchē, yīnwèi zuò chūzūchē bǐ zuò gōngjiāochē guì."}, question:{zh:"他觉得坐出租车怎么样？",py:"Tā juéde zuò chūzūchē zěnmeyàng?"}, answer:0},
+          {options:[{zh:"自己做",py:"zìjǐ zuò"}, {zh:"去饭馆买",py:"qù fànguǎn mǎi"}, {zh:"在网上点",py:"zài wǎngshang diǎn"}], passage:{zh:"我喜欢请朋友们来家里吃饭，但是我不会做菜，所以每次我都在网上点好菜，让他们送家里来。鱼啊肉啊什么的都可以点，比自己做的还好吃。",py:"Wǒ xǐhuan qǐng péngyoumen lái jiā li chī fàn, dànshì wǒ bú huì zuò cài, suǒyǐ měicì wǒ dōu zài wǎngshang diǎnhǎo cài, ràng tāmen sòng jiā li lái. Yú a ròu a shénmede dōu kěyǐ diǎn, bǐ zìjǐ zuò de hái hǎochī."}, question:{zh:"朋友来家里吃饭，他会：",py:"Péngyou lái jiā li chī fàn, tā huì:"}, answer:2},
+        ],
+      },
+    ],
+  },
+  9: {
+    audio: "audio/hsk2/lesson9/mocktest.mp3",
+    listening: [
+      {
+        part: "Phần 1 — Nghe và chọn đúng tranh", kind: "own_img",
+        questions: [
+          {images:["assets/hsk2/lesson9/listen1_q1_A.jpg", "assets/hsk2/lesson9/listen1_q1_B.jpg", "assets/hsk2/lesson9/listen1_q1_C.jpg"], qAudio:"audio/hsk2/lesson9/mocktest/q1.mp3", transcript:[{zh:"那个男孩儿的个子很高。",py:"Nàge nánháir de gèzi hěn gāo.",vi:"Cậu bé kia có chiều cao rất cao."}], answer:1},
+          {images:["assets/hsk2/lesson9/listen1_q2_A.jpg", "assets/hsk2/lesson9/listen1_q2_B.jpg", "assets/hsk2/lesson9/listen1_q2_C.jpg"], qAudio:"audio/hsk2/lesson9/mocktest/q2.mp3", transcript:[{zh:"公司离家不远，我每天走路去上班。",py:"Gōngsī lí jiā bù yuǎn, wǒ měitiān zǒulù qù shàngbān.",vi:"Công ty cách nhà không xa, tôi đi bộ đi làm mỗi ngày."}], answer:2},
+          {images:["assets/hsk2/lesson9/listen1_q3_A.jpg", "assets/hsk2/lesson9/listen1_q3_B.jpg", "assets/hsk2/lesson9/listen1_q3_C.jpg"], qAudio:"audio/hsk2/lesson9/mocktest/q3.mp3", transcript:[{zh:"黑色的裤子没有白色的好看。",py:"Hēisè de kùzi méiyǒu báisè de hǎokàn.",vi:"Quần màu đen không đẹp bằng quần màu trắng."}], answer:1},
+        ],
+      },
+      {
+        part: "Phần 2 — Nghe hội thoại, chọn tranh phù hợp nhất", kind: "shared_img",
+        pool: ["assets/hsk2/lesson9/listen2_A.jpg", "assets/hsk2/lesson9/listen2_B.jpg", "assets/hsk2/lesson9/listen2_C.jpg", "assets/hsk2/lesson9/listen2_D.jpg"],
+        questions: [
+          {qAudio:"audio/hsk2/lesson9/mocktest/q4.mp3", transcript:[{speaker:"女",zh:"我们洗几个苹果吃吧。",py:"Wǒmen xǐ jǐ gè píngguǒ chī ba.",vi:"Chúng ta rửa mấy quả táo ăn đi."}, {speaker:"男",zh:"好的，但这次买的没有上次的好吃。",py:"Hǎo de, dàn zhècì mǎi de méiyǒu shàngcì de hǎochī.",vi:"Được, nhưng lần này mua không ngon bằng lần trước."}], answer:2},
+          {qAudio:"audio/hsk2/lesson9/mocktest/q5.mp3", transcript:[{speaker:"男",zh:"你一回家，小猫就过来坐你旁边。",py:"Nǐ yì huí jiā, xiǎo māo jiù guòlái zuò nǐ pángbiān.",vi:"Em vừa về nhà là con mèo con liền đến ngồi cạnh em."}, {speaker:"女",zh:"是啊，因为它喜欢我。",py:"Shì a, yīnwèi tā xǐhuan wǒ.",vi:"Đúng vậy, vì nó thích em."}], answer:1},
+          {qAudio:"audio/hsk2/lesson9/mocktest/q6.mp3", transcript:[{speaker:"女",zh:"你儿子都这么高了！",py:"Nǐ érzi dōu zhème gāo le!",vi:"Con trai anh đã cao thế này rồi!"}, {speaker:"男",zh:"是啊，现在我都没有他高。",py:"Shì a, xiànzài wǒ dōu méiyǒu tā gāo.",vi:"Đúng vậy, bây giờ tôi còn không cao bằng nó."}], answer:0},
+        ],
+      },
+      {
+        part: "Phần 3 — Nghe hội thoại, chọn đáp án đúng", kind: "own_text",
+        questions: [
+          {options:[{zh:"打车",py:"dǎchē"}, {zh:"走路",py:"zǒulù"}, {zh:"跑步",py:"pǎobù"}], qAudio:"audio/hsk2/lesson9/mocktest/q7.mp3", transcript:[{speaker:"女",zh:"商场离这儿不远，我们走路去吧。",py:"Shāngchǎng lí zhèr bù yuǎn, wǒmen zǒulù qù ba.",vi:"Trung tâm thương mại cách đây không xa, chúng ta đi bộ đi."}, {speaker:"男",zh:"走十多分钟你就会累的，还是现在就打车吧。",py:"Zǒu shí duō fēnzhōng nǐ jiù huì lèi de, háishi xiànzài jiù dǎchē ba.",vi:"Đi bộ hơn mười phút là em sẽ mệt đấy, cứ bắt taxi ngay bây giờ đi."}, {speaker:"问",zh:"男的想怎么去商场？",py:"Nán de xiǎng zěnme qù shāngchǎng?",vi:"Hỏi: Người nam muốn đi đến trung tâm thương mại bằng cách nào?"}], answer:0},
+          {options:[{zh:"安妮的老师",py:"Ānnī de lǎoshī"}, {zh:"安妮的同学",py:"Ānnī de tóngxué"}, {zh:"安妮的男朋友",py:"Ānnī de nánpéngyou"}], qAudio:"audio/hsk2/lesson9/mocktest/q8.mp3", transcript:[{speaker:"男",zh:"安妮旁边那个男孩儿是她男朋友吗？",py:"Ānnī pángbiān nàge nánháir shì tā nánpéngyou ma?",vi:"Cậu bé bên cạnh Annie là bạn trai cô ấy à?"}, {speaker:"女",zh:"不是，是她同学。她男朋友没有那个男孩儿那么高。",py:"Bú shì, shì tā tóngxué. Tā nánpéngyou méiyǒu nàge nánháir nàme gāo.",vi:"Không phải, là bạn học của cô ấy. Bạn trai cô ấy không cao bằng cậu bé đó."}, {speaker:"问",zh:"安妮旁边的男孩儿是谁？",py:"Ānnī pángbiān de nánháir shì shéi?",vi:"Hỏi: Cậu bé bên cạnh Annie là ai?"}], answer:1},
+          {options:[{zh:"商店",py:"shāngdiàn"}, {zh:"学校",py:"xuéxiào"}, {zh:"火车站",py:"huǒchēzhàn"}], qAudio:"audio/hsk2/lesson9/mocktest/q9.mp3", transcript:[{speaker:"女",zh:"请问，火车站离这儿远吗？",py:"Qǐngwèn, huǒchēzhàn lí zhèr yuǎn ma?",vi:"Xin hỏi, ga tàu cách đây có xa không?"}, {speaker:"男",zh:"不远，走二十多分钟就到了。",py:"Bù yuǎn, zǒu èrshí duō fēnzhōng jiù dào le.",vi:"Không xa, đi bộ hơn hai mươi phút là tới."}, {speaker:"女",zh:"你知道怎么坐车过去吗？",py:"Nǐ zhīdào zěnme zuò chē guòqù ma?",vi:"Anh có biết đi xe thế nào đến đó không?"}, {speaker:"男",zh:"你从我们店里出去，右边有个公交站，那里有很多车到火车站。",py:"Nǐ cóng wǒmen diàn li chūqù, yòubian yǒu gè gōngjiāozhàn, nàli yǒu hěnduō chē dào huǒchēzhàn.",vi:"Chị đi ra khỏi cửa hàng của chúng tôi, bên phải có một trạm xe buýt, ở đó có nhiều xe đến ga tàu."}, {speaker:"问",zh:"女的要去哪儿？",py:"Nǚ de yào qù nǎr?",vi:"Hỏi: Người nữ muốn đi đâu?"}], answer:2},
+          {options:[{zh:"没有肉菜",py:"méiyǒu ròucài"}, {zh:"女的爱吃鱼",py:"nǚ de ài chī yú"}, {zh:"鱼做得好吃",py:"yú zuò de hǎochī"}], qAudio:"audio/hsk2/lesson9/mocktest/q10.mp3", transcript:[{speaker:"男",zh:"我记得你爱吃鱼，所以就点了一条鱼，你多吃点儿。",py:"Wǒ jìde nǐ ài chī yú, suǒyǐ jiù diǎnle yì tiáo yú, nǐ duō chī diǎnr.",vi:"Anh nhớ là em thích ăn cá, nên đã gọi một con cá, em ăn nhiều một chút."}, {speaker:"女",zh:"我吃了，您也快吃吧。",py:"Wǒ chīle, nín yě kuài chī ba.",vi:"Em ăn rồi, anh cũng ăn nhanh đi."}, {speaker:"男",zh:"这家饭馆我们来过，菜做得不错。",py:"Zhè jiā fànguǎn wǒmen láiguò, cài zuò de búcuò.",vi:"Nhà hàng này chúng ta từng đến, món ăn làm khá ngon."}, {speaker:"女",zh:"是，这个肉菜和饺子做得不错，鱼没有您做得好吃。",py:"Shì, zhège ròucài hé jiǎozi zuò de búcuò, yú méiyǒu nín zuò de hǎochī.",vi:"Đúng vậy, món thịt và sủi cảo này làm khá ngon, cá không ngon bằng anh nấu."}, {speaker:"问",zh:"男的为什么点了条鱼？",py:"Nán de wèi shénme diǎnle tiáo yú?",vi:"Hỏi: Vì sao người nam gọi một con cá?"}], answer:1},
+        ],
+      },
+    ],
+    reading: [
+      {
+        part: "Phần 1 — Chọn tranh phù hợp với câu", kind: "shared_img_prompt",
+        pool: ["assets/hsk2/lesson9/read1_A.jpg", "assets/hsk2/lesson9/read1_B.jpg", "assets/hsk2/lesson9/read1_C.jpg", "assets/hsk2/lesson9/read1_D.jpg"],
+        questions: [
+          {prompt:{zh:"商场旁边是一家饭馆。",py:"Shāngchǎng pángbiān shì yì jiā fànguǎn."}, answer:2},
+          {prompt:{zh:"那个男孩儿坐在咖啡店门口看书。",py:"Nàge nánháir zuò zài kāfēidiàn ménkǒu kàn shū."}, answer:1},
+          {prompt:{zh:"学校离家很近，所以他们每天一起走路上学。",py:"Xuéxiào lí jiā hěn jìn, suǒyǐ tāmen měitiān yìqǐ zǒulù shàngxué."}, answer:0},
+        ],
+      },
+      {
+        part: "Phần 2 — Chọn từ điền vào chỗ trống", kind: "fill_blank",
+        pool: [{zh:"离",py:"lí"}, {zh:"周",py:"zhōu"}, {zh:"走路",py:"zǒulù"}, {zh:"这样",py:"zhèyàng"}, {zh:"完",py:"wán"}],
+        questions: [
+          {prompt:{zh:"你看，我（　）写，对吗？",py:"Nǐ kàn, wǒ (　) xiě, duì ma?"}, answer:3},
+          {prompt:{zh:"车站（　）酒店很近，从酒店出去往左边走五分钟就能到。",py:"Chēzhàn (　) jiǔdiàn hěn jìn, cóng jiǔdiàn chūqù wǎng zuǒbian zǒu wǔ fēnzhōng jiù néng dào."}, answer:0},
+          {prompt:{zh:"女：下（　）我休息，我们出去旅游吧。\\n男：你休息几天？时间长我们可以去上海。",py:"Nǚ: Xià (　) wǒ xiūxi, wǒmen chūqù lǚyóu ba.\\nNán: Nǐ xiūxi jǐ tiān? Shíjiān cháng wǒmen kěyǐ qù Shànghǎi."}, answer:1},
+          {prompt:{zh:"男：你每天怎么上下班？\\n女：因为公司离家很近，所以我每天（　）上下班。",py:"Nán: Nǐ měitiān zěnme shàng xiàbān?\\nNǚ: Yīnwèi gōngsī lí jiā hěn jìn, suǒyǐ wǒ měitiān (　) shàng xiàbān."}, answer:2},
+        ],
+      },
+      {
+        part: "Phần 3 — Nối câu", kind: "shared_text_prompt",
+        pool: [{zh:"来了两周了。",py:"Láile liǎng zhōu le."}, {zh:"没问题，这儿没人。",py:"Méi wèntí, zhèr méi rén."}, {zh:"不知道为什么，我觉得没有昨天好。",py:"Bù zhīdào wèi shénme, wǒ juéde méiyǒu zuótiān hǎo."}, {zh:"你都看了一天了，休息休息吧。",py:"Nǐ dōu kànle yìtiān le, xiūxi xiūxi ba."}, {zh:"他出去了，一会儿就回来。",py:"Tā chūqù le, yíhuìr jiù huílái."}],
+        questions: [
+          {prompt:{zh:"这本书真有意思。",py:"Zhè běn shū zhēn yǒu yìsi."}, answer:3},
+          {prompt:{zh:"你今天好点儿了吧？",py:"Nǐ jīntiān hǎo diǎnr le ba?"}, answer:2},
+          {prompt:{zh:"我可以坐在你旁边吗？",py:"Wǒ kěyǐ zuò zài nǐ pángbiān ma?"}, answer:1},
+          {prompt:{zh:"你什么时候来上海的？",py:"Nǐ shénme shíhou lái Shànghǎi de?"}, answer:0},
+        ],
+      },
+      {
+        part: "Phần 4 — Đọc đoạn văn, chọn đáp án đúng", kind: "reading_q",
+        questions: [
+          {options:[{zh:"走路来看他",py:"zǒulù lái kàn tā"}, {zh:"给他做吃的",py:"gěi tā zuò chī de"}, {zh:"和他一起学习",py:"hé tā yìqǐ xuéxí"}], passage:{zh:"我家离爷爷、奶奶家不远，我每个星期六都去。每次奶奶都会给我做好吃的，爷爷会跟我一起看书、写字。",py:"Wǒ jiā lí yéye, nǎinai jiā bù yuǎn, wǒ měi gè Xīngqīliù dōu qù. Měicì nǎinai dōu huì gěi wǒ zuò hǎochī de, yéye huì gēn wǒ yìqǐ kàn shū, xiě zì."}, question:{zh:"爷爷：",py:"Yéye:"}, answer:2},
+          {options:[{zh:"走路",py:"zǒulù"}, {zh:"跑步",py:"pǎobù"}, {zh:"打车",py:"dǎchē"}], passage:{zh:"老师打来电话，说我儿子不舒服，让我过去接孩子。我公司离儿子的学校很近，走十分钟就到了。我走到学校，就看见儿子已经在门口等我了。",py:"Lǎoshī dǎlái diànhuà, shuō wǒ érzi bù shūfu, ràng wǒ guòqù jiē háizi. Wǒ gōngsī lí érzi de xuéxiào hěn jìn, zǒu shí fēnzhōng jiù dào le. Wǒ zǒudào xuéxiào, jiù kànjiàn érzi yǐjīng zài ménkǒu děng wǒ le."}, question:{zh:"他是怎么去儿子学校的？",py:"Tā shì zěnme qù érzi xuéxiào de?"}, answer:0},
+          {options:[{zh:"上课",py:"shàngkè"}, {zh:"睡觉",py:"shuìjiào"}, {zh:"打篮球",py:"dǎ lánqiú"}], passage:{zh:"我女儿今年15岁，她爱好运动，一下课就去打篮球，所以个子高高的，很多男同学都没她高。",py:"Wǒ nǚ'ér jīnnián shíwǔ suì, tā àihào yùndòng, yí xiàkè jiù qù dǎ lánqiú, suǒyǐ gèzi gāogāo de, hěnduō nán tóngxué dōu méi tā gāo."}, question:{zh:"女儿喜欢做什么？",py:"Nǚ'ér xǐhuan zuò shénme?"}, answer:2},
+        ],
+      },
+    ],
+  },
+  10: {
+    audio: "audio/hsk2/lesson10/mocktest.mp3",
+    listening: [
+      {
+        part: "Phần 1 — Nghe và chọn đúng tranh", kind: "own_img",
+        questions: [
+          {images:["assets/hsk2/lesson10/listen1_q1_A.jpg", "assets/hsk2/lesson10/listen1_q1_B.jpg", "assets/hsk2/lesson10/listen1_q1_C.jpg"], qAudio:"audio/hsk2/lesson10/mocktest/q1.mp3", transcript:[{zh:"小猫在门后面，你看见了吗？",py:"Xiǎomāo zài mén hòumiàn, nǐ kànjiàn le ma?",vi:"Con mèo con ở phía sau cửa, bạn có nhìn thấy không?"}], answer:2},
+          {images:["assets/hsk2/lesson10/listen1_q2_A.jpg", "assets/hsk2/lesson10/listen1_q2_B.jpg", "assets/hsk2/lesson10/listen1_q2_C.jpg"], qAudio:"audio/hsk2/lesson10/mocktest/q2.mp3", transcript:[{zh:"学生们在教室里考试，你现在别进去。",py:"Xuéshengmen zài jiàoshì li kǎoshì, nǐ xiànzài bié jìnqù.",vi:"Các học sinh đang thi trong lớp học, bây giờ bạn đừng vào."}], answer:2},
+          {images:["assets/hsk2/lesson10/listen1_q3_A.jpg", "assets/hsk2/lesson10/listen1_q3_B.jpg", "assets/hsk2/lesson10/listen1_q3_C.jpg"], qAudio:"audio/hsk2/lesson10/mocktest/q3.mp3", transcript:[{zh:"这次考试，她是第一名。",py:"Zhè cì kǎoshì, tā shì dì-yī míng.",vi:"Lần thi này, cô ấy đứng thứ nhất."}], answer:1},
+        ],
+      },
+      {
+        part: "Phần 2 — Nghe hội thoại, chọn tranh phù hợp nhất", kind: "shared_img",
+        pool: ["assets/hsk2/lesson10/listen2_A.jpg", "assets/hsk2/lesson10/listen2_B.jpg", "assets/hsk2/lesson10/listen2_C.jpg", "assets/hsk2/lesson10/listen2_D.jpg"],
+        questions: [
+          {qAudio:"audio/hsk2/lesson10/mocktest/q4.mp3", transcript:[{speaker:"女",zh:"你吃包子还是饺子？",py:"Nǐ chī bāozi háishi jiǎozi?",vi:"Bạn ăn bánh bao hay là sủi cảo?"}, {speaker:"男",zh:"包子好吃，吃包子吧。",py:"Bāozi hǎochī, chī bāozi ba.",vi:"Bánh bao ngon, ăn bánh bao đi."}], answer:0},
+          {qAudio:"audio/hsk2/lesson10/mocktest/q5.mp3", transcript:[{speaker:"男",zh:"快要到家了，你别睡了。",py:"Kuàiyào dào jiā le, nǐ bié shuì le.",vi:"Sắp về đến nhà rồi, em đừng ngủ nữa."}, {speaker:"女",zh:"这么快啊！",py:"Zhème kuài a!",vi:"Nhanh vậy sao!"}], answer:2},
+          {qAudio:"audio/hsk2/lesson10/mocktest/q6.mp3", transcript:[{speaker:"女",zh:"我还不知道你的手机号呢。",py:"Wǒ hái bù zhīdào nǐ de shǒujīhào ne.",vi:"Tôi vẫn chưa biết số điện thoại của bạn đấy."}, {speaker:"男",zh:"我给你写在本子上吧。",py:"Wǒ gěi nǐ xiě zài běnzi shang ba.",vi:"Để tôi viết vào vở cho bạn nhé."}], answer:1},
+        ],
+      },
+      {
+        part: "Phần 3 — Nghe hội thoại, chọn đáp án đúng", kind: "own_text",
+        questions: [
+          {options:[{zh:"水",py:"shuǐ"}, {zh:"奶茶",py:"nǎichá"}, {zh:"咖啡",py:"kāfēi"}], qAudio:"audio/hsk2/lesson10/mocktest/q7.mp3", transcript:[{speaker:"女",zh:"你喝奶茶还是咖啡？",py:"Nǐ hē nǎichá háishi kāfēi?",vi:"Bạn uống trà sữa hay là cà phê?"}, {speaker:"男",zh:"我都不想喝，给我杯水吧。",py:"Wǒ dōu bù xiǎng hē, gěi wǒ bēi shuǐ ba.",vi:"Tôi không muốn uống cả hai, cho tôi một cốc nước thôi."}, {speaker:"问",zh:"男的要喝什么？",py:"Nán de yào hē shénme?",vi:"Hỏi: Người nam muốn uống gì?"}], answer:0},
+          {options:[{zh:"安妮的老师",py:"Ānnī de lǎoshī"}, {zh:"安妮的同学",py:"Ānnī de tóngxué"}, {zh:"安妮的男朋友",py:"Ānnī de nánpéngyou"}], qAudio:"audio/hsk2/lesson10/mocktest/q8.mp3", transcript:[{speaker:"男",zh:"小雨，这个男孩儿是你同学还是你男朋友？",py:"Xiǎoyǔ, zhège nánháir shì nǐ tóngxué háishi nǐ nánpéngyou?",vi:"Tiểu Vũ, cậu con trai này là bạn học hay là bạn trai của em?"}, {speaker:"女",zh:"都不是，他是我哥哥。",py:"Dōu bú shì, tā shì wǒ gēge.",vi:"Không phải cả hai, anh ấy là anh trai của em."}, {speaker:"问",zh:"那个男孩儿是谁？",py:"Nàge nánháir shì shéi?",vi:"Hỏi: Cậu con trai đó là ai?"}], answer:1},
+          {options:[{zh:"书包里",py:"shūbāo li"}, {zh:"桌子上",py:"zhuōzi shang"}, {zh:"椅子下面",py:"yǐzi xiàmiàn"}], qAudio:"audio/hsk2/lesson10/mocktest/q9.mp3", transcript:[{speaker:"女",zh:"我的本子你看见了吗？",py:"Wǒ de běnzi nǐ kànjiàn le ma?",vi:"Vở của tôi bạn có thấy không?"}, {speaker:"男",zh:"没在书包里吗？",py:"Méi zài shūbāo li ma?",vi:"Không ở trong cặp sách à?"}, {speaker:"女",zh:"没有，桌子上也没有，你帮我找找。",py:"Méiyǒu, zhuōzi shang yě méiyǒu, nǐ bāng wǒ zhǎozhao.",vi:"Không có, trên bàn cũng không có, bạn giúp tôi tìm với."}, {speaker:"男",zh:"找到了，在椅子下面。",py:"Zhǎodào le, zài yǐzi xiàmiàn.",vi:"Tìm thấy rồi, ở dưới ghế."}, {speaker:"问",zh:"本子在哪儿？",py:"Běnzi zài nǎr?",vi:"Hỏi: Quyển vở ở đâu?"}], answer:2},
+          {options:[{zh:"看书",py:"kàn shū"}, {zh:"出去玩",py:"chūqù wán"}, {zh:"在家休息",py:"zài jiā xiūxi"}], qAudio:"audio/hsk2/lesson10/mocktest/q10.mp3", transcript:[{speaker:"男",zh:"就要考试了，你准备得怎么样？",py:"Jiù yào kǎoshì le, nǐ zhǔnbèi de zěnmeyàng?",vi:"Sắp thi rồi, bạn chuẩn bị thế nào rồi?"}, {speaker:"女",zh:"还可以吧，这几天我再好好看看书。",py:"Hái kěyǐ ba, zhè jǐ tiān wǒ zài hǎohāo kànkan shū.",vi:"Cũng tạm được, mấy hôm nay tôi sẽ học bài thật kỹ."}, {speaker:"男",zh:"考完就没事了，你想去哪儿玩啊？",py:"Kǎowán jiù méishì le, nǐ xiǎng qù nǎr wán a?",vi:"Thi xong là rảnh rồi, bạn muốn đi đâu chơi?"}, {speaker:"女",zh:"不出去玩了，准备考试太累了，就在家休息休息。",py:"Bù chūqù wán le, zhǔnbèi kǎoshì tài lèi le, jiù zài jiā xiūxi xiūxi.",vi:"Không đi chơi đâu, chuẩn bị thi mệt quá, cứ ở nhà nghỉ ngơi thôi."}, {speaker:"问",zh:"考试后女的要做什么？",py:"Kǎoshì hòu nǚ de yào zuò shénme?",vi:"Hỏi: Sau khi thi xong, người nữ muốn làm gì?"}], answer:2},
+        ],
+      },
+    ],
+    reading: [
+      {
+        part: "Phần 1 — Chọn tranh phù hợp với câu", kind: "shared_img_prompt",
+        pool: ["assets/hsk2/lesson10/read1_A.jpg", "assets/hsk2/lesson10/read1_B.jpg", "assets/hsk2/lesson10/read1_C.jpg", "assets/hsk2/lesson10/read1_D.jpg"],
+        questions: [
+          {prompt:{zh:"就要开学了，今天我去买了一个新书包。",py:"Jiù yào kāixué le, jīntiān wǒ qù mǎile yí gè xīn shūbāo."}, answer:2},
+          {prompt:{zh:"请帮我拿一下本子。",py:"Qǐng bāng wǒ ná yíxià běnzi."}, answer:0},
+          {prompt:{zh:"这次考试我考得非常好。",py:"Zhè cì kǎoshì wǒ kǎo de fēicháng hǎo."}, answer:1},
+        ],
+      },
+      {
+        part: "Phần 2 — Chọn từ điền vào chỗ trống", kind: "fill_blank",
+        pool: [{zh:"题",py:"tí"}, {zh:"考试",py:"kǎoshì"}, {zh:"本子",py:"běnzi"}, {zh:"后面",py:"hòumiàn"}, {zh:"完",py:"wán"}],
+        questions: [
+          {prompt:{zh:"这个（　）你做错了，再看一下。",py:"Zhège (　) nǐ zuòcuò le, zài kàn yíxià."}, answer:0},
+          {prompt:{zh:"这是你的（　）吧？上边有你的名字。",py:"Zhè shì nǐ de (　) ba? Shàngbian yǒu nǐ de míngzi."}, answer:2},
+          {prompt:{zh:"女：这次（　）你考得怎么样？\\n男：这次比上次好。",py:"Nǚ: Zhè cì (　) nǐ kǎo de zěnmeyàng?\\nNán: Zhè cì bǐ shàng cì hǎo."}, answer:1},
+          {prompt:{zh:"男：小红坐在哪儿？\\n女：她个子比我高，坐在我（　）。",py:"Nán: Xiǎohóng zuò zài nǎr?\\nNǚ: Tā gèzi bǐ wǒ gāo, zuò zài wǒ (　)."}, answer:3},
+        ],
+      },
+      {
+        part: "Phần 3 — Nối câu", kind: "shared_text_prompt",
+        pool: [{zh:"我26号回去。",py:"Wǒ èrshíliù hào huíqù."}, {zh:"我也不知道，你去问问老师吧。",py:"Wǒ yě bù zhīdào, nǐ qù wènwen lǎoshī ba."}, {zh:"都不是，是我自己。",py:"Dōu bú shì, shì wǒ zìjǐ."}, {zh:"别去了，我有两个本子，给你一个。",py:"Bié qù le, wǒ yǒu liǎng gè běnzi, gěi nǐ yí gè."}, {zh:"他出去了，一会儿就回来。",py:"Tā chūqù le, yíhuìr jiù huílái."}],
+        questions: [
+          {prompt:{zh:"谁帮你准备的画笔？是爸爸还是妈妈？",py:"Shéi bāng nǐ zhǔnbèi de huàbǐ? Shì bàba háishi māma?"}, answer:2},
+          {prompt:{zh:"你看，这个题做对了还是做错了？",py:"Nǐ kàn, zhège tí zuòduì le háishi zuòcuò le?"}, answer:1},
+          {prompt:{zh:"我忘了拿本子，现在去商店买一个。",py:"Wǒ wàngle ná běnzi, xiànzài qù shāngdiàn mǎi yí gè."}, answer:3},
+          {prompt:{zh:"快要开学了，你什么时候回来？",py:"Kuàiyào kāixué le, nǐ shénme shíhou huílái?"}, answer:0},
+        ],
+      },
+      {
+        part: "Phần 4 — Đọc đoạn văn, chọn đáp án đúng", kind: "reading_q",
+        questions: [
+          {options:[{zh:"很少写字",py:"hěn shǎo xiě zì"}, {zh:"是小学生",py:"shì xiǎoxuéshēng"}, {zh:"没有本子",py:"méiyǒu běnzi"}], passage:{zh:"女儿已经上小学了，她学习不错，她的本子我看过，错题不多，字写得也很好。",py:"Nǚ'ér yǐjīng shàng xiǎoxué le, tā xuéxí búcuò, tā de běnzi wǒ kànguo, cuò tí bù duō, zì xiě de yě hěn hǎo."}, question:{zh:"女儿现在：",py:"Nǚ'ér xiànzài:"}, answer:1},
+          {options:[{zh:"饭馆人太多",py:"fànguǎn rén tài duō"}, {zh:"爸爸不去饭馆",py:"bàba bú qù fànguǎn"}, {zh:"家里的菜好吃",py:"jiā li de cài hǎochī"}], passage:{zh:"还有一个星期爷爷就要过生日了。爸爸想去饭馆给爷爷过生日，但是爷爷觉得饭馆的菜没有家里的好吃，所以今年还是在家里过。",py:"Hái yǒu yí gè xīngqī yéye jiù yào guò shēngrì le. Bàba xiǎng qù fànguǎn gěi yéye guò shēngrì, dànshì yéye juéde fànguǎn de cài méiyǒu jiā li de hǎochī, suǒyǐ jīnnián háishi zài jiā li guò."}, question:{zh:"爷爷要在家里过生日，因为：",py:"Yéye yào zài jiā li guò shēngrì, yīnwèi:"}, answer:2},
+          {options:[{zh:"笔",py:"bǐ"}, {zh:"衣服",py:"yīfu"}, {zh:"电影票",py:"diànyǐngpiào"}], passage:{zh:"就要开学了，儿子的笔、本子什么的都没有准备好。我在网上看了看，网上有很多，今天买完，明天就能送到家，真不错！",py:"Jiù yào kāixué le, érzi de bǐ, běnzi shénmede dōu méiyǒu zhǔnbèi hǎo. Wǒ zài wǎngshang kànle kàn, wǎngshang yǒu hěn duō, jīntiān mǎiwán, míngtiān jiù néng sòngdào jiā, zhēn búcuò!"}, question:{zh:"他在网上给儿子买什么？",py:"Tā zài wǎngshang gěi érzi mǎi shénme?"}, answer:0},
+        ],
+      },
+    ],
+  },
 };
 const WORKBOOK_LESSONS_HSK2 = {};
 rewriteMediaPaths(MOCKTEST_LESSONS_HSK2);
@@ -6439,6 +7208,10 @@ const MOCKTEST_EXERCISE_MAP_HSK2 = {
   4: '9052583e-ec66-4af6-b4b0-7733e201d471',
   5: 'bf336d0f-ce04-45ee-a521-3ab21b747968',
   6: '85934318-f1db-48d4-907d-8b1a45c42c0a',
+  7: '30282ab4-9328-4322-ab41-436968790702',
+  8: '92136f9a-b94b-4e45-a34c-56dd3604059f',
+  9: 'a1cc2481-ffc9-4623-8573-01d8aeac07b3',
+  10: '8ef258bf-ce18-4061-b6ee-b983fcbed18c',
 };
 
 const MOCKTEST_EXERCISE_MAP = {

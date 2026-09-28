@@ -3680,7 +3680,20 @@ const LESSONS_HSK2 = {};
 LESSONS_META_HSK2.forEach(m => {
   LESSONS_HSK2[m.id] = Object.assign({ready:false}, m);
 });
-const FINAL_EXAM_ID_HSK2 = null; // chưa có bài kiểm tra cuối khoá HSK2
+
+// Bài kiểm tra cuối khoá HSK2 — không phải bài học thường (không có 8 tab),
+// chỉ có 1 bộ đề duy nhất (60 câu: 25 Nghe + 25 Đọc + 10 Viết, lấy từ
+// HSK（二级）模拟试卷 cuối SBT New HSK 2).
+const FINAL_EXAM_ID_HSK2 = 16;
+LESSONS_HSK2[FINAL_EXAM_ID_HSK2] = {
+  id: FINAL_EXAM_ID_HSK2,
+  isFinalExam: true,
+  ready: true,
+  zh: '期末测试',
+  py: 'Qīmò Cèshì',
+  vi: 'Bài kiểm tra cuối khoá HSK2',
+  goals: [],
+};
 
 // Nội dung đầy đủ Bài 1 HSK2 — trích từ 《新HSK教程2》第1课 + SBT New HSK 2
 const LESSON_HSK2_1_CONTENT = {
@@ -5496,7 +5509,7 @@ LESSONS_HSK2[15] = Object.assign(LESSONS_HSK2[15], LESSON_HSK2_15_CONTENT, {read
 
 
 
-[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15].forEach(n => { if (LESSONS_HSK2[n]) rewriteMediaPaths(LESSONS_HSK2[n]); });
+[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,FINAL_EXAM_ID_HSK2].forEach(n => { if (LESSONS_HSK2[n]) rewriteMediaPaths(LESSONS_HSK2[n]); });
 // (WORKBOOK_LESSONS / MOCKTEST_LESSONS / PHONETICS_LESSONS được xử lý ở dưới,
 //  ngay sau khi chúng được khai báo — xem gần cuối file)
 
@@ -8134,6 +8147,873 @@ const MOCKTEST_LESSONS_HSK2 = {
       },
     ],
   },
+  16: {
+  "sections": [
+    {
+      "key": "listening",
+      "title": "🎧 Phần Nghe",
+      "seconds": null
+    },
+    {
+      "key": "reading",
+      "title": "📖 Phần Đọc",
+      "seconds": 1500
+    },
+    {
+      "key": "writing",
+      "title": "✍️ Phần Viết",
+      "seconds": 600
+    }
+  ],
+  "reviewSeconds": 180,
+  "introTitle": "Kiểm tra cuối khoá HSK2 — chế độ thi thật",
+  "introBullets": [
+    "🎧 Phần Nghe (25 câu, ~17 phút) tự động phát <b>một lần duy nhất</b>, không tua lại được.",
+    "✅ Nghe xong, bạn có <b>3 phút</b> để kiểm tra và sửa lại đáp án phần Nghe.",
+    "📖 Hết 3 phút, hệ thống <b>tự động khoá phần Nghe</b> và chuyển sang phần Đọc.",
+    "⏱️ Phần Đọc (25 câu) giới hạn đúng <b>25 phút</b> — hết giờ tự động chuyển sang phần Viết, kể cả khi chưa làm hết.",
+    "✍️ Phần Viết (10 câu) giới hạn đúng <b>10 phút</b> — hết giờ hệ thống <b>tự động nộp bài</b>.",
+    "🕐 Tổng thời gian làm bài: khoảng 55 phút, đúng theo cấu trúc đề thi HSK（二级）thật."
+  ],
+  "audio": "audio/hsk2/final-exam/listening.mp3",
+  "listening": [
+    {
+      "part": "Phần 1 (第一部分) — Nghe và chọn đúng tranh, Q1–5",
+      "kind": "own_img",
+      "questions": [
+        {
+          "images": [
+            "assets/hsk2/final-exam/listen1_q1_A.jpg",
+            "assets/hsk2/final-exam/listen1_q1_B.jpg",
+            "assets/hsk2/final-exam/listen1_q1_C.jpg"
+          ],
+          "answer": 0
+        },
+        {
+          "images": [
+            "assets/hsk2/final-exam/listen1_q2_A.jpg",
+            "assets/hsk2/final-exam/listen1_q2_B.jpg",
+            "assets/hsk2/final-exam/listen1_q2_C.jpg"
+          ],
+          "answer": 2
+        },
+        {
+          "images": [
+            "assets/hsk2/final-exam/listen1_q3_A.jpg",
+            "assets/hsk2/final-exam/listen1_q3_B.jpg",
+            "assets/hsk2/final-exam/listen1_q3_C.jpg"
+          ],
+          "answer": 1
+        },
+        {
+          "images": [
+            "assets/hsk2/final-exam/listen1_q4_A.jpg",
+            "assets/hsk2/final-exam/listen1_q4_B.jpg",
+            "assets/hsk2/final-exam/listen1_q4_C.jpg"
+          ],
+          "answer": 1
+        },
+        {
+          "images": [
+            "assets/hsk2/final-exam/listen1_q5_A.jpg",
+            "assets/hsk2/final-exam/listen1_q5_B.jpg",
+            "assets/hsk2/final-exam/listen1_q5_C.jpg"
+          ],
+          "answer": 0
+        }
+      ]
+    },
+    {
+      "part": "Phần 2 (第二部分) — Nghe và chọn tranh phù hợp, Q6–15",
+      "kind": "shared_img",
+      "pool": [
+        "assets/hsk2/final-exam/listen2a_A.jpg",
+        "assets/hsk2/final-exam/listen2a_B.jpg",
+        "assets/hsk2/final-exam/listen2a_C.jpg",
+        "assets/hsk2/final-exam/listen2a_D.jpg",
+        "assets/hsk2/final-exam/listen2a_E.jpg",
+        "assets/hsk2/final-exam/listen2a_F.jpg"
+      ],
+      "questions": [
+        {
+          "answer": 0
+        },
+        {
+          "answer": 5
+        },
+        {
+          "answer": 4
+        },
+        {
+          "answer": 2
+        },
+        {
+          "answer": 1
+        }
+      ]
+    },
+    {
+      "part": "Phần 2 (第二部分) — Nghe và chọn tranh phù hợp, Q6–15",
+      "kind": "shared_img",
+      "pool": [
+        "assets/hsk2/final-exam/listen2b_A.jpg",
+        "assets/hsk2/final-exam/listen2b_B.jpg",
+        "assets/hsk2/final-exam/listen2b_C.jpg",
+        "assets/hsk2/final-exam/listen2b_D.jpg",
+        "assets/hsk2/final-exam/listen2b_E.jpg"
+      ],
+      "questions": [
+        {
+          "answer": 4
+        },
+        {
+          "answer": 3
+        },
+        {
+          "answer": 1
+        },
+        {
+          "answer": 2
+        },
+        {
+          "answer": 0
+        }
+      ]
+    },
+    {
+      "part": "Phần 3 (第三部分) — Nghe câu hỏi, chọn đáp án đúng, Q16–25",
+      "kind": "own_text",
+      "questions": [
+        {
+          "options": [
+            {
+              "zh": "家里",
+              "py": "jiā li"
+            },
+            {
+              "zh": "饭馆",
+              "py": "fànguǎn"
+            },
+            {
+              "zh": "电影院",
+              "py": "diànyǐngyuàn"
+            }
+          ],
+          "answer": 1
+        },
+        {
+          "options": [
+            {
+              "zh": "上课",
+              "py": "shàngkè"
+            },
+            {
+              "zh": "游泳",
+              "py": "yóuyǒng"
+            },
+            {
+              "zh": "踢球",
+              "py": "tī qiú"
+            }
+          ],
+          "answer": 1
+        },
+        {
+          "options": [
+            {
+              "zh": "药店",
+              "py": "yàodiàn"
+            },
+            {
+              "zh": "学校",
+              "py": "xuéxiào"
+            },
+            {
+              "zh": "咖啡店",
+              "py": "kāfēidiàn"
+            }
+          ],
+          "answer": 0
+        },
+        {
+          "options": [
+            {
+              "zh": "走路",
+              "py": "zǒulù"
+            },
+            {
+              "zh": "做菜",
+              "py": "zuò cài"
+            },
+            {
+              "zh": "吃饭",
+              "py": "chī fàn"
+            }
+          ],
+          "answer": 1
+        },
+        {
+          "options": [
+            {
+              "zh": "东西贵",
+              "py": "dōngxi guì"
+            },
+            {
+              "zh": "不太近",
+              "py": "bú tài jìn"
+            },
+            {
+              "zh": "东西不好",
+              "py": "dōngxi bù hǎo"
+            }
+          ],
+          "answer": 0
+        },
+        {
+          "options": [
+            {
+              "zh": "打车",
+              "py": "dǎchē"
+            },
+            {
+              "zh": "坐地铁",
+              "py": "zuò dìtiě"
+            },
+            {
+              "zh": "坐公交车",
+              "py": "zuò gōngjiāochē"
+            }
+          ],
+          "answer": 1
+        },
+        {
+          "options": [
+            {
+              "zh": "休息",
+              "py": "xiūxi"
+            },
+            {
+              "zh": "去跑步",
+              "py": "qù pǎobù"
+            },
+            {
+              "zh": "洗衣服",
+              "py": "xǐ yīfu"
+            }
+          ],
+          "answer": 2
+        },
+        {
+          "options": [
+            {
+              "zh": "今天",
+              "py": "jīntiān"
+            },
+            {
+              "zh": "星期六",
+              "py": "Xīngqīliù"
+            },
+            {
+              "zh": "星期天",
+              "py": "Xīngqītiān"
+            }
+          ],
+          "answer": 0
+        },
+        {
+          "options": [
+            {
+              "zh": "火车站",
+              "py": "huǒchēzhàn"
+            },
+            {
+              "zh": "火车上",
+              "py": "huǒche shang"
+            },
+            {
+              "zh": "出租车上",
+              "py": "chūzūchē shang"
+            }
+          ],
+          "answer": 0
+        },
+        {
+          "options": [
+            {
+              "zh": "商店",
+              "py": "shāngdiàn"
+            },
+            {
+              "zh": "超市",
+              "py": "chāoshì"
+            },
+            {
+              "zh": "水果店",
+              "py": "shuǐguǒdiàn"
+            }
+          ],
+          "answer": 1
+        }
+      ]
+    }
+  ],
+  "reading": [
+    {
+      "part": "Phần 1 (第一部分) — Chọn tranh phù hợp với câu, Q26–30",
+      "kind": "shared_img_prompt",
+      "pool": [
+        "assets/hsk2/final-exam/read1_A.jpg",
+        "assets/hsk2/final-exam/read1_B.jpg",
+        "assets/hsk2/final-exam/read1_C.jpg",
+        "assets/hsk2/final-exam/read1_D.jpg",
+        "assets/hsk2/final-exam/read1_E.jpg",
+        "assets/hsk2/final-exam/read1_F.jpg"
+      ],
+      "questions": [
+        {
+          "prompt": {
+            "zh": "这家饭馆的鱼做得真不错！",
+            "py": "Zhè jiā fànguǎn de yú zuò de zhēn búcuò!"
+          },
+          "answer": 2
+        },
+        {
+          "prompt": {
+            "zh": "这间教室里没有人，我们进去学习吧。",
+            "py": "Zhè jiān jiàoshì li méiyǒu rén, wǒmen jìnqù xuéxí ba."
+          },
+          "answer": 4
+        },
+        {
+          "prompt": {
+            "zh": "我坐地铁过去，这样能快一些。",
+            "py": "Wǒ zuò dìtiě guòqù, zhèyàng néng kuài yìxiē."
+          },
+          "answer": 5
+        },
+        {
+          "prompt": {
+            "zh": "这是我新买的手表，你觉得怎么样？",
+            "py": "Zhè shì wǒ xīn mǎi de shǒubiǎo, nǐ juéde zěnmeyàng?"
+          },
+          "answer": 0
+        },
+        {
+          "prompt": {
+            "zh": "我身体不舒服，今天没去学校。",
+            "py": "Wǒ shēntǐ bù shūfu, jīntiān méi qù xuéxiào."
+          },
+          "answer": 1
+        }
+      ]
+    },
+    {
+      "part": "Phần 2 (第二部分) — Chọn từ điền vào chỗ trống, Q31–35",
+      "kind": "fill_blank",
+      "pool": [
+        {
+          "zh": "长",
+          "py": "cháng"
+        },
+        {
+          "zh": "拿",
+          "py": "ná"
+        },
+        {
+          "zh": "丈夫",
+          "py": "zhàngfu"
+        },
+        {
+          "zh": "高中",
+          "py": "gāozhōng"
+        },
+        {
+          "zh": "完",
+          "py": "wán"
+        },
+        {
+          "zh": "告诉",
+          "py": "gàosu"
+        }
+      ],
+      "questions": [
+        {
+          "prompt": {
+            "zh": "你手里（　）的是什么？",
+            "py": "Nǐ shǒu li ( ) de shì shénme?"
+          },
+          "answer": 1
+        },
+        {
+          "prompt": {
+            "zh": "我弟弟今年16岁，正在上（　）。",
+            "py": "Wǒ dìdi jīnnián shíliù suì, zhèngzài shàng ( )."
+          },
+          "answer": 3
+        },
+        {
+          "prompt": {
+            "zh": "请（　）我这个字是什么意思。",
+            "py": "Qǐng ( ) wǒ zhège zì shì shénme yìsi."
+          },
+          "answer": 5
+        },
+        {
+          "prompt": {
+            "zh": "女：这些题你做了多（　）时间？男：我做了半个多小时。",
+            "py": "Nǚ: Zhèxiē tí nǐ zuòle duō ( ) shíjiān? Nán: Wǒ zuòle bàn gè duō xiǎoshí."
+          },
+          "answer": 0
+        },
+        {
+          "prompt": {
+            "zh": "男：昨天来找你的那个人是你（　）吗？女：不是，那是我弟弟。",
+            "py": "Nán: Zuótiān lái zhǎo nǐ de nàge rén shì nǐ ( ) ma? Nǚ: Bú shì, nà shì wǒ dìdi."
+          },
+          "answer": 2
+        }
+      ]
+    },
+    {
+      "part": "Phần 3 (第三部分) — Ghép câu hỏi/câu nói với câu trả lời phù hợp, Q36–45",
+      "kind": "shared_text_prompt",
+      "pool": [
+        {
+          "zh": "回来，我就回去过个年。",
+          "py": "Huílái, wǒ jiù huíqù guò gè nián."
+        },
+        {
+          "zh": "您出门往左走，很快就能看到。",
+          "py": "Nín chū mén wǎng zuǒ zǒu, hěn kuài jiù néng kàndào."
+        },
+        {
+          "zh": "我也做错了，我们一起去问老师吧。",
+          "py": "Wǒ yě zuòcuò le, wǒmen yìqǐ qù wèn lǎoshī ba."
+        },
+        {
+          "zh": "这几天没有好看的电影，还是别去了吧。",
+          "py": "Zhè jǐ tiān méiyǒu hǎokàn de diànyǐng, háishi bié qù le ba."
+        },
+        {
+          "zh": "他出去了，一会儿就回来。",
+          "py": "Tā chūqù le, yíhuìr jiù huílái."
+        },
+        {
+          "zh": "昨天是我的生日，这是朋友送给我的。",
+          "py": "Zuótiān shì wǒ de shēngrì, zhè shì péngyou sòng gěi wǒ de."
+        }
+      ],
+      "questions": [
+        {
+          "prompt": {
+            "zh": "请问，洗手间在哪儿？",
+            "py": "Qǐngwèn, xǐshǒujiān zài nǎr?"
+          },
+          "answer": 1
+        },
+        {
+          "prompt": {
+            "zh": "我们晚上去看电影吧。",
+            "py": "Wǒmen wǎnshang qù kàn diànyǐng ba."
+          },
+          "answer": 3
+        },
+        {
+          "prompt": {
+            "zh": "你帮我看看这个题怎么做。",
+            "py": "Nǐ bāng wǒ kànkan zhège tí zěnme zuò."
+          },
+          "answer": 2
+        },
+        {
+          "prompt": {
+            "zh": "这是你新买的包？真漂亮。",
+            "py": "Zhè shì nǐ xīn mǎi de bāo? Zhēn piàoliang."
+          },
+          "answer": 5
+        },
+        {
+          "prompt": {
+            "zh": "小李说你要回国了，还回来吗？",
+            "py": "Xiǎo Lǐ shuō nǐ yào huí guó le, hái huílái ma?"
+          },
+          "answer": 0
+        }
+      ]
+    },
+    {
+      "part": "Phần 3 (第三部分) — Ghép câu hỏi/câu nói với câu trả lời phù hợp, Q36–45",
+      "kind": "shared_text_prompt",
+      "pool": [
+        {
+          "zh": "还有一个多星期。",
+          "py": "Hái yǒu yí gè duō xīngqī."
+        },
+        {
+          "zh": "女孩儿比男孩儿多一些。",
+          "py": "Nǚháir bǐ nánháir duō yìxiē."
+        },
+        {
+          "zh": "因为这是我最喜欢的颜色。",
+          "py": "Yīnwèi zhè shì wǒ zuì xǐhuan de yánsè."
+        },
+        {
+          "zh": "爷爷去买菜了，奶奶在准备晚饭。",
+          "py": "Yéye qù mǎi cài le, nǎinai zài zhǔnbèi wǎnfàn."
+        },
+        {
+          "zh": "还不错，但我记得家里有一件这样的衣服。",
+          "py": "Hái búcuò, dàn wǒ jìde jiā li yǒu yí jiàn zhèyàng de yīfu."
+        }
+      ],
+      "questions": [
+        {
+          "prompt": {
+            "zh": "你爷爷、奶奶呢？",
+            "py": "Nǐ yéye, nǎinai ne?"
+          },
+          "answer": 3
+        },
+        {
+          "prompt": {
+            "zh": "你们什么时候开学？",
+            "py": "Nǐmen shénme shíhou kāixué?"
+          },
+          "answer": 0
+        },
+        {
+          "prompt": {
+            "zh": "你怎么买了个绿色的？",
+            "py": "Nǐ zěnme mǎile gè lǜsè de?"
+          },
+          "answer": 2
+        },
+        {
+          "prompt": {
+            "zh": "你觉得这件衣服怎么样？",
+            "py": "Nǐ juéde zhè jiàn yīfu zěnmeyàng?"
+          },
+          "answer": 4
+        },
+        {
+          "prompt": {
+            "zh": "你们班男孩儿多还是女孩儿多？",
+            "py": "Nǐmen bān nánháir duō háishi nǚháir duō?"
+          },
+          "answer": 1
+        }
+      ]
+    },
+    {
+      "part": "Phần 4 (第四部分) — Đọc đoạn văn, trả lời câu hỏi, Q46–50",
+      "kind": "reading_q",
+      "questions": [
+        {
+          "passage": {
+            "zh": "虽然左边的花比右边的贵一些，但是颜色很好看，还是买左边的吧。",
+            "py": "Suīrán zuǒbian de huā bǐ yòubian de guì yìxiē, dànshì yánsè hěn hǎokàn, háishi mǎi zuǒbian de ba."
+          },
+          "question": {
+            "zh": "为什么买左边的花？",
+            "py": "Wèi shénme mǎi zuǒbian de huā?"
+          },
+          "options": [
+            {
+              "zh": "很便宜",
+              "py": "hěn piányi"
+            },
+            {
+              "zh": "颜色多",
+              "py": "yánsè duō"
+            },
+            {
+              "zh": "很好看",
+              "py": "hěn hǎokàn"
+            }
+          ],
+          "answer": 2
+        },
+        {
+          "passage": {
+            "zh": "我从小就喜欢踢足球，踢球时我不觉得累，每次踢完球都很高兴。",
+            "py": "Wǒ cóngxiǎo jiù xǐhuan tī zúqiú, tī qiú shí wǒ bù juéde lèi, měi cì tīwán qiú dōu hěn gāoxìng."
+          },
+          "question": {
+            "zh": "踢球让他觉得：",
+            "py": "Tī qiú ràng tā juéde:"
+          },
+          "options": [
+            {
+              "zh": "很累",
+              "py": "hěn lèi"
+            },
+            {
+              "zh": "很快乐",
+              "py": "hěn kuàilè"
+            },
+            {
+              "zh": "没意思",
+              "py": "méi yìsi"
+            }
+          ],
+          "answer": 1
+        },
+        {
+          "passage": {
+            "zh": "小李的桌子下面放着她的书包，桌子上放着一杯奶茶，那是她最喜欢喝的。",
+            "py": "Xiǎo Lǐ de zhuōzi xiàmiàn fàngzhe tā de shūbāo, zhuōzi shang fàngzhe yì bēi nǎichá, nà shì tā zuì xǐhuan hē de."
+          },
+          "question": {
+            "zh": "奶茶在哪儿？",
+            "py": "Nǎichá zài nǎr?"
+          },
+          "options": [
+            {
+              "zh": "桌子上",
+              "py": "zhuōzi shang"
+            },
+            {
+              "zh": "桌子下",
+              "py": "zhuōzi xià"
+            },
+            {
+              "zh": "书包里",
+              "py": "shūbāo li"
+            }
+          ],
+          "answer": 0
+        },
+        {
+          "passage": {
+            "zh": "我这几周工作很忙，经常头疼，眼睛也不舒服，就去医院看了看。医生说问题不大，让我多休息。",
+            "py": "Wǒ zhè jǐ zhōu gōngzuò hěn máng, jīngcháng tóu téng, yǎnjing yě bù shūfu, jiù qù yīyuàn kànle kàn. Yīshēng shuō wèntí bú dà, ràng wǒ duō xiūxi."
+          },
+          "question": {
+            "zh": "医生让他做什么？",
+            "py": "Yīshēng ràng tā zuò shénme?"
+          },
+          "options": [
+            {
+              "zh": "工作",
+              "py": "gōngzuò"
+            },
+            {
+              "zh": "休息",
+              "py": "xiūxi"
+            },
+            {
+              "zh": "去医院",
+              "py": "qù yīyuàn"
+            }
+          ],
+          "answer": 1
+        },
+        {
+          "passage": {
+            "zh": "就要过年了，我和丈夫去超市买了一些肉、菜和水果回来。但是，今天去的时候鱼卖完了，所以我们明天还要再去一次。",
+            "py": "Jiù yào guònián le, wǒ hé zhàngfu qù chāoshì mǎile yìxiē ròu, cài hé shuǐguǒ huílái. Dànshì, jīntiān qù de shíhou yú màiwán le, suǒyǐ wǒmen míngtiān hái yào zài qù yí cì."
+          },
+          "question": {
+            "zh": "他们明天去买什么？",
+            "py": "Tāmen míngtiān qù mǎi shénme?"
+          },
+          "options": [
+            {
+              "zh": "鱼",
+              "py": "yú"
+            },
+            {
+              "zh": "菜",
+              "py": "cài"
+            },
+            {
+              "zh": "水果",
+              "py": "shuǐguǒ"
+            }
+          ],
+          "answer": 0
+        }
+      ]
+    }
+  ],
+  "writing": [
+    {
+      "part": "Phần 1 (第一部分) — Ghép bộ thủ để tạo thành chữ Hán hoàn chỉnh, Q51–55",
+      "kind": "radical_assembly",
+      "pool": [
+        "灬",
+        "纟",
+        "亻",
+        "巾",
+        "彳",
+        "忄"
+      ],
+      "questions": [
+        {
+          "given": "邦忙",
+          "py": "bāng máng",
+          "target": "帮忙",
+          "answer": 3
+        },
+        {
+          "given": "工色",
+          "py": "hóng sè",
+          "target": "红色",
+          "answer": 1
+        },
+        {
+          "given": "旦是",
+          "py": "dàn shì",
+          "target": "但是",
+          "answer": 2
+        },
+        {
+          "given": "不董",
+          "py": "bù dǒng",
+          "target": "不懂",
+          "answer": 5
+        },
+        {
+          "given": "占菜",
+          "py": "diǎn cài",
+          "target": "点菜",
+          "answer": 0
+        }
+      ]
+    },
+    {
+      "part": "Phần 2 (第二部分) — Nghe phiên âm, chọn đúng chữ Hán điền vào chỗ trống, Q56–60",
+      "kind": "pinyin_hanzi",
+      "questions": [
+        {
+          "prompt": {
+            "zh": "我到（　）校门口了，你呢？",
+            "py": "Wǒ dào ( ) xiào ménkǒu le, nǐ ne?"
+          },
+          "options": [
+            {
+              "zh": "学",
+              "py": "xué"
+            },
+            {
+              "zh": "到",
+              "py": "dào"
+            },
+            {
+              "zh": "这",
+              "py": "zhè"
+            },
+            {
+              "zh": "那",
+              "py": "nà"
+            }
+          ],
+          "answer": 0
+        },
+        {
+          "prompt": {
+            "zh": "这次考试他考了第一（　）。",
+            "py": "Zhè cì kǎoshì tā kǎole dì-yī ( )."
+          },
+          "options": [
+            {
+              "zh": "个",
+              "py": "gè"
+            },
+            {
+              "zh": "名",
+              "py": "míng"
+            },
+            {
+              "zh": "位",
+              "py": "wèi"
+            },
+            {
+              "zh": "次",
+              "py": "cì"
+            }
+          ],
+          "answer": 1
+        },
+        {
+          "prompt": {
+            "zh": "电影院（　）面开了一家大超市。",
+            "py": "Diànyǐngyuàn ( ) miàn kāile yì jiā dà chāoshì."
+          },
+          "options": [
+            {
+              "zh": "前",
+              "py": "qián"
+            },
+            {
+              "zh": "里",
+              "py": "lǐ"
+            },
+            {
+              "zh": "后",
+              "py": "hòu"
+            },
+            {
+              "zh": "上",
+              "py": "shàng"
+            }
+          ],
+          "answer": 2
+        },
+        {
+          "prompt": {
+            "zh": "我是新来的，所以您（　）能没见过我。",
+            "py": "Wǒ shì xīn lái de, suǒyǐ nín ( ) néng méi jiànguo wǒ."
+          },
+          "options": [
+            {
+              "zh": "才",
+              "py": "cái"
+            },
+            {
+              "zh": "不",
+              "py": "bù"
+            },
+            {
+              "zh": "又",
+              "py": "yòu"
+            },
+            {
+              "zh": "可",
+              "py": "kě"
+            }
+          ],
+          "answer": 3
+        },
+        {
+          "prompt": {
+            "zh": "都十点了，你（　）什么还不去机场？",
+            "py": "Dōu shí diǎn le, nǐ ( ) shénme hái bú qù jīchǎng?"
+          },
+          "options": [
+            {
+              "zh": "因",
+              "py": "yīn"
+            },
+            {
+              "zh": "怎",
+              "py": "zěn"
+            },
+            {
+              "zh": "为",
+              "py": "wèi"
+            },
+            {
+              "zh": "什",
+              "py": "shén"
+            }
+          ],
+          "answer": 2
+        }
+      ]
+    }
+  ]
+},
 };
 const WORKBOOK_LESSONS_HSK2 = {};
 rewriteMediaPaths(MOCKTEST_LESSONS_HSK2);
@@ -8153,6 +9033,7 @@ const MOCKTEST_EXERCISE_MAP_HSK2 = {
   13: '9bdaaf84-1c37-4440-baac-f06618e76fe4',
   14: '91fcf4f4-1316-4c8c-8cc3-b5f504140785',
   15: '3ad875a0-264e-413e-b86a-a06802180437',
+  16: '13919769-4def-4b6d-b50a-9236841069b9',
 };
 
 const MOCKTEST_EXERCISE_MAP = {
@@ -8191,9 +9072,32 @@ async function initMockTestHomework(lessonId){
   }
   const alreadySubmitted = !!existingSubs;
 
+  // Danh sách các phần thi (mặc định 2 phần Nghe/Đọc cho các bài mock_test thường và
+  // bài kiểm tra cuối khoá HSK1; bài kiểm tra cuối khoá HSK2 khai báo thêm phần Viết
+  // qua data.sections — code ở đây hoàn toàn data-driven, không hardcode số phần/thời gian).
+  const SECTION_DEFAULTS = {
+    listening: { title: '🎧 Phần Nghe', seconds: null },
+    reading:   { title: '📖 Phần Đọc',  seconds: 1200 },
+    writing:   { title: '✍️ Phần Viết', seconds: 600 },
+  };
+  const sectionKeys = (data.sections && data.sections.length)
+    ? data.sections.map(s => s.key).filter(k => !!data[k])
+    : ['listening','reading'].filter(k => !!data[k]);
+  function sectionMeta(key){
+    const fromData = data.sections && data.sections.find(s => s.key === key);
+    const def = SECTION_DEFAULTS[key] || { title: key, seconds: null };
+    return {
+      title: (fromData && fromData.title) || def.title,
+      seconds: (fromData && fromData.seconds != null) ? fromData.seconds : def.seconds,
+    };
+  }
+  function sectionIcon(key){
+    return key === 'listening' ? '🎧 ' : (key === 'reading' ? '📖 ' : (key === 'writing' ? '✍️ ' : ''));
+  }
+
   // gộp tất cả câu hỏi thành 1 mảng phẳng để dễ chấm điểm, kèm thông tin để hiển thị
-  const flatQuestions = []; // {section:'listening'|'reading', partIdx, qIdx, kind, pool, data}
-  ['listening','reading'].forEach(section => {
+  const flatQuestions = []; // {section, partIdx, qIdx, kind, pool, part, q}
+  sectionKeys.forEach(section => {
     data[section].forEach((part, partIdx) => {
       part.questions.forEach((q, qIdx) => {
         flatQuestions.push({section, partIdx, qIdx, kind: part.kind, pool: part.pool, part: part.part, q});
@@ -8228,6 +9132,13 @@ async function initMockTestHomework(lessonId){
       bodyHtml = `<div style="font-size:16px;margin-bottom:4px;">${item.q.passage.zh}<br><span style="color:var(--ink-soft);font-size:14px;">${item.q.passage.py}</span></div>
         <div style="font-size:15.5px;font-weight:700;margin-bottom:6px;">★ ${item.q.question.zh}<br><span style="color:var(--ink-soft);font-size:13px;font-weight:400;">${item.q.question.py}</span></div>` +
         renderOptionsRow('opt', gIdx, item.q.options.map(o => `<div style="font-size:15px;">${o.zh}<br><span style="color:var(--ink-soft);font-size:12.5px;">${o.py}</span></div>`));
+    } else if(item.kind === 'radical_assembly'){
+      bodyHtml = `<div style="font-size:26px;font-weight:700;letter-spacing:6px;margin-bottom:4px;">${item.q.given}<span style="color:var(--ink-soft);font-size:14px;font-weight:400;letter-spacing:normal;margin-left:12px;">(${item.q.py})</span></div>
+        <div style="font-size:14px;color:var(--ink-soft);margin-bottom:8px;">Chọn bộ thủ đúng để hoàn thành chữ được khoanh, ghép thành: <b>${item.q.target}</b></div>` +
+        renderOptionsRow('opt', gIdx, item.pool.map(r => `<div style="font-size:26px;font-weight:700;min-width:20px;text-align:center;">${r}</div>`));
+    } else if(item.kind === 'pinyin_hanzi'){
+      bodyHtml = `<div style="font-size:16px;margin-bottom:6px;">${item.q.prompt.zh}<br><span style="color:var(--ink-soft);font-size:14px;">${item.q.prompt.py}</span></div>` +
+        renderOptionsRow('opt', gIdx, item.q.options.map(o => `<div style="font-size:20px;font-weight:700;text-align:center;min-width:28px;">${o.zh}<br><span style="color:var(--ink-soft);font-size:11.5px;font-weight:400;">${o.py}</span></div>`));
     }
     let audioHtml = '';
     if(item.q.qAudio){
@@ -8253,7 +9164,7 @@ async function initMockTestHomework(lessonId){
   }
 
   function buildSectionHtml(section){
-    const title = section === 'listening' ? '🎧 Phần Nghe' : '📖 Phần Đọc';
+    const title = sectionMeta(section).title;
     let html = `<h3 style="font-size:18.5px;margin:22px 0 8px;">${title}</h3>`;
     let lastPart = null;
     flatQuestions.forEach((item, gIdx) => {
@@ -8266,17 +9177,19 @@ async function initMockTestHomework(lessonId){
     });
     return html;
   }
-  const listeningHtml = buildSectionHtml('listening');
-  const readingHtml = buildSectionHtml('reading');
+  const sectionHtmls = {};
+  sectionKeys.forEach(k => { sectionHtmls[k] = buildSectionHtml(k); });
 
   // "Chế độ thi thật" — chỉ áp dụng cho bài kiểm tra cuối khoá, khi học sinh làm lần đầu
   // (không áp dụng cho chế độ xem trước của giáo viên, hay khi đã nộp bài rồi):
-  // audio Nghe tự phát 1 lần duy nhất (~12') -> hết audio cho 3' kiểm tra lại -> tự khoá Nghe & mở Đọc (20', hết giờ tự nộp bài).
-  // Cấu trúc thời gian lấy đúng theo trang "注意" của đề thi HSK (一级) mô phỏng trong sách: 听力20题约12分钟 + 3分钟填答题卡 + 阅读20题20分钟.
+  // audio Nghe tự phát 1 lần duy nhất -> hết audio cho X phút kiểm tra lại -> tự khoá Nghe & lần lượt
+  // mở các phần thi có tính giờ tiếp theo (vd Đọc, rồi Viết), mỗi phần hết giờ thì tự khoá & chuyển tiếp,
+  // hết phần có tính giờ cuối cùng thì tự nộp bài. Số phần/thời gian mỗi phần lấy từ data.sections —
+  // KHÔNG hardcode theo HSK1 hay HSK2, để cùng 1 đoạn code phục vụ cả 2 (và các cấp độ sau này).
   const isRealExamMode = !isPreview && !alreadySubmitted && (lessonId === activeFinalExamId());
-  const EXAM_REVIEW_SECONDS = 180;   // 3 phút kiểm tra lại đáp án Nghe sau khi audio kết thúc
-  const EXAM_READING_SECONDS = 1200; // 20 phút làm phần Đọc
-  let examForceSubmit = null; // được gán bên trong wireUpInteractivity(), gọi khi hết giờ phần Đọc để tự nộp bài
+  const EXAM_REVIEW_SECONDS = data.reviewSeconds || 180; // số giây kiểm tra lại đáp án Nghe sau khi audio kết thúc
+  const timedSectionKeys = sectionKeys.slice(1); // các phần có tính giờ, theo sau phần Nghe (vd ['reading'] hoặc ['reading','writing'])
+  let examForceSubmit = null; // được gán bên trong wireUpInteractivity(), gọi khi hết giờ phần tính giờ cuối cùng để tự nộp bài
 
   function audioBlockHtml(){
     if(isRealExamMode){
@@ -8286,20 +9199,25 @@ async function initMockTestHomework(lessonId){
       </div>`;
     }
     return `<div style="margin-bottom:14px;">
-      <p style="font-size:15.5px;color:var(--ink-soft);margin-bottom:8px;">🎧 Nghe file audio dưới đây (đúng như trong sách), sau đó làm lần lượt các câu hỏi. Phần Đọc không cần nghe.</p>
+      <p style="font-size:15.5px;color:var(--ink-soft);margin-bottom:8px;">🎧 Nghe file audio dưới đây (đúng như trong sách), sau đó làm lần lượt các câu hỏi. Các phần khác không cần nghe.</p>
       <audio controls src="${data.audio}" style="width:100%;"></audio>
     </div>`;
   }
 
   function fullBodyHtml(){
+    let sectionsHtml = '';
+    sectionKeys.forEach((key, idx) => {
+      const isTimedSection = idx > 0; // mọi phần sau phần Nghe đều được coi là có tính giờ trong chế độ thi thật
+      const hidden = isRealExamMode && isTimedSection;
+      sectionsHtml += `<div id="mt-${key}-section"${hidden ? ' style="display:none;"' : ''}>
+        ${hidden ? `<p id="mt-exam-${key}-status" style="font-size:15.5px;font-weight:700;color:var(--seal,#8B2C2C);background:var(--seal-tint,#f4e6e3);padding:10px 14px;border-radius:10px;margin:0 0 8px;"></p>` : ''}
+        ${sectionHtmls[key]}
+      </div>`;
+    });
     return `
       ${audioBlockHtml()}
       ${isPreview ? '<p style="font-size:14.5px;color:var(--seal,#8B2C2C);background:var(--seal-tint,#f4e6e3);padding:10px 14px;border-radius:10px;margin-bottom:10px;">👁️ Xem trước — đáp án đúng đã tô sẵn.</p>' : ''}
-      <div id="mt-listening-section">${listeningHtml}</div>
-      <div id="mt-reading-section"${isRealExamMode ? ' style="display:none;"' : ''}>
-        ${isRealExamMode ? '<p id="mt-exam-reading-status" style="font-size:15.5px;font-weight:700;color:var(--seal,#8B2C2C);background:var(--seal-tint,#f4e6e3);padding:10px 14px;border-radius:10px;margin:0 0 8px;"></p>' : ''}
-        ${readingHtml}
-      </div>
+      ${sectionsHtml}
       ${isPreview ? '' : '<button class="btn-primary" id="mt-submit-btn" style="margin-top:16px;">Nộp bài →</button><p id="mt-submit-status" style="font-size:15.5px;margin-top:10px;"></p>'}
     `;
   }
@@ -8326,7 +9244,7 @@ async function initMockTestHomework(lessonId){
         const correctBtn = container.querySelector(`.mt-opt-btn[data-gidx="${gIdx}"][data-i="${item.q.answer}"]`);
         if (correctBtn) { correctBtn.style.borderColor = 'var(--green,#3f7d5c)'; correctBtn.style.background = '#eef7f1'; }
         const el = container.querySelector(`.mt-result[data-gidx="${gIdx}"]`);
-        if (el) el.innerHTML = `✅ Đáp án đúng: ${String.fromCharCode(65 + item.q.answer)}`;
+        if (el) el.innerHTML = `✅ Đáp án đúng: ${describeOption(item, item.q.answer)}`;
       });
       revealTranscripts();
       return;
@@ -8364,6 +9282,12 @@ async function initMockTestHomework(lessonId){
       if(item.kind === 'reading_q'){
         return item.q.options[idx]?.zh || '';
       }
+      if(item.kind === 'radical_assembly'){
+        return item.pool[idx] || '';
+      }
+      if(item.kind === 'pinyin_hanzi'){
+        return item.q.options[idx]?.zh || '';
+      }
       return String(idx);
     }
 
@@ -8385,13 +9309,13 @@ async function initMockTestHomework(lessonId){
         const ok = selected[gIdx] === item.q.answer;
         if(ok) correct++;
         return {
-          label: (item.section === 'listening' ? '🎧 ' : '📖 ') + 'Câu ' + (gIdx+1) + ' — ' + item.part,
+          label: sectionIcon(item.section) + 'Câu ' + (gIdx+1) + ' — ' + item.part,
           given: describeOption(item, selected[gIdx]),
           correct_answer: describeOption(item, item.q.answer),
           correct: ok,
         };
       });
-      const answerPayload = { title: '📝 Bài thi mô phỏng (20 câu)', details, correct, total: flatQuestions.length };
+      const answerPayload = { title: `📝 Bài thi mô phỏng (${flatQuestions.length} câu)`, details, correct, total: flatQuestions.length };
 
       const { error } = await sb.from('submissions').upsert({
         student_id: CURRENT_STUDENT.id, exercise_id: exId,
@@ -8430,68 +9354,81 @@ async function initMockTestHomework(lessonId){
     }
   }
 
-  // Chạy audio Nghe tự động, đếm ngược 3 phút kiểm tra lại sau khi nghe xong, rồi tự mở phần Đọc.
+  // Chạy audio Nghe tự động, đếm ngược để kiểm tra lại sau khi nghe xong, rồi lần lượt tự mở
+  // từng phần thi có tính giờ tiếp theo (data-driven qua timedSectionKeys); hết giờ phần tính giờ
+  // cuối cùng thì tự động nộp bài.
   function startExamAudioFlow(){
     const audioEl = document.getElementById('mt-exam-audio');
     const statusEl = document.getElementById('mt-exam-status');
     const listeningSection = document.getElementById('mt-listening-section');
-    const readingSection = document.getElementById('mt-reading-section');
     let reviewTimer = null;
 
-    function revealReading(){
-      if(reviewTimer) clearInterval(reviewTimer);
-      if(listeningSection){
-        listeningSection.querySelectorAll('.mt-opt-btn').forEach(b => { b.disabled = true; b.style.pointerEvents = 'none'; b.style.opacity = '0.65'; });
+    function lockSection(key){
+      const sec = document.getElementById(`mt-${key}-section`);
+      if(sec){
+        sec.querySelectorAll('.mt-opt-btn').forEach(b => { b.disabled = true; b.style.pointerEvents = 'none'; b.style.opacity = '0.65'; });
       }
-      if(statusEl) statusEl.remove();
-      if(readingSection){
-        readingSection.style.display = '';
-        readingSection.scrollIntoView({behavior:'smooth', block:'start'});
-      }
-      startReadingCountdown();
     }
 
-    // Phần Đọc giới hạn đúng 20 phút (theo đề thi thật) — hết giờ tự động khoá & nộp bài, kể cả khi chưa làm hết.
-    let readingTimer = null;
-    function startReadingCountdown(){
-      const readingStatusEl = document.getElementById('mt-exam-reading-status');
-      let remaining = EXAM_READING_SECONDS;
+    // Mỗi phần tính giờ (Đọc, rồi Viết, ...) có countdown riêng theo sectionMeta(key).seconds;
+    // hết giờ phần này thì tự khoá & chuyển sang phần tính giờ kế tiếp; hết phần cuối cùng thì tự nộp bài.
+    let sectionTimer = null;
+    function startSectionCountdown(idx){
+      if(idx >= timedSectionKeys.length){
+        if(examForceSubmit) examForceSubmit('⏰ Đã hết giờ — bài thi được tự động nộp.');
+        return;
+      }
+      const key = timedSectionKeys[idx];
+      const meta = sectionMeta(key);
+      const sec = document.getElementById(`mt-${key}-section`);
+      const statusElK = document.getElementById(`mt-exam-${key}-status`);
+      if(sec){
+        sec.style.display = '';
+        sec.scrollIntoView({behavior:'smooth', block:'start'});
+      }
+      let remaining = meta.seconds || 1200;
       function tick(){
         const mm = String(Math.floor(remaining/60)).padStart(2,'0');
         const ss = String(remaining%60).padStart(2,'0');
-        if(readingStatusEl){
-          readingStatusEl.style.color = remaining <= 60 ? '#a33a2e' : '';
-          readingStatusEl.innerHTML = `⏱️ Thời gian làm phần Đọc: còn <b>${mm}:${ss}</b>`;
+        if(statusElK){
+          statusElK.style.color = remaining <= 60 ? '#a33a2e' : '';
+          statusElK.innerHTML = `⏱️ Thời gian làm ${meta.title}: còn <b>${mm}:${ss}</b>`;
         }
         if(remaining <= 0){
-          clearInterval(readingTimer);
-          if(readingStatusEl) readingStatusEl.innerHTML = '⏰ Đã hết giờ làm bài!';
-          if(readingSection){
-            readingSection.querySelectorAll('.mt-opt-btn').forEach(b => { b.disabled = true; b.style.pointerEvents = 'none'; b.style.opacity = '0.65'; });
-          }
-          if(examForceSubmit) examForceSubmit('⏰ Đã hết giờ — bài thi được tự động nộp.');
+          clearInterval(sectionTimer);
+          if(statusElK) statusElK.innerHTML = `⏰ Đã hết giờ ${meta.title}!`;
+          lockSection(key);
+          startSectionCountdown(idx + 1);
           return;
         }
         remaining--;
       }
       tick();
-      readingTimer = setInterval(tick, 1000);
+      sectionTimer = setInterval(tick, 1000);
     }
 
-    if(!audioEl){ revealReading(); return; }
+    function revealNextSections(){
+      if(reviewTimer) clearInterval(reviewTimer);
+      if(listeningSection) lockSection('listening');
+      if(statusEl) statusEl.remove();
+      startSectionCountdown(0);
+    }
+
+    if(!audioEl){ revealNextSections(); return; }
 
     function startReviewCountdown(){
       let remaining = EXAM_REVIEW_SECONDS;
+      const nextLabel = timedSectionKeys.length ? sectionMeta(timedSectionKeys[0]).title : '';
       function tick(){
         if(statusEl){
           const mm = String(Math.floor(remaining/60)).padStart(2,'0');
           const ss = String(remaining%60).padStart(2,'0');
           statusEl.innerHTML = `✅ Đã nghe xong! Bạn còn <b>${mm}:${ss}</b> để kiểm tra lại đáp án phần Nghe.
-            <button type="button" id="mt-skip-review-btn" style="margin-left:10px;font-size:13px;padding:4px 10px;border-radius:8px;border:1px solid var(--seal,#8B2C2C);background:#fff;color:var(--seal,#8B2C2C);cursor:pointer;">Chuyển sang phần Đọc ngay →</button>`;
+            <button type="button" id="mt-skip-review-btn" style="margin-left:10px;font-size:13px;padding:4px 10px;border-radius:8px;border:1px solid var(--seal,#8B2C2C);background:#fff;color:var(--seal,#8B2C2C);cursor:pointer;">Chuyển sang ${nextLabel} ngay →</button>`;
           const skipBtn = document.getElementById('mt-skip-review-btn');
-          if(skipBtn) skipBtn.addEventListener('click', revealReading);
+          if(skipBtn) skipBtn.addEventListener('click', revealNextSections);
         }
-        if(remaining <= 0){ revealReading(); return; }
+        if(remaining <= 0){ revealNextSections(); return; }
         remaining--;
       }
       tick();
@@ -8517,16 +9454,23 @@ async function initMockTestHomework(lessonId){
   }
 
   if(isRealExamMode){
+    const introTitle = data.introTitle || 'Kiểm tra cuối khoá — chế độ thi thật';
+    const introBullets = (data.introBullets && data.introBullets.length) ? data.introBullets : [
+      `🎧 Phần Nghe (${flatQuestions.filter(q=>q.section==='listening').length} câu) tự động phát <b>một lần duy nhất</b>, không tua lại được.`,
+      `✅ Nghe xong, bạn có <b>${Math.round(EXAM_REVIEW_SECONDS/60)} phút</b> để kiểm tra và sửa lại đáp án phần Nghe.`,
+      `📖 Hết thời gian kiểm tra lại, hệ thống <b>tự động khoá phần Nghe</b> và chuyển sang phần tiếp theo.`,
+      ...timedSectionKeys.map(key => {
+        const meta = sectionMeta(key);
+        const cnt = flatQuestions.filter(q=>q.section===key).length;
+        return `⏱️ ${meta.title} (${cnt} câu) giới hạn đúng <b>${Math.round((meta.seconds||1200)/60)} phút</b> — hết giờ hệ thống sẽ tự động chuyển tiếp / nộp bài, kể cả khi chưa làm hết.`;
+      }),
+    ];
     container.innerHTML = `
       <div style="text-align:center;padding:30px 10px;">
         <div style="font-size:42px;margin-bottom:10px;">🏆</div>
-        <h3 style="font-size:19px;margin-bottom:14px;">Kiểm tra cuối khoá — chế độ thi thật</h3>
+        <h3 style="font-size:19px;margin-bottom:14px;">${introTitle}</h3>
         <ul style="text-align:left;max-width:420px;margin:0 auto 20px;font-size:15px;color:var(--ink-soft);line-height:1.7;">
-          <li>🎧 Phần Nghe (20 câu, ~12 phút) tự động phát <b>một lần duy nhất</b>, không tua lại được.</li>
-          <li>✅ Nghe xong, bạn có <b>3 phút</b> để kiểm tra và sửa lại đáp án phần Nghe.</li>
-          <li>📖 Hết 3 phút, hệ thống <b>tự động khoá phần Nghe</b> và chuyển sang phần Đọc.</li>
-          <li>⏱️ Phần Đọc (20 câu) giới hạn đúng <b>20 phút</b> — hết giờ hệ thống sẽ <b>tự động nộp bài</b>, kể cả khi chưa làm hết.</li>
-          <li>🕐 Tổng thời gian làm bài: khoảng 35 phút, đúng theo cấu trúc đề thi HSK (一级) thật.</li>
+          ${introBullets.map(b => `<li>${b}</li>`).join('')}
         </ul>
         <button class="btn-primary" id="mt-exam-start-btn">Bắt đầu làm bài →</button>
       </div>

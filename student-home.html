@@ -8252,150 +8252,295 @@ async function initMockTestHomework(lessonId){
     </div>`;
   }
 
-  let sectionsHtml = '';
-  ['listening','reading'].forEach(section => {
+  function buildSectionHtml(section){
     const title = section === 'listening' ? '🎧 Phần Nghe' : '📖 Phần Đọc';
-    sectionsHtml += `<h3 style="font-size:18.5px;margin:22px 0 8px;">${title}</h3>`;
+    let html = `<h3 style="font-size:18.5px;margin:22px 0 8px;">${title}</h3>`;
     let lastPart = null;
     flatQuestions.forEach((item, gIdx) => {
       if(item.section !== section) return;
       if(item.part !== lastPart){
-        sectionsHtml += `<div style="font-size:15px;font-weight:700;color:var(--seal,#8B2C2C);margin-top:14px;">${item.part}</div>`;
+        html += `<div style="font-size:15px;font-weight:700;color:var(--seal,#8B2C2C);margin-top:14px;">${item.part}</div>`;
         lastPart = item.part;
       }
-      sectionsHtml += renderQuestion(gIdx, item);
+      html += renderQuestion(gIdx, item);
     });
-  });
+    return html;
+  }
+  const listeningHtml = buildSectionHtml('listening');
+  const readingHtml = buildSectionHtml('reading');
 
-  container.innerHTML = `
-    <div style="margin-bottom:14px;">
+  // "Chế độ thi thật" — chỉ áp dụng cho bài kiểm tra cuối khoá, khi học sinh làm lần đầu
+  // (không áp dụng cho chế độ xem trước của giáo viên, hay khi đã nộp bài rồi):
+  // audio Nghe tự phát 1 lần duy nhất (~12') -> hết audio cho 3' kiểm tra lại -> tự khoá Nghe & mở Đọc (20', hết giờ tự nộp bài).
+  // Cấu trúc thời gian lấy đúng theo trang "注意" của đề thi HSK (一级) mô phỏng trong sách: 听力20题约12分钟 + 3分钟填答题卡 + 阅读20题20分钟.
+  const isRealExamMode = !isPreview && !alreadySubmitted && (lessonId === activeFinalExamId());
+  const EXAM_REVIEW_SECONDS = 180;   // 3 phút kiểm tra lại đáp án Nghe sau khi audio kết thúc
+  const EXAM_READING_SECONDS = 1200; // 20 phút làm phần Đọc
+  let examForceSubmit = null; // được gán bên trong wireUpInteractivity(), gọi khi hết giờ phần Đọc để tự nộp bài
+
+  function audioBlockHtml(){
+    if(isRealExamMode){
+      return `<div style="margin-bottom:14px;">
+        <p id="mt-exam-status" style="font-size:15.5px;font-weight:700;color:var(--seal,#8B2C2C);background:var(--seal-tint,#f4e6e3);padding:10px 14px;border-radius:10px;margin-bottom:8px;">🎧 Đang phát bài nghe — bài chỉ phát <b>một lần duy nhất</b>, hãy tập trung...</p>
+        <audio id="mt-exam-audio" src="${data.audio}"></audio>
+      </div>`;
+    }
+    return `<div style="margin-bottom:14px;">
       <p style="font-size:15.5px;color:var(--ink-soft);margin-bottom:8px;">🎧 Nghe file audio dưới đây (đúng như trong sách), sau đó làm lần lượt các câu hỏi. Phần Đọc không cần nghe.</p>
       <audio controls src="${data.audio}" style="width:100%;"></audio>
-    </div>
-    ${isPreview ? '<p style="font-size:14.5px;color:var(--seal,#8B2C2C);background:var(--seal-tint,#f4e6e3);padding:10px 14px;border-radius:10px;margin-bottom:10px;">👁️ Xem trước — đáp án đúng đã tô sẵn.</p>' : ''}
-    ${sectionsHtml}
-    ${isPreview ? '' : '<button class="btn-primary" id="mt-submit-btn" style="margin-top:16px;">Nộp bài →</button><p id="mt-submit-status" style="font-size:15.5px;margin-top:10px;"></p>'}
-  `;
-
-  const selected = {}; // gIdx -> chosen option index
-
-  // Transcript chỉ hiện SAU khi nộp bài / ở chế độ xem trước — tránh lộ đáp án khi đang làm bài
-  function revealTranscripts(){
-    container.querySelectorAll('.mt-transcript-wrap').forEach(wrap => { wrap.style.display = 'block'; });
-    container.querySelectorAll('.mt-transcript-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const gIdx = btn.dataset.gidx;
-        const body = container.querySelector(`.mt-transcript-body[data-gidx="${gIdx}"]`);
-        if(body) body.style.display = (body.style.display === 'none') ? 'block' : 'none';
-      });
-    });
+    </div>`;
   }
 
-  if (isPreview) {
-    // Chế độ xem trước: khoá tương tác, tô sẵn đáp án đúng cho từng câu
-    container.querySelectorAll('.mt-opt-btn').forEach(b => { b.disabled = true; b.style.pointerEvents = 'none'; b.style.cursor = 'default'; });
-    flatQuestions.forEach((item, gIdx) => {
-      const correctBtn = container.querySelector(`.mt-opt-btn[data-gidx="${gIdx}"][data-i="${item.q.answer}"]`);
-      if (correctBtn) { correctBtn.style.borderColor = 'var(--green,#3f7d5c)'; correctBtn.style.background = '#eef7f1'; }
-      const el = container.querySelector(`.mt-result[data-gidx="${gIdx}"]`);
-      if (el) el.innerHTML = `✅ Đáp án đúng: ${String.fromCharCode(65 + item.q.answer)}`;
+  function fullBodyHtml(){
+    return `
+      ${audioBlockHtml()}
+      ${isPreview ? '<p style="font-size:14.5px;color:var(--seal,#8B2C2C);background:var(--seal-tint,#f4e6e3);padding:10px 14px;border-radius:10px;margin-bottom:10px;">👁️ Xem trước — đáp án đúng đã tô sẵn.</p>' : ''}
+      <div id="mt-listening-section">${listeningHtml}</div>
+      <div id="mt-reading-section"${isRealExamMode ? ' style="display:none;"' : ''}>
+        ${isRealExamMode ? '<p id="mt-exam-reading-status" style="font-size:15.5px;font-weight:700;color:var(--seal,#8B2C2C);background:var(--seal-tint,#f4e6e3);padding:10px 14px;border-radius:10px;margin:0 0 8px;"></p>' : ''}
+        ${readingHtml}
+      </div>
+      ${isPreview ? '' : '<button class="btn-primary" id="mt-submit-btn" style="margin-top:16px;">Nộp bài →</button><p id="mt-submit-status" style="font-size:15.5px;margin-top:10px;"></p>'}
+    `;
+  }
+
+  function wireUpInteractivity(){
+    const selected = {}; // gIdx -> chosen option index
+
+    // Transcript chỉ hiện SAU khi nộp bài / ở chế độ xem trước — tránh lộ đáp án khi đang làm bài
+    function revealTranscripts(){
+      container.querySelectorAll('.mt-transcript-wrap').forEach(wrap => { wrap.style.display = 'block'; });
+      container.querySelectorAll('.mt-transcript-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const gIdx = btn.dataset.gidx;
+          const body = container.querySelector(`.mt-transcript-body[data-gidx="${gIdx}"]`);
+          if(body) body.style.display = (body.style.display === 'none') ? 'block' : 'none';
+        });
+      });
+    }
+
+    if (isPreview) {
+      // Chế độ xem trước: khoá tương tác, tô sẵn đáp án đúng cho từng câu
+      container.querySelectorAll('.mt-opt-btn').forEach(b => { b.disabled = true; b.style.pointerEvents = 'none'; b.style.cursor = 'default'; });
+      flatQuestions.forEach((item, gIdx) => {
+        const correctBtn = container.querySelector(`.mt-opt-btn[data-gidx="${gIdx}"][data-i="${item.q.answer}"]`);
+        if (correctBtn) { correctBtn.style.borderColor = 'var(--green,#3f7d5c)'; correctBtn.style.background = '#eef7f1'; }
+        const el = container.querySelector(`.mt-result[data-gidx="${gIdx}"]`);
+        if (el) el.innerHTML = `✅ Đáp án đúng: ${String.fromCharCode(65 + item.q.answer)}`;
+      });
+      revealTranscripts();
+      return;
+    }
+
+    container.querySelectorAll('.mt-opt-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const gIdx = btn.dataset.gidx;
+        selected[gIdx] = Number(btn.dataset.i);
+        container.querySelectorAll(`.mt-opt-btn[data-gidx="${gIdx}"]`).forEach(b => {
+          b.style.borderColor = (b === btn) ? 'var(--seal,#8B2C2C)' : 'var(--line,#ecdfd0)';
+          b.style.background = (b === btn) ? 'var(--seal-tint,#f4e6e3)' : '#fff';
+        });
+      });
     });
-    revealTranscripts();
+
+    if(alreadySubmitted){
+      lockMockTest(existingSubs.answer);
+    } else {
+      document.getElementById('mt-submit-btn').addEventListener('click', () => submitMockTest());
+      examForceSubmit = (statusText) => submitMockTest({ force: true, statusText });
+    }
+
+    function describeOption(item, idx){
+      if(idx === null || idx === undefined) return '(chưa chọn)';
+      if(item.kind === 'own_img' || item.kind === 'shared_img' || item.kind === 'shared_img_prompt'){
+        return 'Tranh ' + String.fromCharCode(65 + idx);
+      }
+      if(item.kind === 'own_text'){
+        return item.q.options[idx]?.zh || '';
+      }
+      if(item.kind === 'shared_text_prompt' || item.kind === 'fill_blank'){
+        return item.pool[idx]?.zh || '';
+      }
+      if(item.kind === 'reading_q'){
+        return item.q.options[idx]?.zh || '';
+      }
+      return String(idx);
+    }
+
+    async function submitMockTest(opts){
+      opts = opts || {};
+      const force = !!opts.force;
+      const btn = document.getElementById('mt-submit-btn');
+      const status = document.getElementById('mt-submit-status');
+      const unanswered = flatQuestions.filter((_, gIdx) => selected[gIdx] === undefined).length;
+      if(unanswered > 0 && !force){
+        status.textContent = `⚠️ Bạn còn ${unanswered} câu chưa trả lời — hãy làm hết trước khi nộp (chỉ nộp được 1 lần).`;
+        return;
+      }
+      if(btn.disabled) return; // đã nộp rồi (vd. bấm Nộp bài đúng lúc hết giờ) — tránh nộp trùng
+      btn.disabled = true; status.textContent = opts.statusText || '⏳ Đang nộp bài...';
+
+      let correct = 0;
+      const details = flatQuestions.map((item, gIdx) => {
+        const ok = selected[gIdx] === item.q.answer;
+        if(ok) correct++;
+        return {
+          label: (item.section === 'listening' ? '🎧 ' : '📖 ') + 'Câu ' + (gIdx+1) + ' — ' + item.part,
+          given: describeOption(item, selected[gIdx]),
+          correct_answer: describeOption(item, item.q.answer),
+          correct: ok,
+        };
+      });
+      const answerPayload = { title: '📝 Bài thi mô phỏng (20 câu)', details, correct, total: flatQuestions.length };
+
+      const { error } = await sb.from('submissions').upsert({
+        student_id: CURRENT_STUDENT.id, exercise_id: exId,
+        answer: answerPayload, is_correct: correct === flatQuestions.length,
+      }, { onConflict: 'student_id,exercise_id' });
+
+      if(error){ status.textContent = '⚠️ Lỗi khi nộp bài: ' + error.message; btn.disabled = false; return; }
+      lockMockTest(answerPayload);
+    }
+
+    function lockMockTest(answerPayload){
+      container.querySelectorAll('.mt-opt-btn').forEach(b => { b.disabled = true; b.style.pointerEvents = 'none'; });
+      const btn = document.getElementById('mt-submit-btn');
+      if(btn) btn.style.display = 'none';
+      document.getElementById('mt-submit-status').textContent = '';
+
+      (answerPayload.details || []).forEach((d, gIdx) => {
+        const el = container.querySelector(`.mt-result[data-gidx="${gIdx}"]`);
+        if(el) el.innerHTML = d.correct ? '✅ Đúng' : '❌ Sai';
+        const chosenBtn = container.querySelector(`.mt-opt-btn[data-gidx="${gIdx}"][data-i="${selected[gIdx]}"]`);
+        if(chosenBtn) chosenBtn.style.borderColor = d.correct ? 'var(--green,#3f7d5c)' : 'var(--red-err,#a33a2e)';
+        if(!d.correct){
+          const correctIdx = flatQuestions[gIdx].q.answer;
+          const correctBtn = container.querySelector(`.mt-opt-btn[data-gidx="${gIdx}"][data-i="${correctIdx}"]`);
+          if(correctBtn) correctBtn.style.borderColor = 'var(--green,#3f7d5c)';
+        }
+      });
+
+      const old = container.querySelector('.hw-submitted-banner');
+      if(old) old.remove();
+      const banner = document.createElement('div');
+      banner.className = 'hw-submitted-banner';
+      banner.innerHTML = `<div class="ico">🔒</div><div><b>Bạn đã nộp bài thi này</b><span>Kết quả tự động chấm — không thể nộp lại.</span><div class="hw-score-pill">🎯 ${answerPayload.correct}/${answerPayload.total} câu đúng</div></div>`;
+      container.prepend(banner);
+      revealTranscripts();
+    }
+  }
+
+  // Chạy audio Nghe tự động, đếm ngược 3 phút kiểm tra lại sau khi nghe xong, rồi tự mở phần Đọc.
+  function startExamAudioFlow(){
+    const audioEl = document.getElementById('mt-exam-audio');
+    const statusEl = document.getElementById('mt-exam-status');
+    const listeningSection = document.getElementById('mt-listening-section');
+    const readingSection = document.getElementById('mt-reading-section');
+    let reviewTimer = null;
+
+    function revealReading(){
+      if(reviewTimer) clearInterval(reviewTimer);
+      if(listeningSection){
+        listeningSection.querySelectorAll('.mt-opt-btn').forEach(b => { b.disabled = true; b.style.pointerEvents = 'none'; b.style.opacity = '0.65'; });
+      }
+      if(statusEl) statusEl.remove();
+      if(readingSection){
+        readingSection.style.display = '';
+        readingSection.scrollIntoView({behavior:'smooth', block:'start'});
+      }
+      startReadingCountdown();
+    }
+
+    // Phần Đọc giới hạn đúng 20 phút (theo đề thi thật) — hết giờ tự động khoá & nộp bài, kể cả khi chưa làm hết.
+    let readingTimer = null;
+    function startReadingCountdown(){
+      const readingStatusEl = document.getElementById('mt-exam-reading-status');
+      let remaining = EXAM_READING_SECONDS;
+      function tick(){
+        const mm = String(Math.floor(remaining/60)).padStart(2,'0');
+        const ss = String(remaining%60).padStart(2,'0');
+        if(readingStatusEl){
+          readingStatusEl.style.color = remaining <= 60 ? '#a33a2e' : '';
+          readingStatusEl.innerHTML = `⏱️ Thời gian làm phần Đọc: còn <b>${mm}:${ss}</b>`;
+        }
+        if(remaining <= 0){
+          clearInterval(readingTimer);
+          if(readingStatusEl) readingStatusEl.innerHTML = '⏰ Đã hết giờ làm bài!';
+          if(readingSection){
+            readingSection.querySelectorAll('.mt-opt-btn').forEach(b => { b.disabled = true; b.style.pointerEvents = 'none'; b.style.opacity = '0.65'; });
+          }
+          if(examForceSubmit) examForceSubmit('⏰ Đã hết giờ — bài thi được tự động nộp.');
+          return;
+        }
+        remaining--;
+      }
+      tick();
+      readingTimer = setInterval(tick, 1000);
+    }
+
+    if(!audioEl){ revealReading(); return; }
+
+    function startReviewCountdown(){
+      let remaining = EXAM_REVIEW_SECONDS;
+      function tick(){
+        if(statusEl){
+          const mm = String(Math.floor(remaining/60)).padStart(2,'0');
+          const ss = String(remaining%60).padStart(2,'0');
+          statusEl.innerHTML = `✅ Đã nghe xong! Bạn còn <b>${mm}:${ss}</b> để kiểm tra lại đáp án phần Nghe.
+            <button type="button" id="mt-skip-review-btn" style="margin-left:10px;font-size:13px;padding:4px 10px;border-radius:8px;border:1px solid var(--seal,#8B2C2C);background:#fff;color:var(--seal,#8B2C2C);cursor:pointer;">Chuyển sang phần Đọc ngay →</button>`;
+          const skipBtn = document.getElementById('mt-skip-review-btn');
+          if(skipBtn) skipBtn.addEventListener('click', revealReading);
+        }
+        if(remaining <= 0){ revealReading(); return; }
+        remaining--;
+      }
+      tick();
+      reviewTimer = setInterval(tick, 1000);
+    }
+
+    audioEl.addEventListener('ended', startReviewCountdown);
+    audioEl.addEventListener('error', () => {
+      if(statusEl) statusEl.textContent = '⚠️ Không phát được file audio — vui lòng tải lại trang hoặc báo giáo viên.';
+    });
+
+    const playPromise = audioEl.play();
+    if(playPromise && typeof playPromise.catch === 'function'){
+      playPromise.catch(() => {
+        if(statusEl) statusEl.innerHTML = `🎧 Trình duyệt chặn tự phát — nhấn nút để bắt đầu nghe: <button type="button" id="mt-manual-play-btn" style="margin-left:6px;font-size:13px;padding:4px 10px;border-radius:8px;border:1px solid var(--seal,#8B2C2C);background:#fff;color:var(--seal,#8B2C2C);cursor:pointer;">▶️ Phát audio</button>`;
+        const manualBtn = document.getElementById('mt-manual-play-btn');
+        if(manualBtn) manualBtn.addEventListener('click', () => {
+          audioEl.play();
+          if(statusEl) statusEl.innerHTML = '🎧 Đang phát bài nghe — bài chỉ phát <b>một lần duy nhất</b>, hãy tập trung...';
+        });
+      });
+    }
+  }
+
+  if(isRealExamMode){
+    container.innerHTML = `
+      <div style="text-align:center;padding:30px 10px;">
+        <div style="font-size:42px;margin-bottom:10px;">🏆</div>
+        <h3 style="font-size:19px;margin-bottom:14px;">Kiểm tra cuối khoá — chế độ thi thật</h3>
+        <ul style="text-align:left;max-width:420px;margin:0 auto 20px;font-size:15px;color:var(--ink-soft);line-height:1.7;">
+          <li>🎧 Phần Nghe (20 câu, ~12 phút) tự động phát <b>một lần duy nhất</b>, không tua lại được.</li>
+          <li>✅ Nghe xong, bạn có <b>3 phút</b> để kiểm tra và sửa lại đáp án phần Nghe.</li>
+          <li>📖 Hết 3 phút, hệ thống <b>tự động khoá phần Nghe</b> và chuyển sang phần Đọc.</li>
+          <li>⏱️ Phần Đọc (20 câu) giới hạn đúng <b>20 phút</b> — hết giờ hệ thống sẽ <b>tự động nộp bài</b>, kể cả khi chưa làm hết.</li>
+          <li>🕐 Tổng thời gian làm bài: khoảng 35 phút, đúng theo cấu trúc đề thi HSK (一级) thật.</li>
+        </ul>
+        <button class="btn-primary" id="mt-exam-start-btn">Bắt đầu làm bài →</button>
+      </div>
+    `;
+    document.getElementById('mt-exam-start-btn').addEventListener('click', () => {
+      container.innerHTML = fullBodyHtml();
+      wireUpInteractivity();
+      startExamAudioFlow();
+    });
     return;
   }
 
-  container.querySelectorAll('.mt-opt-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const gIdx = btn.dataset.gidx;
-      selected[gIdx] = Number(btn.dataset.i);
-      container.querySelectorAll(`.mt-opt-btn[data-gidx="${gIdx}"]`).forEach(b => {
-        b.style.borderColor = (b === btn) ? 'var(--seal,#8B2C2C)' : 'var(--line,#ecdfd0)';
-        b.style.background = (b === btn) ? 'var(--seal-tint,#f4e6e3)' : '#fff';
-      });
-    });
-  });
-
-  if(alreadySubmitted){
-    lockMockTest(existingSubs.answer);
-  } else {
-    document.getElementById('mt-submit-btn').addEventListener('click', submitMockTest);
-  }
-
-  function describeOption(item, idx){
-    if(idx === null || idx === undefined) return '(chưa chọn)';
-    if(item.kind === 'own_img' || item.kind === 'shared_img' || item.kind === 'shared_img_prompt'){
-      return 'Tranh ' + String.fromCharCode(65 + idx);
-    }
-    if(item.kind === 'own_text'){
-      return item.q.options[idx]?.zh || '';
-    }
-    if(item.kind === 'shared_text_prompt' || item.kind === 'fill_blank'){
-      return item.pool[idx]?.zh || '';
-    }
-    if(item.kind === 'reading_q'){
-      return item.q.options[idx]?.zh || '';
-    }
-    return String(idx);
-  }
-
-  async function submitMockTest(){
-    const btn = document.getElementById('mt-submit-btn');
-    const status = document.getElementById('mt-submit-status');
-    const unanswered = flatQuestions.filter((_, gIdx) => selected[gIdx] === undefined).length;
-    if(unanswered > 0){
-      status.textContent = `⚠️ Bạn còn ${unanswered} câu chưa trả lời — hãy làm hết trước khi nộp (chỉ nộp được 1 lần).`;
-      return;
-    }
-    btn.disabled = true; status.textContent = '⏳ Đang nộp bài...';
-
-    let correct = 0;
-    const details = flatQuestions.map((item, gIdx) => {
-      const ok = selected[gIdx] === item.q.answer;
-      if(ok) correct++;
-      return {
-        label: (item.section === 'listening' ? '🎧 ' : '📖 ') + 'Câu ' + (gIdx+1) + ' — ' + item.part,
-        given: describeOption(item, selected[gIdx]),
-        correct_answer: describeOption(item, item.q.answer),
-        correct: ok,
-      };
-    });
-    const answerPayload = { title: '📝 Bài thi mô phỏng (20 câu)', details, correct, total: flatQuestions.length };
-
-    const { error } = await sb.from('submissions').upsert({
-      student_id: CURRENT_STUDENT.id, exercise_id: exId,
-      answer: answerPayload, is_correct: correct === flatQuestions.length,
-    }, { onConflict: 'student_id,exercise_id' });
-
-    if(error){ status.textContent = '⚠️ Lỗi khi nộp bài: ' + error.message; btn.disabled = false; return; }
-    lockMockTest(answerPayload);
-  }
-
-  function lockMockTest(answerPayload){
-    container.querySelectorAll('.mt-opt-btn').forEach(b => { b.disabled = true; b.style.pointerEvents = 'none'; });
-    const btn = document.getElementById('mt-submit-btn');
-    if(btn) btn.style.display = 'none';
-    document.getElementById('mt-submit-status').textContent = '';
-
-    (answerPayload.details || []).forEach((d, gIdx) => {
-      const el = container.querySelector(`.mt-result[data-gidx="${gIdx}"]`);
-      if(el) el.innerHTML = d.correct ? '✅ Đúng' : '❌ Sai';
-      const chosenBtn = container.querySelector(`.mt-opt-btn[data-gidx="${gIdx}"][data-i="${selected[gIdx]}"]`);
-      if(chosenBtn) chosenBtn.style.borderColor = d.correct ? 'var(--green,#3f7d5c)' : 'var(--red-err,#a33a2e)';
-      if(!d.correct){
-        const correctIdx = flatQuestions[gIdx].q.answer;
-        const correctBtn = container.querySelector(`.mt-opt-btn[data-gidx="${gIdx}"][data-i="${correctIdx}"]`);
-        if(correctBtn) correctBtn.style.borderColor = 'var(--green,#3f7d5c)';
-      }
-    });
-
-    const old = container.querySelector('.hw-submitted-banner');
-    if(old) old.remove();
-    const banner = document.createElement('div');
-    banner.className = 'hw-submitted-banner';
-    banner.innerHTML = `<div class="ico">🔒</div><div><b>Bạn đã nộp bài thi này</b><span>Kết quả tự động chấm — không thể nộp lại.</span><div class="hw-score-pill">🎯 ${answerPayload.correct}/${answerPayload.total} câu đúng</div></div>`;
-    container.prepend(banner);
-    revealTranscripts();
-  }
+  container.innerHTML = fullBodyHtml();
+  wireUpInteractivity();
 }
 
 

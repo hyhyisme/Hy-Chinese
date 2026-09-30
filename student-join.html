@@ -21,21 +21,31 @@
   </div>
 
   <div class="card">
-    <h1>🎒 Vào lớp học</h1>
-    <p class="sub">Nhập mã lớp giáo viên đã cung cấp và tên của em</p>
+    <div id="class-picker" style="display:none;">
+      <h1>📚 Chọn lớp để vào học</h1>
+      <p class="sub">Em đang tham gia nhiều lớp — chọn 1 lớp để vào học</p>
+      <div id="class-picker-list" style="display:flex;flex-direction:column;gap:10px;margin:18px 0;"></div>
+      <button type="button" id="show-join-form-btn" style="width:100%;padding:12px;border:1.5px solid var(--line,#ecdfd0);border-radius:12px;background:#fff;cursor:pointer;font-size:14px;font-weight:600;">+ Nhập mã lớp khác</button>
+    </div>
 
-    <form id="join-form">
-      <div class="field">
-        <label for="join-code">Mã lớp</label>
-        <input type="text" id="join-code" class="join-code" required placeholder="HY-XXXX" maxlength="12">
-      </div>
-      <div class="field">
-        <label for="join-name">Họ và tên</label>
-        <input type="text" id="join-name" required placeholder="Nguyễn Văn A">
-      </div>
-      <button type="submit" class="btn-primary" id="join-btn">Vào lớp →</button>
-      <p class="form-msg" id="join-msg"></p>
-    </form>
+    <div id="join-form-wrap">
+      <h1>🎒 Vào lớp học</h1>
+      <p class="sub" id="join-sub">Nhập mã lớp giáo viên đã cung cấp và tên của em</p>
+
+      <form id="join-form">
+        <div class="field">
+          <label for="join-code">Mã lớp</label>
+          <input type="text" id="join-code" class="join-code" required placeholder="HY-XXXX" maxlength="12">
+        </div>
+        <div class="field">
+          <label for="join-name">Họ và tên</label>
+          <input type="text" id="join-name" required placeholder="Nguyễn Văn A">
+        </div>
+        <button type="submit" class="btn-primary" id="join-btn">Vào lớp →</button>
+        <p class="form-msg" id="join-msg"></p>
+      </form>
+      <button type="button" id="back-to-picker-btn" style="display:none;width:100%;margin-top:10px;padding:12px;border:none;background:none;color:var(--ink-soft,#6b6560);cursor:pointer;font-size:13.5px;">← Quay lại danh sách lớp</button>
+    </div>
 
     <div id="dup-confirm" style="display:none;margin-top:18px;padding:16px;background:var(--paper-soft,#f7ede1);border-radius:12px;">
       <p style="font-size:14px;margin:0 0 12px;">Lớp đã có bạn tên "<b id="dup-name"></b>" rồi — <b>đây có phải là bạn không?</b></p>
@@ -57,11 +67,54 @@ window.addEventListener('pageshow', (event) => {
 });
 </script>
 <script>
-// nếu học sinh đã join trước đó trên thiết bị này -> vào thẳng
+// forceSwitch=true khi vào bằng link "đổi lớp / thêm lớp" (student-join.html?switch=1) từ trang học —
+// khi đó LUÔN hiện màn chọn lớp (nếu có ≥1 lớp) thay vì tự động vào thẳng lớp cũ.
+const forceSwitch = new URLSearchParams(window.location.search).has('switch');
+
+function renderClassPicker(list) {
+  document.getElementById('class-picker').style.display = 'block';
+  document.getElementById('join-form-wrap').style.display = 'none';
+  document.getElementById('back-to-picker-btn').style.display = 'block';
+  document.getElementById('join-sub').textContent = 'Thêm một lớp mới bằng mã giáo viên đã cung cấp';
+  const box = document.getElementById('class-picker-list');
+  box.innerHTML = list.map(s => `
+    <button type="button" class="btn-primary pick-class-btn" data-id="${s.id}" style="width:100%;justify-content:space-between;text-align:left;">
+      <span>${s.classes?.name || 'Lớp'}</span>
+      <span style="opacity:.85;font-weight:600;">${s.classes?.hsk_level || ''} →</span>
+    </button>
+  `).join('');
+  box.querySelectorAll('.pick-class-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const student = list.find(s => s.id === btn.dataset.id);
+      selectStudentClass(student);
+      window.location.href = 'student-home.html';
+    });
+  });
+}
+
 (async () => {
-  const existing = await getCurrentStudent();
-  if (existing) window.location.href = 'student-home.html';
+  const list = await getStudentClasses();
+  if (!forceSwitch && list.length === 1) {
+    // học sinh 1 lớp duy nhất -> giữ nguyên trải nghiệm cũ, vào thẳng
+    selectStudentClass(list[0]);
+    window.location.href = 'student-home.html';
+    return;
+  }
+  if (list.length >= 1) {
+    renderClassPicker(list);
+  }
+  // list.length === 0 -> chưa từng vào lớp nào, giữ nguyên form nhập mã mặc định
 })();
+
+document.getElementById('show-join-form-btn')?.addEventListener('click', () => {
+  document.getElementById('class-picker').style.display = 'none';
+  document.getElementById('join-form-wrap').style.display = 'block';
+});
+document.getElementById('back-to-picker-btn')?.addEventListener('click', async () => {
+  const list = await getStudentClasses();
+  document.getElementById('join-form-wrap').style.display = 'none';
+  renderClassPicker(list);
+});
 
 let pendingJoinCode = '', pendingName = '', pendingExistingId = '';
 

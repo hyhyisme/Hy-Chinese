@@ -35,13 +35,22 @@ async function studentJoinClass(joinCode, fullName, options = {}) {
   // 1. Tìm lớp theo mã
   const { data: cls, error: clsErr } = await sb
     .from('classes')
-    .select('id, name, teacher_id, is_active')
+    .select('id, name, teacher_id, is_active, hsk_level')
     .eq('join_code', joinCode.trim().toUpperCase())
     .eq('is_active', true)
     .maybeSingle();
 
   if (clsErr) throw clsErr;
   if (!cls) throw new Error('Không tìm thấy lớp với mã này. Kiểm tra lại mã lớp giáo viên đã cung cấp.');
+
+  // 1b. options.expectedLevel: học sinh đã BẤM CHỌN một khoá cụ thể (vd HSK2) trên màn "chọn khoá học"
+  // trước khi nhập mã -> chặn sớm nếu mã này thực ra thuộc khoá khác, tránh nhầm lẫn.
+  if (options.expectedLevel) {
+    const norm = v => String(v || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+    if (norm(cls.hsk_level) !== norm(options.expectedLevel)) {
+      throw new Error(`Mã lớp này thuộc ${cls.hsk_level || 'khoá khác'}, không phải ${options.expectedLevel}. Kiểm tra lại mã hoặc quay lại chọn đúng khoá học.`);
+    }
+  }
 
   // 2. Đăng nhập ẩn danh (nếu chưa có phiên)
   // QUAN TRỌNG: nếu thiết bị này đang có sẵn một phiên KHÔNG PHẢI ẩn danh (vd: giáo viên

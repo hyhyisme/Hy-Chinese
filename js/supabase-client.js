@@ -60,16 +60,19 @@ async function studentJoinClass(joinCode, fullName, options = {}) {
     user = anonData.user;
   }
 
-  // 3. Kiểm tra đã có hồ sơ học sinh gắn với auth_uid này chưa (đã từng vào lớp trên chính thiết bị này)
+  // 3. Kiểm tra đã có hồ sơ học sinh gắn với auth_uid này TRONG CHÍNH LỚP NÀY chưa.
+  // Lưu ý: một phiên (một thiết bị) giờ có thể có NHIỀU hồ sơ students — mỗi lớp một hồ sơ
+  // riêng (vd: 1 hồ sơ ở lớp HSK1, 1 hồ sơ khác ở lớp HSK2) — nên phải lọc thêm theo class_id,
+  // không được dùng .maybeSingle() trên riêng auth_uid nữa (sẽ lỗi nếu học sinh đã ở ≥2 lớp).
   const { data: existing } = await sb
     .from('students')
     .select('*')
     .eq('auth_uid', user.id)
+    .eq('class_id', cls.id)
     .maybeSingle();
 
   if (existing) {
-    localStorage.setItem('hy_student_id', existing.id);
-    localStorage.setItem('hy_class_id', existing.class_id);
+    selectStudentClass(existing);
     return existing;
   }
 
@@ -82,12 +85,11 @@ async function studentJoinClass(joinCode, fullName, options = {}) {
       .select()
       .single();
     if (relinkErr) throw relinkErr;
-    localStorage.setItem('hy_student_id', relinked.id);
-    localStorage.setItem('hy_class_id', relinked.class_id);
+    selectStudentClass(relinked);
     return relinked;
   }
 
-  // 4. Chưa từng vào trên thiết bị này -> kiểm tra xem đã có ai trùng tên trong lớp chưa (tránh tạo trùng)
+  // 4. Chưa từng vào lớp này -> kiểm tra xem đã có ai trùng tên trong lớp chưa (tránh tạo trùng)
   if (!options.forceNew) {
     const { data: nameMatches } = await sb
       .from('students')
@@ -102,7 +104,8 @@ async function studentJoinClass(joinCode, fullName, options = {}) {
     }
   }
 
-  // 5. Tạo hồ sơ học sinh mới trong lớp
+  // 5. Tạo hồ sơ học sinh mới trong lớp này (auth_uid có thể đã tồn tại ở (các) lớp khác rồi,
+  // đó là bình thường — mỗi lớp một hồ sơ riêng, tiến độ không lẫn giữa các lớp)
   const { data: student, error: insErr } = await sb
     .from('students')
     .insert({ class_id: cls.id, auth_uid: user.id, full_name: fullName.trim() })
@@ -110,20 +113,57 @@ async function studentJoinClass(joinCode, fullName, options = {}) {
     .single();
 
   if (insErr) throw insErr;
-  localStorage.setItem('hy_student_id', student.id);
-  localStorage.setItem('hy_class_id', student.class_id);
+  selectStudentClass(student);
   return student;
 }
 
+// Đánh dấu đây là hồ sơ/lớp đang "hoạt động" cho phiên hiện tại (dùng khi học sinh
+// tham gia nhiều lớp và vừa chọn 1 lớp cụ thể để vào học)
+function selectStudentClass(student) {
+  localStorage.setItem('hy_student_id', student.id);
+  localStorage.setItem('hy_class_id', student.class_id);
+}
+
+// Trả về TẤT CẢ hồ sơ students (tức tất cả các lớp) gắn với phiên ẩn danh hiện tại,
+// kèm thông tin lớp (name, hsk_level). Rỗng nếu chưa từng nhập mã lớp nào.
+async function getStudentClasses() {
+  const { data: { user } } = await sb.auth.getUser();
+  if (!user || !user.is_anonymous) return [];
+  const { data, error } = await sb
+    .from('students')
+    .select('*, classes(name, hsk_level)')
+    .eq('auth_uid', user.id)
+    .order('created_at', { ascending: true });
+  if (error) return [];
+  return data || [];
+}
+
+// Trả về hồ sơ học sinh đang "hoạt động" cho phiên này:
+// - Chưa từng nhập mã lớp nào -> null
+// - Có sẵn lựa chọn hợp lệ trong localStorage (hy_student_id khớp 1 trong các lớp) -> dùng lựa chọn đó
+// - Chỉ có đúng 1 lớp -> tự động chọn luôn (giữ nguyên trải nghiệm cũ cho học sinh 1 lớp)
+// - Có từ 2 lớp trở lên mà CHƯA chọn -> trả về null để nơi gọi biết cần hiển thị màn "chọn lớp"
+//   (student-home.html sẽ tự điều hướng sang student-join.html trong trường hợp này)
 async function getCurrentStudent() {
   const { data: { user } } = await sb.auth.getUser();
   if (!user) return null;
   // Lớp bảo vệ: phiên KHÔNG ẩn danh (đăng nhập email/mật khẩu = giáo viên) không bao giờ
   // được coi là học sinh, kể cả nếu dữ liệu cũ trong bảng students lỡ bị gán nhầm auth_uid.
   if (!user.is_anonymous) return null;
-  const { data, error } = await sb.from('students').select('*, classes(name, hsk_level)').eq('auth_uid', user.id).maybeSingle();
-  if (error) return null;
-  return data;
+
+  const list = await getStudentClasses();
+  if (list.length === 0) return null;
+
+  const savedId = localStorage.getItem('hy_student_id');
+  const saved = list.find(s => s.id === savedId);
+  if (saved) return saved;
+
+  if (list.length === 1) {
+    selectStudentClass(list[0]);
+    return list[0];
+  }
+
+  return null; // nhiều lớp, chưa chọn cái nào -> nơi gọi tự đưa sang màn chọn lớp
 }
 
 async function signOutAny() {

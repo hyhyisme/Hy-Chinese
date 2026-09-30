@@ -938,14 +938,10 @@ let STUDENT_COURSE_LEVEL = null;
   document.getElementById('auth-gate').style.display = 'none';
   const miniName = document.getElementById('student-mini-name');
   if (miniName) miniName.textContent = CURRENT_STUDENT.full_name;
-  // Chỉ hiện nút "Đổi lớp" khi học sinh thực sự tham gia từ 2 lớp trở lên (vd: đã học xong
-  // HSK1, nhập thêm mã lớp HSK2) — học sinh 1 lớp không thấy nút này, giữ giao diện gọn như cũ.
-  getStudentClasses().then(list => {
-    if (list.length > 1) {
-      const switchLink = document.getElementById('student-mini-switch-class');
-      if (switchLink) switchLink.style.display = 'inline';
-    }
-  });
+  // Luôn hiện nút "Đổi khoá học" (đưa về màn chọn khoá ở student-join.html) — học sinh có thể
+  // dùng để xem lại khoá cũ (vd HSK1) hoặc nhập mã thêm khoá mới (vd HSK2) bất cứ lúc nào.
+  const switchLink = document.getElementById('student-mini-switch-class');
+  if (switchLink) switchLink.style.display = 'inline';
   const miniSignout = document.getElementById('student-mini-signout');
   if (miniSignout) miniSignout.addEventListener('click', async (e) => {
     e.preventDefault();
@@ -981,7 +977,7 @@ let STUDENT_COURSE_LEVEL = null;
       </nav>
       <div class="site-nav-actions" style="display:flex;align-items:center;gap:12px;">
         <span style="font-weight:700;font-size:16px;">👋 <span id="student-mini-name">...</span></span>
-        <a href="student-join.html?switch=1" id="student-mini-switch-class" style="display:none;font-size:15px;color:var(--ink-soft,#6b6560);font-weight:600;">Đổi lớp</a>
+        <a href="student-join.html" id="student-mini-switch-class" style="display:none;font-size:15px;color:var(--ink-soft,#6b6560);font-weight:600;">Đổi khoá học</a>
         <a href="#" id="student-mini-signout" style="font-size:15px;color:var(--ink-soft,#6b6560);font-weight:600;">Đăng xuất</a>
       </div>
     </div>

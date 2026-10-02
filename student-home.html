@@ -967,11 +967,43 @@ const TRACKING = {
 };
 let CURRENT_STUDENT = null;
 let TEACHER_PREVIEW_MODE = false;
+// Giáo viên xem bài nộp CỤ THỂ của 1 học sinh (khác với TEACHER_PREVIEW_MODE ở trên —
+// đó là xem trước nội dung/đáp án chung chung, không gắn với học sinh nào).
+// Bật khi URL có ?teacherReviewStudent=...&teacherReviewLesson=...&teacherReviewCourse=...
+let TEACHER_REVIEW_MODE = false;
+let TEACHER_REVIEW_STUDENT_NAME = '';
 // Cấp độ khoá học sinh được PHÉP vào, lấy từ classes.hsk_level (vd: "HSK1", "HSK2"), viết thường
 // để so khớp với data-course trên các thẻ chọn cấp độ (vd: "hsk1", "hsk2"). null = không giới hạn
 // (giáo viên xem trước, hoặc lỡ thiếu dữ liệu hsk_level thì mặc định cho vào hết, tránh khoá nhầm).
 let STUDENT_COURSE_LEVEL = null;
 (async () => {
+  // ---- Giáo viên bấm "Xem bài nộp" từ teacher-dashboard.html: mở thẳng giao diện bài nộp
+  // của ĐÚNG học sinh/bài đó, giống hệt giao diện học sinh tự làm, kèm nút "Xem đáp án". ----
+  const _reviewParams = new URLSearchParams(location.search);
+  const _reviewStudentId = _reviewParams.get('teacherReviewStudent');
+  if (_reviewStudentId) {
+    const teacher = await getCurrentTeacherProfile();
+    if (!teacher) { window.location.href = 'teacher-login.html'; return; }
+    const { data: studentRow } = await sb
+      .from('students')
+      .select('id, full_name, classes!inner(teacher_id)')
+      .eq('id', _reviewStudentId)
+      .eq('classes.teacher_id', teacher.id)
+      .maybeSingle();
+    if (!studentRow) {
+      document.body.innerHTML = '<p style="padding:40px;font-family:sans-serif;font-size:16px;">Không tìm thấy học sinh này, hoặc bạn không có quyền xem bài nộp của học sinh này.</p>';
+      return;
+    }
+    TEACHER_REVIEW_MODE = true;
+    TEACHER_REVIEW_STUDENT_NAME = studentRow.full_name;
+    CURRENT_STUDENT = { id: studentRow.id, full_name: studentRow.full_name };
+    currentCourse = (_reviewParams.get('teacherReviewCourse') || 'hsk1').toLowerCase();
+    document.getElementById('auth-gate').style.display = 'none';
+    const _reviewLessonNum = parseInt(_reviewParams.get('teacherReviewLesson'), 10);
+    renderTeacherReviewShell(_reviewLessonNum);
+    return;
+  }
+
   CURRENT_STUDENT = await getCurrentStudent();
   if (!CURRENT_STUDENT) {
     // không phải học sinh — kiểm tra xem có phải giáo viên đang đăng nhập không (cho xem trước, không nộp bài được)
@@ -6150,6 +6182,34 @@ function openLesson(id){
   }
 }
 
+// Giáo viên xem bài nộp của 1 học sinh cụ thể (TEACHER_REVIEW_MODE): chỉ dựng đúng khung
+// màn hình bài học + panel "Bài tập nộp" (không gọi initLessonPanels() đầy đủ, để tránh
+// chạy các phần ôn tập khác vốn không cần và có thể ghi nhầm tiến độ dưới tên học sinh).
+function renderTeacherReviewShell(lessonNum){
+  currentLessonId = lessonNum;
+  const L = activeLessons()[lessonNum];
+  const isExam = (lessonNum === activeFinalExamId());
+  if (L) {
+    const sealEl = document.getElementById('lesson-seal');
+    if (sealEl) { sealEl.textContent = isExam ? '🏆' : SEAL_NUM[lessonNum]; sealEl.classList.toggle('seal-wide', !isExam && SEAL_NUM[lessonNum] && SEAL_NUM[lessonNum].length > 1); }
+    const zhEl = document.getElementById('lesson-zh-title'); if (zhEl) zhEl.textContent = L.zh || '';
+    const pyEl = document.getElementById('lesson-pinyin-title'); if (pyEl) pyEl.textContent = L.py || '';
+    const viEl = document.getElementById('lesson-vi-title'); if (viEl) viEl.textContent = isExam ? (L.vi || '') : ('Bài ' + lessonNum + ' · ' + (L.vi || ''));
+    const goalsEl = document.getElementById('lesson-goals'); if (goalsEl) goalsEl.innerHTML = (L.goals || []).map(g=>`<li>${g}</li>`).join('');
+  }
+  const goalsBox = document.querySelector('.goals'); if (goalsBox) goalsBox.style.display = 'none';
+  const tabsBox = document.getElementById('lesson-tabs'); if (tabsBox) tabsBox.style.display = 'none';
+  showScreen('lesson', isExam ? 'Kiểm tra cuối khoá' : ('Bài ' + lessonNum));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active', p.id === 'panel-homework'));
+  if (activeMocktest()[lessonNum]) {
+    initMockTestHomework(lessonNum);
+  } else if (activeWorkbook()[lessonNum]) {
+    initWorkbookHomework(lessonNum);
+  } else {
+    document.getElementById('hw-container').innerHTML = '<p style="color:var(--ink-soft);font-size:16px;">Bài này chưa có bài tập nộp.</p>';
+  }
+}
+
 document.querySelectorAll('.tab-btn').forEach(btn=>{
   btn.addEventListener('click', ()=>{
     document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
@@ -10068,9 +10128,11 @@ async function initMockTestHomework(lessonId){
     });
     return `
       ${audioBlockHtml()}
-      ${isPreview ? '<p style="font-size:14.5px;color:var(--seal,#8B2C2C);background:var(--seal-tint,#f4e6e3);padding:10px 14px;border-radius:10px;margin-bottom:10px;">👁️ Xem trước — đáp án đúng đã tô sẵn.</p>' : ''}
+      ${isPreview ? '<p style="font-size:14.5px;color:var(--seal,#8B2C2C);background:var(--seal-tint,#f4e6e3);padding:10px 14px;border-radius:10px;margin-bottom:10px;">👁️ Xem trước — giao diện giống hệt học sinh. Bấm "Xem đáp án" bên dưới bất cứ lúc nào để xem đáp án đúng.</p>' : ''}
       ${sectionsHtml}
-      ${isPreview ? '' : '<button class="btn-primary" id="mt-submit-btn" style="margin-top:16px;">Nộp bài →</button><p id="mt-submit-status" style="font-size:15.5px;margin-top:10px;"></p>'}
+      ${isPreview
+        ? '<button class="btn-primary" id="mt-submit-btn" style="margin-top:16px;">👀 Xem đáp án</button><p id="mt-submit-status" style="font-size:15.5px;margin-top:10px;"></p>'
+        : '<button class="btn-primary" id="mt-submit-btn" style="margin-top:16px;">Nộp bài →</button><p id="mt-submit-status" style="font-size:15.5px;margin-top:10px;"></p>'}
     `;
   }
 
@@ -10092,19 +10154,84 @@ async function initMockTestHomework(lessonId){
     }
 
     if (isPreview) {
-      // Chế độ xem trước: khoá tương tác, tô sẵn đáp án đúng cho từng câu
-      container.querySelectorAll('.mt-opt-btn').forEach(b => { b.disabled = true; b.style.pointerEvents = 'none'; b.style.cursor = 'default'; });
-      flatQuestions.forEach((item, gIdx) => {
-        const correctBtn = container.querySelector(`.mt-opt-btn[data-gidx="${gIdx}"][data-i="${item.q.answer}"]`);
-        if (correctBtn) { correctBtn.style.borderColor = 'var(--green,#3f7d5c)'; correctBtn.style.background = '#eef7f1'; }
+      // Chế độ xem trước (giáo viên duyệt nội dung, KHÔNG gắn với học sinh cụ thể — xem
+      // TEACHER_REVIEW_MODE bên dưới để xem đúng bài nộp của 1 học sinh): hiện giao diện
+      // y hệt học sinh — bấm chọn được như bình thường (không lưu gì cả) — kèm nút
+      // "Xem đáp án" để giáo viên tự lộ đáp án đúng bất cứ lúc nào, thay vì lộ ngay từ đầu.
+      container.querySelectorAll('.mt-opt-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const gIdx = btn.dataset.gidx;
+          container.querySelectorAll(`.mt-opt-btn[data-gidx="${gIdx}"]`).forEach(b => {
+            b.style.borderColor = (b === btn) ? 'var(--seal,#8B2C2C)' : 'var(--line,#ecdfd0)';
+            b.style.background = (b === btn) ? 'var(--seal-tint,#f4e6e3)' : '#fff';
+          });
+        });
+      });
+      const revealBtn = document.getElementById('mt-submit-btn');
+      if (revealBtn) {
+        revealBtn.addEventListener('click', () => {
+          container.querySelectorAll('.mt-opt-btn').forEach(b => { b.disabled = true; b.style.pointerEvents = 'none'; b.style.cursor = 'default'; });
+          flatQuestions.forEach((item, gIdx) => {
+            const correctBtn = container.querySelector(`.mt-opt-btn[data-gidx="${gIdx}"][data-i="${item.q.answer}"]`);
+            if (correctBtn) { correctBtn.style.borderColor = 'var(--green,#3f7d5c)'; correctBtn.style.background = '#eef7f1'; }
+            if(item.kind === 'hanzi_fill_type'){
+              const inp = container.querySelector(`.mt-hanzi-input[data-gidx="${gIdx}"]`);
+              if(inp){ inp.value = item.q.answer; inp.disabled = true; inp.style.borderColor = 'var(--green,#3f7d5c)'; inp.style.background = '#eef7f1'; }
+            }
+            const el = container.querySelector(`.mt-result[data-gidx="${gIdx}"]`);
+            if (el) el.innerHTML = `✅ Đáp án đúng: ${describeOption(item, item.q.answer)}`;
+          });
+          revealTranscripts();
+          revealBtn.style.display = 'none';
+          const statusEl = document.getElementById('mt-submit-status');
+          if (statusEl) statusEl.textContent = '';
+        });
+      }
+      return;
+    }
+
+    // ---- Giáo viên xem bài nộp của 1 học sinh cụ thể: hiện đúng lựa chọn học sinh đã
+    // chọn lúc nộp bài (giống giao diện học sinh đang làm bài), CHƯA tô đúng/sai — bấm
+    // nút "Xem đáp án" mới lộ ra (tái dùng lockMockTest() có sẵn cho bước 2 này). ----
+    if (TEACHER_REVIEW_MODE) {
+      if (!alreadySubmitted) {
+        container.innerHTML = '<p style="color:var(--ink-soft);font-size:16px;">Học sinh này chưa nộp bài tập này.</p>';
+        return;
+      }
+      container.querySelectorAll('.mt-opt-btn').forEach(b => { b.disabled = true; b.style.pointerEvents = 'none'; });
+      container.querySelectorAll('.mt-hanzi-input').forEach(inp => { inp.disabled = true; });
+      (existingSubs.answer.details || []).forEach((d, gIdx) => {
+        const item = flatQuestions[gIdx];
         if(item.kind === 'hanzi_fill_type'){
           const inp = container.querySelector(`.mt-hanzi-input[data-gidx="${gIdx}"]`);
-          if(inp){ inp.value = item.q.answer; inp.disabled = true; inp.style.borderColor = 'var(--green,#3f7d5c)'; inp.style.background = '#eef7f1'; }
+          if(inp && d.given && d.given !== '(chưa chọn)') inp.value = d.given;
+        } else {
+          const idx = indexFromGiven(item, d.given);
+          if(idx !== undefined){
+            container.querySelectorAll(`.mt-opt-btn[data-gidx="${gIdx}"]`).forEach(b => {
+              const isChosen = Number(b.dataset.i) === idx;
+              b.style.borderColor = isChosen ? 'var(--seal,#8B2C2C)' : 'var(--line,#ecdfd0)';
+              b.style.background = isChosen ? 'var(--seal-tint,#f4e6e3)' : '#fff';
+            });
+          }
         }
-        const el = container.querySelector(`.mt-result[data-gidx="${gIdx}"]`);
-        if (el) el.innerHTML = `✅ Đáp án đúng: ${describeOption(item, item.q.answer)}`;
       });
-      revealTranscripts();
+      const revealBtn = document.getElementById('mt-submit-btn');
+      if (revealBtn) {
+        revealBtn.textContent = '👀 Xem đáp án';
+        revealBtn.disabled = false;
+        revealBtn.style.display = '';
+        revealBtn.onclick = () => { lockMockTest(existingSubs.answer); };
+      }
+      const statusEl = document.getElementById('mt-submit-status');
+      if (statusEl) statusEl.textContent = '';
+      if (!container.querySelector('.hw-review-banner')) {
+        const banner = document.createElement('div');
+        banner.className = 'hw-review-banner';
+        banner.style.cssText = 'background:#eef3fb;border:1px solid #c8d8f0;border-radius:12px;padding:12px 16px;margin-bottom:16px;font-size:14.5px;';
+        banner.innerHTML = `👩‍🏫 Đang xem bài nộp của <b>${TEACHER_REVIEW_STUDENT_NAME}</b> (chế độ giáo viên) — <a href="teacher-dashboard.html" style="color:var(--seal,#8B2C2C);font-weight:700;">← Về trang quản lý</a>`;
+        container.prepend(banner);
+      }
       return;
     }
 
@@ -10158,6 +10285,22 @@ async function initMockTestHomework(lessonId){
         return String(idx);
       }
       return String(idx);
+    }
+
+    // Chiều ngược lại của describeOption(): từ chuỗi mô tả đã lưu trong submissions.answer.details[].given
+    // (lúc nộp bài) suy ra lại index lựa chọn ban đầu — dùng để tô lại đúng nút học sinh đã bấm khi
+    // giáo viên xem lại bài nộp (xem TEACHER_REVIEW_MODE ở trên). Không áp dụng cho hanzi_fill_type
+    // (dạng gõ chữ — đã xử lý riêng bằng d.given trực tiếp).
+    function indexFromGiven(item, given){
+      if(given === undefined || given === null || given === '(chưa chọn)') return undefined;
+      let n = 0;
+      if(item.kind === 'own_img'){ n = item.q.images.length; }
+      else if(item.kind === 'shared_img' || item.kind === 'shared_img_prompt'){ n = item.pool.length; }
+      else if(item.kind === 'own_text' || item.kind === 'reading_q' || item.kind === 'pinyin_hanzi'){ n = item.q.options.length; }
+      else if(item.kind === 'shared_text_prompt' || item.kind === 'fill_blank' || item.kind === 'radical_assembly'){ n = item.pool.length; }
+      else { return undefined; }
+      for(let i=0;i<n;i++){ if(describeOption(item, i) === given) return i; }
+      return undefined;
     }
 
     async function submitMockTest(opts){
@@ -10710,17 +10853,21 @@ async function initWorkbookHomework(lessonId){
     <div style="margin-bottom:18px;">
       <audio controls src="${data.audio}" style="width:100%;"></audio>
     </div>
-    ${isPreview ? '<p style="font-size:14.5px;color:var(--seal,#8B2C2C);background:var(--seal-tint,#f4e6e3);padding:10px 14px;border-radius:10px;margin-bottom:14px;">👁️ Xem trước — đáp án đúng đã điền sẵn.</p>' : ''}
+    ${isPreview ? '<p style="font-size:14.5px;color:var(--seal,#8B2C2C);background:var(--seal-tint,#f4e6e3);padding:10px 14px;border-radius:10px;margin-bottom:14px;">👁️ Xem trước — giao diện giống hệt học sinh. Bấm "Xem đáp án" bên dưới bất cứ lúc nào để xem đáp án đúng.</p>' : ''}
     ${toneToolbarHtml}
     ${renderDictationSection('1️⃣ Nghe và điền thanh mẫu (声母) còn thiếu', data.initials, 'initials', false)}
     ${renderDictationSection('2️⃣ Nghe và điền vận mẫu (韵母) còn thiếu — nhớ ghi đúng dấu thanh điệu', data.finals, 'finals', false)}
     ${renderDictationSection('3️⃣ Nghe và chọn đúng thanh điệu', data.tones, 'tones', true)}
     ${renderPicturesSection()}
-    ${isPreview ? '' : '<button class="btn-primary" id="wb-submit-btn" style="margin-top:10px;">Nộp bài →</button><p id="wb-submit-status" style="font-size:15.5px;margin-top:10px;"></p>'}
+    ${isPreview
+      ? '<button class="btn-primary" id="wb-submit-btn" style="margin-top:10px;">👀 Xem đáp án</button><p id="wb-submit-status" style="font-size:15.5px;margin-top:10px;"></p>'
+      : '<button class="btn-primary" id="wb-submit-btn" style="margin-top:10px;">Nộp bài →</button><p id="wb-submit-status" style="font-size:15.5px;margin-top:10px;"></p>'}
   `;
 
-  if (isPreview) {
-    // Chế độ xem trước: điền sẵn đáp án đúng, khoá toàn bộ tương tác
+  // Chế độ xem trước (giáo viên duyệt nội dung): giao diện y hệt học sinh, bấm/gõ thử
+  // được bình thường (không lưu gì) — bấm "Xem đáp án" mới điền/tô đáp án đúng, thay vì lộ
+  // sẵn ngay từ đầu như trước đây.
+  function revealWorkbookPreviewAnswers(){
     data.initials.forEach((it,i) => {
       const inp = container.querySelector(`.wb-input[data-key="initials"][data-idx="${i}"]`);
       if(inp){ inp.value = it.answer; inp.disabled = true; }
@@ -10740,7 +10887,10 @@ async function initWorkbookHomework(lessonId){
       if(sel){ sel.value = String(data.pictures.answer[i]); sel.disabled = true; }
     });
     container.querySelectorAll('.tone-mark-btn').forEach(b => { b.disabled = true; });
-    return;
+    const revealBtn = document.getElementById('wb-submit-btn');
+    if(revealBtn) revealBtn.style.display = 'none';
+    const statusEl = document.getElementById('wb-submit-status');
+    if(statusEl) statusEl.textContent = '';
   }
 
   // gắn toolbar dấu thanh điệu cho mọi ô input trong phần finals
@@ -10762,6 +10912,59 @@ async function initWorkbookHomework(lessonId){
       });
     });
   });
+
+  // ---- Giáo viên xem bài nộp của 1 học sinh cụ thể: điền lại đúng ô/lựa chọn học sinh đã
+  // làm (giống giao diện học sinh đang làm bài), CHƯA tô đúng/sai — bấm "Xem đáp án" mới lộ
+  // (tái dùng lockWorkbookForm() có sẵn, vốn đọc thẳng từ dữ liệu đã lưu). ----
+  if (TEACHER_REVIEW_MODE) {
+    if (!alreadySubmitted) {
+      container.innerHTML = '<p style="color:var(--ink-soft);font-size:16px;">Học sinh này chưa nộp bài tập này.</p>';
+      return;
+    }
+    container.querySelectorAll('input, select, .tone-mark-btn, .tone-pick-btn').forEach(el => { el.disabled = true; el.style.pointerEvents = 'none'; });
+    (subByEx[map.initials]?.answer?.details || []).forEach((d,i) => {
+      const inp = container.querySelector(`.wb-input[data-key="initials"][data-idx="${i}"]`);
+      if(inp && d.given && d.given !== '(bỏ trống)') inp.value = d.given;
+    });
+    (subByEx[map.finals]?.answer?.details || []).forEach((d,i) => {
+      const inp = container.querySelector(`.wb-input[data-key="finals"][data-idx="${i}"]`);
+      if(inp && d.given && d.given !== '(bỏ trống)') inp.value = d.given;
+    });
+    (subByEx[map.tones]?.answer?.details || []).forEach((d,i) => {
+      if(d.given === '(bỏ trống)') return;
+      const btn = container.querySelector(`.tone-pick-btn[data-idx="${i}"][data-t="${d.given}"]`);
+      if(btn){ btn.style.background = 'var(--seal,#8B2C2C)'; btn.style.color = '#fff'; }
+    });
+    (subByEx[map.pictures]?.answer?.details || []).forEach((d,i) => {
+      if(!d.given || d.given === '(chưa chọn)') return;
+      const idx = data.pictures.dialogues.findIndex(dl => dl.split('\n')[0] === d.given);
+      if(idx >= 0){
+        const sel = container.querySelector(`.wb-pic-select[data-idx="${i}"]`);
+        if(sel) sel.value = String(idx);
+      }
+    });
+    const revealBtn = document.getElementById('wb-submit-btn');
+    if(revealBtn){
+      revealBtn.textContent = '👀 Xem đáp án';
+      revealBtn.style.display = '';
+      revealBtn.onclick = () => { lockWorkbookForm(); };
+    }
+    const statusEl = document.getElementById('wb-submit-status');
+    if(statusEl) statusEl.textContent = '';
+    if (!container.querySelector('.hw-review-banner')) {
+      const banner = document.createElement('div');
+      banner.className = 'hw-review-banner';
+      banner.style.cssText = 'background:#eef3fb;border:1px solid #c8d8f0;border-radius:12px;padding:12px 16px;margin-bottom:16px;font-size:14.5px;';
+      banner.innerHTML = `👩‍🏫 Đang xem bài nộp của <b>${TEACHER_REVIEW_STUDENT_NAME}</b> (chế độ giáo viên) — <a href="teacher-dashboard.html" style="color:var(--seal,#8B2C2C);font-weight:700;">← Về trang quản lý</a>`;
+      container.prepend(banner);
+    }
+    return;
+  }
+
+  if (isPreview) {
+    document.getElementById('wb-submit-btn').addEventListener('click', revealWorkbookPreviewAnswers);
+    return;
+  }
 
   if(alreadySubmitted){
     lockWorkbookForm();

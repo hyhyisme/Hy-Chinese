@@ -9673,28 +9673,30 @@ async function initMockTestHomework(lessonId){
       const opts = item.q.images.map(url => `<img src="${url}" style="width:130px;height:95px;object-fit:cover;border-radius:6px;display:block;">`);
       bodyHtml = renderOptionsRow('opt', gIdx, opts);
     } else if(item.kind === 'own_text'){
-      const opts = item.q.options.map(o => `<div style="font-size:15px;">${o.zh}<br><span style="color:var(--ink-soft);font-size:12.5px;">${o.py}</span></div>`);
+      const opts = item.q.options.map(o => `<div style="font-size:15px;">${o.zh}<br><span class="mt-pinyin" style="display:none;color:var(--ink-soft);font-size:12.5px;">${o.py}</span></div>`);
       bodyHtml = renderOptionsRow('opt', gIdx, opts);
     } else if(item.kind === 'shared_img'){
       const opts = item.pool.map((url,i) => `<div style="text-align:center;"><img src="${url}" style="width:130px;height:95px;object-fit:cover;border-radius:6px;display:block;"><span style="font-size:12.5px;color:var(--ink-soft);">${String.fromCharCode(65+i)}</span></div>`);
       bodyHtml = renderOptionsRow('opt', gIdx, opts);
     } else if(item.kind === 'shared_img_prompt'){
-      bodyHtml = `<div style="font-size:16px;margin-bottom:6px;">${item.q.prompt.zh}<br><span style="color:var(--ink-soft);font-size:14px;">${item.q.prompt.py}</span></div>` +
+      bodyHtml = `<div style="font-size:16px;margin-bottom:6px;">${item.q.prompt.zh}<br><span class="mt-pinyin" style="display:none;color:var(--ink-soft);font-size:14px;">${item.q.prompt.py}</span></div>` +
         renderOptionsRow('opt', gIdx, item.pool.map((url,i) => `<div style="text-align:center;"><img src="${url}" style="width:130px;height:95px;object-fit:cover;border-radius:6px;display:block;"><span style="font-size:12.5px;color:var(--ink-soft);">${String.fromCharCode(65+i)}</span></div>`));
     } else if(item.kind === 'shared_text_prompt' || item.kind === 'fill_blank'){
-      bodyHtml = `<div style="font-size:16px;margin-bottom:6px;">${item.q.prompt.zh}<br><span style="color:var(--ink-soft);font-size:14px;">${item.q.prompt.py}</span></div>` +
-        renderOptionsRow('opt', gIdx, item.pool.map((o,i) => `<div style="font-size:15px;">${String.fromCharCode(65+i)}. ${o.zh}<br><span style="color:var(--ink-soft);font-size:12.5px;">${o.py}</span></div>`));
+      bodyHtml = `<div style="font-size:16px;margin-bottom:6px;">${item.q.prompt.zh}<br><span class="mt-pinyin" style="display:none;color:var(--ink-soft);font-size:14px;">${item.q.prompt.py}</span></div>` +
+        renderOptionsRow('opt', gIdx, item.pool.map((o,i) => `<div style="font-size:15px;">${String.fromCharCode(65+i)}. ${o.zh}<br><span class="mt-pinyin" style="display:none;color:var(--ink-soft);font-size:12.5px;">${o.py}</span></div>`));
     } else if(item.kind === 'reading_q'){
-      bodyHtml = `<div style="font-size:16px;margin-bottom:4px;">${item.q.passage.zh}<br><span style="color:var(--ink-soft);font-size:14px;">${item.q.passage.py}</span></div>
-        <div style="font-size:15.5px;font-weight:700;margin-bottom:6px;">★ ${item.q.question.zh}<br><span style="color:var(--ink-soft);font-size:13px;font-weight:400;">${item.q.question.py}</span></div>` +
-        renderOptionsRow('opt', gIdx, item.q.options.map(o => `<div style="font-size:15px;">${o.zh}<br><span style="color:var(--ink-soft);font-size:12.5px;">${o.py}</span></div>`));
+      bodyHtml = `<div style="font-size:16px;margin-bottom:4px;">${item.q.passage.zh}<br><span class="mt-pinyin" style="display:none;color:var(--ink-soft);font-size:14px;">${item.q.passage.py}</span></div>
+        <div style="font-size:15.5px;font-weight:700;margin-bottom:6px;">★ ${item.q.question.zh}<br><span class="mt-pinyin" style="display:none;color:var(--ink-soft);font-size:13px;font-weight:400;">${item.q.question.py}</span></div>` +
+        renderOptionsRow('opt', gIdx, item.q.options.map(o => `<div style="font-size:15px;">${o.zh}<br><span class="mt-pinyin" style="display:none;color:var(--ink-soft);font-size:12.5px;">${o.py}</span></div>`));
     } else if(item.kind === 'radical_assembly'){
-      bodyHtml = `<div style="font-size:26px;font-weight:700;letter-spacing:6px;margin-bottom:4px;">${item.q.given}<span style="color:var(--ink-soft);font-size:14px;font-weight:400;letter-spacing:normal;margin-left:12px;">(${item.q.py})</span></div>
+      bodyHtml = `<div style="font-size:26px;font-weight:700;letter-spacing:6px;margin-bottom:4px;">${item.q.given}<span class="mt-pinyin" style="display:none;color:var(--ink-soft);font-size:14px;font-weight:400;letter-spacing:normal;margin-left:12px;">(${item.q.py})</span></div>
         <div style="font-size:14px;color:var(--ink-soft);margin-bottom:8px;">Chọn bộ thủ đúng để hoàn thành chữ được khoanh, ghép thành: <b>${item.q.target}</b></div>` +
         renderOptionsRow('opt', gIdx, item.pool.map(r => `<div style="font-size:26px;font-weight:700;min-width:20px;text-align:center;">${r}</div>`));
     } else if(item.kind === 'pinyin_hanzi'){
+      // Lưu ý: dạng câu này không có audio thật — phần phiên âm (prompt.py) CHÍNH LÀ nội dung
+      // đề bài ("nghe phiên âm, chọn chữ Hán đúng"), không phải đáp án/gợi ý, nên KHÔNG ẩn.
       bodyHtml = `<div style="font-size:16px;margin-bottom:6px;">${item.q.prompt.zh}<br><span style="color:var(--ink-soft);font-size:14px;">${item.q.prompt.py}</span></div>` +
-        renderOptionsRow('opt', gIdx, item.q.options.map(o => `<div style="font-size:20px;font-weight:700;text-align:center;min-width:28px;">${o.zh}<br><span style="color:var(--ink-soft);font-size:11.5px;font-weight:400;">${o.py}</span></div>`));
+        renderOptionsRow('opt', gIdx, item.q.options.map(o => `<div style="font-size:20px;font-weight:700;text-align:center;min-width:28px;">${o.zh}<br><span class="mt-pinyin" style="display:none;color:var(--ink-soft);font-size:11.5px;font-weight:400;">${o.py}</span></div>`));
     }
     let audioHtml = '';
     if(item.q.qAudio){
@@ -9788,6 +9790,7 @@ async function initMockTestHomework(lessonId){
     function revealTranscripts(){
       container.querySelectorAll('.mt-transcript-wrap').forEach(wrap => { wrap.style.display = 'block'; });
       container.querySelectorAll('.mt-qaudio-wrap').forEach(wrap => { wrap.style.display = 'block'; });
+      container.querySelectorAll('.mt-pinyin').forEach(el => { el.style.display = 'inline'; });
       container.querySelectorAll('.mt-transcript-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           const gIdx = btn.dataset.gidx;

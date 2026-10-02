@@ -1462,12 +1462,49 @@ function showToast(msg){
   t._timer = setTimeout(()=> t.classList.remove('show'), 2600);
 }
 
-// Map bài học -> id thật trong Supabase (khớp với schema/seed_lessons_1_3.sql)
+// Map bài học (số nguyên 1-15, 16 = bài kiểm tra cuối khoá) -> id thật của bảng `lessons`
+// trong Supabase — dùng để ghi lesson_id khi lưu tiến độ 7 phần ôn tập (saveActivityProgress).
+// TRƯỚC ĐÂY chỉ có 3 bài đầu (lúc web mới làm) -> từ bài 4 trở đi và TOÀN BỘ HSK2 bị ghi
+// lesson_id = null, khiến trang quản lý giáo viên không gộp được vào đúng bài -> hiện sai
+// tiến độ dù học sinh đã làm xong thật. Lấy đủ từ Supabase (select id,title,hsk_level,order_index
+// from lessons) ngày 2026-10-02, đã đối chiếu khớp với các migration SQL cũ của HSK2.
 const LESSON_UUID_MAP = {
   1: 'afd5dcfe-4237-4cad-90e1-f64fce2a055a',
   2: '11ae2343-91c4-4c07-8a92-ac700a8aa956',
   3: '87eb48f4-95b0-4b29-ba60-21c9cb9ddcd5',
+  4: 'a4633601-eb2c-4e2e-918b-af5f255e7069',
+  5: 'c352ddfd-f06e-47df-b51d-4505ad8cda69',
+  6: '19ab8f0a-1ea3-4fec-8fb4-fabcfe5926e7',
+  7: 'a1b2c3d4-1111-4a1a-9a1a-111111111111',
+  8: 'a1b2c3d4-2222-4a2a-9a2a-222222222222',
+  9: 'a1b2c3d4-3333-4a3a-9a3a-333333333333',
+  10: 'b1c2d3e4-1010-4101-9101-101010101010',
+  11: 'b1c2d3e4-1111-4111-9111-111111111111',
+  12: 'c1d2e3f4-1212-4121-9121-121212121212',
+  13: 'c1d2e3f4-1313-4131-9131-131313131313',
+  14: 'd1e2f3a4-1414-4141-9141-141414141414',
+  15: 'd1e2f3a4-1515-4151-9151-151515151515',
+  16: 'f1e2d3c4-1616-4161-9161-161616161616', // kiểm tra cuối khoá HSK1
 };
+const LESSON_UUID_MAP_HSK2 = {
+  1: 'c07f440e-aa5b-497b-9883-1344c7b8fffa',
+  2: '5d2783bf-58cf-4c37-bf36-5106511adbc4',
+  3: 'db5fc108-90b5-4f11-b37f-a50ea19b0fea',
+  4: '83956957-6ccb-40a6-b2a9-c73c1f4863e0',
+  5: '4a4befc6-b8e1-4e03-bd3a-f702d1261a4f',
+  6: '2a0814fd-6120-4324-8dde-e386ab27eb3e',
+  7: '3863d8dd-ed6b-4b60-b193-311545dbaef4',
+  8: '80e48132-400a-4b23-ab1f-2f468cddf7ee',
+  9: '2d824e42-b475-4178-a52f-6e8e328e841c',
+  10: 'a0d21433-8bcc-4d23-b893-1a3689a5bcc9',
+  11: '50714feb-a7e9-42b3-bd9e-c237bbddd327',
+  12: '1e9a033b-b0fc-4f88-a968-227d11dfa221',
+  13: '7d637421-13a9-41e9-8153-d9823445c83b',
+  14: '37cf4233-b2e7-4ab7-8992-e4c546be4abe',
+  15: '3384afc2-5364-45dd-9b2e-b75d98e41b8c',
+  16: 'f64d7855-dd5c-48b0-bd59-32c1bc319799', // kiểm tra cuối khoá HSK2
+};
+function activeLessonUuidMap(){ return currentCourse === 'hsk2' ? LESSON_UUID_MAP_HSK2 : LESSON_UUID_MAP; }
 
 function logEvent(section, detail, extra){
   const payload = {
@@ -1496,7 +1533,7 @@ async function saveActivityProgress(key, section, detail, extra){
   try{
     await sb.from('activity_progress').upsert({
       student_id: CURRENT_STUDENT.id,
-      lesson_id: LESSON_UUID_MAP[currentLessonId] || null,
+      lesson_id: activeLessonUuidMap()[currentLessonId] || null,
       activity_key: key,
       section, detail, extra: extra || null,
     }, { onConflict: 'student_id,activity_key' });

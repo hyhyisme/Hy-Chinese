@@ -580,6 +580,19 @@ a{color:inherit;text-decoration:none;}
   padding:10px 14px;border-radius:12px;line-height:1.6;
 }
 
+/* ---------- BÀI TẬP PHÁT ÂM: GHI ÂM / TẢI FILE NỘP CHO GIÁO VIÊN ---------- */
+.pr-sub-wrap{margin-top:34px;padding-top:22px;border-top:2px dashed var(--line);}
+.pr-sub-item{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:12px;}
+.pr-sub-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:10px;}
+.pr-sub-zh{font-size:26px;font-weight:700;}
+.pr-sub-py{font-size:16px;color:var(--seal);font-weight:600;}
+.pr-sub-vi{font-size:14.5px;color:var(--ink-soft);}
+.pr-sub-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.pr-sub-rec.recording{background:var(--seal);color:#fff;border-color:var(--seal);animation:pulse-rec 1.2s infinite;}
+.pr-sub-audio{height:36px;max-width:100%;margin-top:10px;display:block;}
+.pr-sub-status{font-size:14.5px;color:var(--ink-soft);margin-top:8px;min-height:18px;}
+.pr-sub-grade{margin-top:10px;}
+
 /* ---------- GIÁO VIÊN XEM BÀI NỘP ---------- */
 .teacher-gate{max-width:420px;margin:0 auto;text-align:center;}
 .teacher-gate .radical-search-box{margin-bottom:14px;text-align:center;}
@@ -1372,6 +1385,7 @@ let STUDENT_COURSE_LEVEL = null;
     <!-- BÀI TẬP NỘP -->
     <div class="panel" id="panel-homework">
       <div id="hw-container"></div>
+      <div id="hw-pronun-container"></div>
     </div>
 
   </div>
@@ -6265,6 +6279,9 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
    4) LOGIC 5 PHẦN ÔN TẬP — chạy trên dữ liệu của bài đang mở
    ============================================================ */
 function initLessonPanels(L){
+  // dọn khu "bài tập phát âm nộp cho giáo viên" của bài trước (chỉ bài 1-3 HSK1 mới dựng lại ở initWorkbookHomework)
+  const _prSubHost = document.getElementById('hw-pronun-container');
+  if(_prSubHost) _prSubHost.innerHTML = '';
   if(L.isFinalExam){
     initMockTestHomework(L.id);
     return;
@@ -10165,8 +10182,7 @@ async function initMockTestHomework(lessonId){
     });
     return `
       ${audioBlockHtml()}
-      ${isPreview ? '<p style="font-size:14.5px;color:var(--seal,#8B2C2C);background:var(--seal-tint,#f4e6e3);padding:10px 14px;border-radius:10px;margin-bottom:10px;">👁️ Xem trước — giao diện giống hệt học sinh. Bấm "Xem đáp án" bên dưới bất cứ lúc nào để xem đáp án đúng.</p>' : ''}
-      ${sectionsHtml}
+            ${sectionsHtml}
       ${isPreview
         ? '<button class="btn-primary" id="mt-submit-btn" style="margin-top:16px;">👀 Xem đáp án</button><p id="mt-submit-status" style="font-size:15.5px;margin-top:10px;"></p>'
         : '<button class="btn-primary" id="mt-submit-btn" style="margin-top:16px;">Nộp bài →</button><p id="mt-submit-status" style="font-size:15.5px;margin-top:10px;"></p>'}
@@ -10703,7 +10719,7 @@ async function initPhoneticsHomework(lessonId){
   if(!data || !exId){ container.innerHTML = '<p style="color:var(--ink-soft);font-size:16px;">Bài này chưa có bài tập.</p>'; return; }
 
   if (TEACHER_PREVIEW_MODE) {
-    container.innerHTML = '<p style="color:var(--ink-soft);font-size:16px;">👁️ Xem trước — không làm bài ở đây được.</p>';
+    container.innerHTML = '';
     return;
   }
 
@@ -10890,8 +10906,7 @@ async function initWorkbookHomework(lessonId){
     <div style="margin-bottom:18px;">
       <audio controls src="${data.audio}" style="width:100%;"></audio>
     </div>
-    ${isPreview ? '<p style="font-size:14.5px;color:var(--seal,#8B2C2C);background:var(--seal-tint,#f4e6e3);padding:10px 14px;border-radius:10px;margin-bottom:14px;">👁️ Xem trước — giao diện giống hệt học sinh. Bấm "Xem đáp án" bên dưới bất cứ lúc nào để xem đáp án đúng.</p>' : ''}
-    ${toneToolbarHtml}
+        ${toneToolbarHtml}
     ${renderDictationSection('1️⃣ Nghe và điền thanh mẫu (声母) còn thiếu', data.initials, 'initials', false)}
     ${renderDictationSection('2️⃣ Nghe và điền vận mẫu (韵母) còn thiếu — nhớ ghi đúng dấu thanh điệu', data.finals, 'finals', false)}
     ${renderDictationSection('3️⃣ Nghe và chọn đúng thanh điệu', data.tones, 'tones', true)}
@@ -10949,6 +10964,11 @@ async function initWorkbookHomework(lessonId){
       });
     });
   });
+
+  // Phần 5: bài tập phát âm (ghi âm / tải file nộp cho giáo viên chấm) — dựng ở khung riêng
+  // #hw-pronun-container (nằm NGOÀI hw-container để lockWorkbookForm() không vô hiệu hoá nhầm).
+  // Giáo viên xem bài nộp của học sinh ở chế độ TEACHER_REVIEW_MODE thì không cần phần này.
+  if (!TEACHER_REVIEW_MODE) initPronunSubmitSection(lessonId);
 
   // ---- Giáo viên xem bài nộp của 1 học sinh cụ thể: điền lại đúng ô/lựa chọn học sinh đã
   // làm (giống giao diện học sinh đang làm bài), CHƯA tô đúng/sai — bấm "Xem đáp án" mới lộ
@@ -11114,6 +11134,273 @@ async function initWorkbookHomework(lessonId){
   }
 }
 
+/* ============================================================
+   PHẦN 5 CỦA BÀI 1-3 (HSK1): BÀI TẬP PHÁT ÂM — GHI ÂM / TẢI FILE NỘP CHO GIÁO VIÊN CHẤM
+   - Học sinh nghe mẫu (nếu có) -> ghi âm trực tiếp HOẶC tải file đã ghi sẵn -> bấm Nộp.
+   - File lưu ở bucket riêng tư `pronunciation-recordings`, metadata ở bảng
+     `pronunciation_submissions` (xem migration_pronunciation_submissions.sql).
+   - Giáo viên nghe + chấm điểm (thang 10) + nhận xét ở teacher-dashboard.html; học sinh
+     thấy điểm ngay tại đây. Được nộp lại cho tới khi giáo viên chấm xong.
+   - Chưa chạy SQL -> bảng chưa tồn tại -> phần này tự ẩn, không ảnh hưởng 4 phần còn lại.
+   ============================================================ */
+const PRONUN_BUCKET = 'pronunciation-recordings';
+const PRONUN_MAX_BYTES = 5 * 1024 * 1024; // khớp giới hạn 5MB của bucket
+// Danh sách từ/câu học sinh phải đọc ở từng bài — sửa/thêm/bớt thoải mái ở đây.
+// Từ nào trùng với từ vựng của bài thì tự có nút "Nghe mẫu" (lấy giọng gốc từ vựng).
+const PRONUN_TASKS_HSK1 = {
+  1: [
+    {zh:'你好', py:'nǐ hǎo', vi:'xin chào'},
+    {zh:'谢谢', py:'xièxie', vi:'cảm ơn'},
+    {zh:'不客气', py:'bú kèqi', vi:'đừng khách sáo'},
+    {zh:'再见', py:'zàijiàn', vi:'tạm biệt'},
+    {zh:'老师，您好！', py:'Lǎoshī, nín hǎo!', vi:'Chào cô ạ!'},
+    {zh:'同学们，再见！', py:'Tóngxuémen, zàijiàn!', vi:'Tạm biệt các em!'},
+  ],
+  2: [
+    {zh:'请问', py:'qǐngwèn', vi:'xin hỏi'},
+    {zh:'名字', py:'míngzi', vi:'tên'},
+    {zh:'对不起', py:'duìbuqǐ', vi:'xin lỗi'},
+    {zh:'没关系', py:'méi guānxi', vi:'không sao'},
+    {zh:'高兴', py:'gāoxìng', vi:'vui'},
+    {zh:'很高兴认识你。', py:'Hěn gāoxìng rènshi nǐ.', vi:'Rất vui được quen bạn.'},
+  ],
+  3: [
+    {zh:'中国', py:'Zhōngguó', vi:'Trung Quốc'},
+    {zh:'法国', py:'Fǎguó', vi:'nước Pháp'},
+    {zh:'女朋友', py:'nǚpéngyou', vi:'bạn gái'},
+    {zh:'工作', py:'gōngzuò', vi:'công việc'},
+    {zh:'这是我女朋友。', py:'Zhè shì wǒ nǚpéngyou.', vi:'Đây là bạn gái tôi.'},
+    {zh:'你工作忙吗？', py:'Nǐ gōngzuò máng ma?', vi:'Công việc của bạn bận không?'},
+  ],
+};
+
+async function initPronunSubmitSection(lessonId){
+  lessonId = Number(lessonId); // đảm bảo là số (cột lesson_num kiểu int, so sánh currentLessonId an toàn)
+  const host = document.getElementById('hw-pronun-container');
+  if(!host) return;
+  host.innerHTML = '';
+  if(currentCourse !== 'hsk1') return;
+  const tasks = PRONUN_TASKS_HSK1[lessonId];
+  if(!tasks || !tasks.length) return;
+  const isPreview = TEACHER_PREVIEW_MODE;
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const lessonObj = activeLessons()[lessonId];
+  const vocab = (lessonObj && lessonObj.vocab) || [];
+  const modelAudioFor = zh => { const v = vocab.find(x => x.zh === zh); return v ? v.wordAudio : null; };
+
+  // bài đã nộp trước đó (nếu có)
+  const subByIdx = {};
+  if(!isPreview){
+    const { data: rows, error } = await sb
+      .from('pronunciation_submissions')
+      .select('item_idx, audio_path, submitted_at, teacher_score, teacher_feedback, graded_at')
+      .eq('student_id', CURRENT_STUDENT.id)
+      .eq('course', 'HSK1')
+      .eq('lesson_num', lessonId);
+    if(error){ console.warn('Phần bài tập phát âm chưa sẵn sàng (đã chạy migration SQL chưa?):', error.message); return; }
+    (rows || []).forEach(r => { subByIdx[r.item_idx] = r; });
+  }
+  if(Number(currentLessonId) !== lessonId) return; // học sinh đã chuyển sang bài khác trong lúc đang tải
+
+  const itemsHtml = tasks.map((t, i) => {
+    const hasModel = !!modelAudioFor(t.zh);
+    return `
+    <div class="pr-sub-item" data-idx="${i}">
+      <div class="pr-sub-head">
+        <span class="pr-sub-zh hanzi">${esc(t.zh)}</span>
+        <span class="pr-sub-py">${esc(t.py)}</span>
+        <span class="pr-sub-vi">${esc(t.vi)}</span>
+        ${hasModel ? `<button type="button" class="pill-btn pr-sub-model" data-idx="${i}">🔊 Nghe mẫu</button>` : ''}
+      </div>
+      ${isPreview ? '' : `
+      <div class="pr-sub-actions">
+        <button type="button" class="pill-btn pr-sub-rec" data-idx="${i}">🎙️ Ghi âm</button>
+        <label class="pill-btn" style="cursor:pointer;">📁 Tải file ghi âm<input type="file" class="pr-sub-file" data-idx="${i}" accept="audio/*,.m4a,.mp3,.wav,.webm,.ogg,.aac" style="display:none;"></label>
+        <button type="button" class="btn-primary pr-sub-submit" data-idx="${i}" style="display:none;padding:8px 18px;font-size:15px;">Nộp bài</button>
+      </div>
+      <audio class="pr-sub-audio" controls style="display:none;"></audio>
+      <div class="pr-sub-status"></div>
+      <div class="pr-sub-grade"></div>`}
+    </div>`;
+  }).join('');
+
+  host.innerHTML = `
+    <div class="pr-sub-wrap">
+      <div class="hw-section-title">🎙️ 5️⃣ Bài tập phát âm — nộp cho giáo viên chấm</div>
+      ${'<div class="hw-intro">📌 Bấm <b>"Nghe mẫu"</b> (nếu có) rồi <b>ghi âm</b> trực tiếp, hoặc <b>tải file</b> bạn đã ghi âm sẵn (mp3, m4a, wav... tối đa 5MB), nghe lại rồi bấm <b>"Nộp bài"</b>. Giáo viên sẽ nghe và chấm điểm — chấm xong bạn xem điểm + nhận xét ngay tại đây. Bạn được nộp lại cho tới khi giáo viên chấm.</div>'}
+      ${itemsHtml}
+    </div>`;
+
+  // ---- nút "Nghe mẫu" (giọng gốc của từ vựng) ----
+  let modelPlayer = null;
+  host.querySelectorAll('.pr-sub-model').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const t = tasks[Number(btn.dataset.idx)];
+      const src = modelAudioFor(t.zh);
+      if(!src) return;
+      if(modelPlayer){ modelPlayer.pause(); }
+      modelPlayer = new Audio(src);
+      modelPlayer.play().catch(() => {});
+    });
+  });
+  if(isPreview) return;
+
+  const pending = {};   // idx -> {blob, ext, contentType, url}
+  let activeRec = null; // {idx, recorder, stream}
+
+  function itemEl(idx){ return host.querySelector(`.pr-sub-item[data-idx="${idx}"]`); }
+  function extFromMime(m){
+    m = (m || '').toLowerCase();
+    if(m.includes('webm')) return 'webm';
+    if(m.includes('mp4') || m.includes('m4a') || m.includes('aac')) return 'm4a';
+    if(m.includes('ogg')) return 'ogg';
+    if(m.includes('mpeg') || m.includes('mp3')) return 'mp3';
+    if(m.includes('wav')) return 'wav';
+    return 'webm';
+  }
+  const MIME_BY_EXT = { webm:'audio/webm', m4a:'audio/mp4', mp4:'audio/mp4', aac:'audio/aac', ogg:'audio/ogg', mp3:'audio/mpeg', wav:'audio/wav' };
+
+  // vẽ lại 1 ô theo trạng thái hiện tại (chưa nộp / đã chọn file chờ nộp / đã nộp chờ chấm / đã chấm)
+  async function refreshItem(idx){
+    const el = itemEl(idx); if(!el) return;
+    const audio = el.querySelector('.pr-sub-audio');
+    const status = el.querySelector('.pr-sub-status');
+    const gradeEl = el.querySelector('.pr-sub-grade');
+    const actions = el.querySelector('.pr-sub-actions');
+    const submitBtn = el.querySelector('.pr-sub-submit');
+    const sub = subByIdx[idx];
+    const graded = !!(sub && sub.graded_at);
+    const p = pending[idx];
+
+    gradeEl.innerHTML = '';
+    if(graded){
+      actions.style.display = 'none';
+      submitBtn.style.display = 'none';
+      status.textContent = '';
+      gradeEl.innerHTML = `<div class="hw-grade-pill">📝 Giáo viên chấm: <b>${sub.teacher_score != null ? esc(sub.teacher_score) + '/10' : '—'}</b>${sub.teacher_feedback ? ' — ' + esc(sub.teacher_feedback) : ''}</div>`;
+    } else if(p){
+      submitBtn.style.display = '';
+      submitBtn.textContent = sub ? 'Nộp lại' : 'Nộp bài';
+      status.textContent = '▶️ Nghe lại bản của bạn, ưng ý thì bấm "' + submitBtn.textContent + '".';
+    } else if(sub){
+      submitBtn.style.display = 'none';
+      status.textContent = '✅ Đã nộp lúc ' + new Date(sub.submitted_at).toLocaleString('vi-VN') + ' — đang chờ giáo viên chấm. Bạn có thể ghi âm / tải file khác để nộp lại.';
+    } else {
+      submitBtn.style.display = 'none';
+      status.textContent = '';
+    }
+
+    // nguồn phát: bản đang chờ nộp > bản đã nộp (link ký tạm 1 giờ)
+    if(p){
+      audio.src = p.url; audio.style.display = '';
+    } else if(sub && sub.audio_path){
+      const { data: signed } = await sb.storage.from(PRONUN_BUCKET).createSignedUrl(sub.audio_path, 3600);
+      if(signed && signed.signedUrl){ audio.src = signed.signedUrl; audio.style.display = ''; }
+    } else {
+      audio.removeAttribute('src'); audio.style.display = 'none';
+    }
+  }
+
+  function setPending(idx, blob, ext, contentType){
+    if(pending[idx] && pending[idx].url) URL.revokeObjectURL(pending[idx].url);
+    pending[idx] = { blob, ext, contentType, url: URL.createObjectURL(blob) };
+    refreshItem(idx);
+  }
+
+  // ---- ghi âm trực tiếp ----
+  host.querySelectorAll('.pr-sub-rec').forEach(btn => {
+    const idx = Number(btn.dataset.idx);
+    btn.addEventListener('click', async () => {
+      const status = itemEl(idx).querySelector('.pr-sub-status');
+      if(activeRec && activeRec.idx === idx){ activeRec.recorder.stop(); return; }
+      if(activeRec){ status.textContent = '⚠️ Hãy dừng ghi âm ở ô đang ghi trước đã.'; return; }
+      if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+        status.textContent = '⚠️ Trình duyệt này không hỗ trợ ghi âm trực tiếp (cần mở qua https). Bạn có thể bấm "Tải file ghi âm" để nộp file đã ghi sẵn.';
+        return;
+      }
+      try{
+        const stream = await navigator.mediaDevices.getUserMedia({audio:true});
+        const preferred = ['audio/webm;codecs=opus','audio/webm','audio/mp4','audio/ogg;codecs=opus'];
+        let chosen = '';
+        for(const t of preferred){
+          if(window.MediaRecorder && MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(t)){ chosen = t; break; }
+        }
+        const recorder = chosen ? new MediaRecorder(stream, {mimeType: chosen}) : new MediaRecorder(stream);
+        const chunks = [];
+        recorder.ondataavailable = e => { if(e.data && e.data.size > 0) chunks.push(e.data); };
+        recorder.onstart = () => {
+          btn.classList.add('recording'); btn.textContent = '⏹ Dừng ghi âm';
+          status.textContent = '🔴 Đang ghi âm... đọc to rồi bấm "Dừng ghi âm".';
+        };
+        recorder.onstop = () => {
+          btn.classList.remove('recording'); btn.textContent = '🎙️ Ghi âm lại';
+          stream.getTracks().forEach(t => t.stop());
+          activeRec = null;
+          if(!chunks.length){ status.textContent = '⚠️ Không ghi được âm thanh — thử lại nhé (nói to trước khi bấm "Dừng").'; return; }
+          const mime = (recorder.mimeType || chosen || 'audio/webm').split(';')[0];
+          const blob = new Blob(chunks, {type: mime});
+          if(blob.size > PRONUN_MAX_BYTES){ status.textContent = '⚠️ Bản ghi quá dài (tối đa 5MB) — ghi ngắn hơn nhé.'; return; }
+          setPending(idx, blob, extFromMime(mime), mime);
+        };
+        activeRec = { idx, recorder, stream };
+        recorder.start();
+      }catch(err){
+        status.textContent = '⚠️ Không truy cập được micro. Kiểm tra quyền micro của trình duyệt, hoặc dùng "Tải file ghi âm".';
+      }
+    });
+  });
+
+  // ---- tải file ghi âm có sẵn ----
+  host.querySelectorAll('.pr-sub-file').forEach(inp => {
+    const idx = Number(inp.dataset.idx);
+    inp.addEventListener('change', () => {
+      const status = itemEl(idx).querySelector('.pr-sub-status');
+      const f = inp.files && inp.files[0];
+      inp.value = '';
+      if(!f) return;
+      const nameExt = (f.name.split('.').pop() || '').toLowerCase();
+      const looksAudio = /^audio\//.test(f.type) || MIME_BY_EXT[nameExt];
+      if(!looksAudio){ status.textContent = '⚠️ Đây không phải file âm thanh (nhận mp3, m4a, wav, webm, ogg, aac).'; return; }
+      if(f.size > PRONUN_MAX_BYTES){ status.textContent = '⚠️ File quá lớn (' + (f.size/1048576).toFixed(1) + 'MB) — tối đa 5MB. Hãy ghi ngắn hơn hoặc nén file lại.'; return; }
+      const contentType = (f.type && f.type.startsWith('audio/')) ? f.type.split(';')[0] : (MIME_BY_EXT[nameExt] || 'audio/mpeg');
+      setPending(idx, f, MIME_BY_EXT[nameExt] ? nameExt : extFromMime(contentType), contentType);
+    });
+  });
+
+  // ---- nộp bài ----
+  host.querySelectorAll('.pr-sub-submit').forEach(btn => {
+    const idx = Number(btn.dataset.idx);
+    btn.addEventListener('click', async () => {
+      const status = itemEl(idx).querySelector('.pr-sub-status');
+      const p = pending[idx];
+      if(!p){ status.textContent = '⚠️ Hãy ghi âm hoặc chọn file trước đã.'; return; }
+      btn.disabled = true; status.textContent = '⏳ Đang nộp bài...';
+      try{
+        const { data: { user } } = await sb.auth.getUser();
+        if(!user) throw new Error('Phiên đăng nhập đã hết — hãy tải lại trang.');
+        const path = `${user.id}/${CURRENT_STUDENT.id}/hsk1_l${lessonId}_${idx}_${Date.now()}.${p.ext}`;
+        const up = await sb.storage.from(PRONUN_BUCKET).upload(path, p.blob, { contentType: p.contentType, upsert: false });
+        if(up.error) throw up.error;
+        const row = {
+          student_id: CURRENT_STUDENT.id, course: 'HSK1', lesson_num: lessonId, item_idx: idx,
+          item_label: tasks[idx].zh, audio_path: path, submitted_at: new Date().toISOString(),
+        };
+        const { error } = await sb.from('pronunciation_submissions').upsert(row, { onConflict: 'student_id,course,lesson_num,item_idx' });
+        if(error) throw error;
+        subByIdx[idx] = { item_idx: idx, audio_path: path, submitted_at: row.submitted_at, teacher_score: null, teacher_feedback: null, graded_at: null };
+        URL.revokeObjectURL(p.url);
+        delete pending[idx];
+        await refreshItem(idx);
+      }catch(err){
+        status.textContent = '⚠️ Lỗi khi nộp: ' + (err && err.message ? err.message : err);
+      }
+      btn.disabled = false;
+    });
+  });
+
+  tasks.forEach((t, i) => { refreshItem(i); });
+}
+
 // Hàm cũ (mcq/essay) — vẫn giữ lại để dùng cho các bài sau này chưa có dữ liệu SBT thật (Bài 4 trở đi)
 async function initHomework(homework){
   const container = document.getElementById('hw-container');
@@ -11122,7 +11409,7 @@ async function initHomework(homework){
     return;
   }
   if (TEACHER_PREVIEW_MODE) {
-    container.innerHTML = '<p style="color:var(--ink-soft);font-size:16px;">👁️ Xem trước — không làm bài ở đây được.</p>';
+    container.innerHTML = '';
     return;
   }
   const map = EXERCISE_MAP[currentLessonId];
